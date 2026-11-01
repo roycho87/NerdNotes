@@ -147,6 +147,12 @@ seitanism (ComfyUI-H3-Motion-Context-MultiRef) has done a lot of H3 chaining wor
 
 ## 🔗 Other community work
 
+- **Fizgig (shootthesound):**
+  - His image upscaler worked well for cleaning up a single frame (the clip's first frame) to use as a clean, locked reference for every shot after it. Combined with QuintForms' TaoMate FL2V refine, it was "almost perfect" for the refresh chain.
+  - **H3 Tweaks** (around −0.1) for a plain-context repair pass.
+  - Single-frame img2img with H3 itself at low denoise (FaceRefine's H3 Inject Video Latent) to clean a last frame, then fix the regenerated clip's end to it.
+  - His sliding sampler as a possible final pass over a whole long video to even out the quality (not tried yet).
+
 - **xyzDist – H3-LongTakeNoCuts** (https://github.com/xyzDist/H3-LongTakeNoCuts): a second refine pass at ~0.5–0.6 denoise to bring back detail and fix the waxy/burnt look, a frame blend between frames 22–44, and a keyframe mask so the start connects to the last shot. Degradation shows up around segments 5–6 with no cuts (the "photocopy effect": each segment treats the last one as ground truth). Shots with cuts don't have the problem. Static/half shots still drift toward more contrast and saturation.
 - **NikoDemon80 – ComfyUI-H3-Motion-Context** (https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context): the original clip-chaining nodes. Clown Chain is a copy of its Chain node. My frame 0 write-up is issue #58 there.
 - **Code review of Clown Keystone** (clown_context_suite issue #5, by sandpies): pointed out that latent 0 was only put back when Clown Context held it, that the mask didn't reach the capstone or Late Lock, and that the capstone position assumes 17n+5-frame clips. That led to Keystone being simplified to always use clip 1.
@@ -192,6 +198,10 @@ What to watch:
 - Whether a low-quality frame 0 makes things worse than no keystone at all
 
 If the unrelated sharp image helps as much as clip 1's frame, detail is what matters. If only the related one helps, the content is doing the work. If an unrelated frame shows up in the picture (objects, colors, layout), that backs Niko's point that a real frame pulls content with it.
+
+### Next: watch the single-frame latents step by step
+
+A workflow that takes every single-frame latent in the shot (latents 0, 5, 10… — the keystone slot, the held context and the new frames) and decodes them at **every sampling step**, so they can be compared side by side. This shows when detail shows up in each one, whether frame 0's detail spreads into the frames behind it, and when (or if) the keystone starts pulling content.
 
 Worth adding: a moving shot (an arc or a walk) next to the locked-off one, since that's where Niko saw the pull, and a capstone-only run, which was his suggestion.
 
