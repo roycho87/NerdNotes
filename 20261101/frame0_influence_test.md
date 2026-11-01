@@ -8,17 +8,18 @@ Find out how much frame 0 (the first single-frame latent) affects a MiniMax H3 s
 
 - One reference image with the clown in it.
 - Base clip: one 5-second generated chain. Its existing shots are not used as results; the front is snipped off and everything is regenerated.
-- Held context: 22 frames from that clip (the minimum that still carries motion).
+- Held context: 22 frames from that clip (the minimum that still carries motion). Frame 0 is the one that gets swapped; the other 21 stay the same in every run.*
 - Every run is a new 5-second generation from the same 21 held frames. The only change is frame 0. The control is regenerated too, using the original frame 0.
 - Keep the seed, prompt, reference image, steps and settings the same for every run.
+- Frame 0 goes in through Clown Keystone (keystone front only, capstone off). The real frame 0 is put back after sampling.*
 
 ## Phase 1: explore effects on the control
 
 Phase 1 is only for exploring: try several methods on the control image and see which, if any, have an impact. Make each effect as heavy as possible while the picture can still be made out.
 
-- Effects: blur, very dark, green tint (a colour not in any image, so it can only come from frame 0), simulated degradation (made in Photoshop).
-- Apply every effect through the same mask in Photoshop at the same opacity, so each one changes the same pixels.
-- Check each against the original with the Difference blend mode to keep the amount of change about equal.
+- Effects: blur, very dark, green tint (a colour not in any image, so it can only come from frame 0), simulated degradation (~~made in Photoshop~~ made with TrentNodes' Video Degradation*).
+- ~~Apply every effect through the same mask in Photoshop at the same opacity, so each one changes the same pixels.~~ Every effect is applied to the whole frame by the Clown Frame 0 Test node, at full strength (max_strength 1.0).*
+- ~~Check each against the original with the Difference blend mode to keep the amount of change about equal.~~ Each run's frame 0 picture is saved next to its video so the strength can be checked.*
 
 ## Phase 2: test grid (25 runs)
 
@@ -33,6 +34,19 @@ Pick the one effect from Phase 1 with the most impact, and run it at increasing 
 | All three: close-up, blue background, child |  |  |  |  |  |
 
 The clown stays the same and in the same position in every image, as far as possible.
+
+**Changed to 10-clip chains.*** A single clip showed no measurable difference (see Phase 1b), so every cell is now a 10-clip chain instead of one clip, and every effect from Phase 1 is run on every row instead of one effect at increasing strength. The top row was run first, as Phase 1b.*
+
+## Phase 1b: the top row as 10-clip chains*
+
+Added after Phase 1.*
+
+- Five chains: clean, blur, dark, green tint, degrade. All at full strength.*
+- Each chain: clip 1 is shared (the same seed makes it identical), then shots 2–10, each with that chain's frame 0 through Keystone (front only, capstone off). Same seed, prompts and settings throughout (the clown walk workflow: 8-second clips, 9:16 at 0.5 MP, Clown Context 39 with drop last 17).*
+- Measured on clip 10, averaged over 10 frames about 20 frames from the end, against clip 1 at the same frames:*
+  - colour drift: distance between the average Lab colour of the two*
+  - sharpness: how strong the fine edges are (higher than clip 1 = over-sharpened / baked)*
+- Compared against the existing no-Keystone baseline and the keystone + capstone run of the same workflow.*
 
 ## Phase 3: frame 0 on a degraded continuation
 
@@ -55,6 +69,7 @@ Phase 3 swaps the Phase 2 frame 0 latents into a chain that is already degraded,
 - Phase 1: does the effect spread into the shot, or does the shot clean it up?
 - Phase 2: does the changed content show up in the shot, for how many frames, and how does the effect strength change that?
 - Phase 3: does each frame 0 make the degradation better or worse than the degraded control? Compare every run to the control side by side.
+- Chains: does a bad frame 0 make the chain drift or bake faster by clip 10?*
 
 ## Follow-up
 
@@ -62,13 +77,17 @@ A second workflow decodes every single-frame latent at each sampling step, to se
 
 ## Open questions
 
-- Should there also be a baseline run using an empty latent?
+- ~~Should there also be a baseline run using an empty latent?~~ Added as its own run outside the grid: frame 0 unmasked (Keystone off), so H3 draws its own frame 0. Whatever is put in frame 0 doesn't matter once it's unmasked, so it's one run, not a row.*
 
 ## Other ideas to test
 
-- Solid colours placed in frame 1.
-- Frame 1 completely denoised.
+- Solid colours placed in latent 1 (frames 1–4; frame 1 can't be swapped on its own).*
+- Latent 1 completely denoised.*
 - Frame 0 as pure random noise.
 - Frame 0 as an all-zero latent.
 - Frame 0 from an unrelated image (landscape, no clown).
 - Swap the single frame at the start of a later block instead of frame 0, to see if position matters.
+
+---
+
+\* Addendum: changed or added after the proposal was written, as the test was run. Struck-through text is the original plan it replaces. Results and conclusions are in [frame0_conclusions.md](frame0_conclusions.md).
