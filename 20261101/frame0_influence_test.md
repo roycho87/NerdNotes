@@ -52,9 +52,9 @@ Phase 3 swaps the Phase 2 frame 0 latents into a chain that is already degraded,
 
 ## What to look for
 
-- Test A: does the changed element show up in the shot, and for how many frames?
-- Test B: does the blur, darkness, green or degradation spread into the shot, or does the shot clean it up?
-- Compare every run to the control side by side.
+- Phase 1: does the effect spread into the shot, or does the shot clean it up?
+- Phase 2: does the changed content show up in the shot, for how many frames, and how does the effect strength change that?
+- Phase 3: does each frame 0 make the degradation better or worse than the degraded control? Compare every run to the control side by side.
 
 ## Follow-up
 
