@@ -199,6 +199,8 @@ What to watch:
 
 If the unrelated sharp image helps as much as clip 1's frame, detail is what matters. If only the related one helps, the content is doing the work. If an unrelated frame shows up in the picture (objects, colors, layout), that backs Niko's point that a real frame pulls content with it.
 
+**The plan if detail is what matters most:** generate fresh replacements for frame 0 instead of always reusing clip 1's. For example, redraw frame 0 for each shot in its own quick pass (unmask only latent 0 so H3 makes a new, sharp first frame that matches the current scene), use it as the keystone for that shot, then swap the real frame back in afterwards. That way each shot gets a clean, detailed frame 0 that matches its own scene, so it can't drag a moving shot back toward clip 1.
+
 ### Next: watch the single-frame latents step by step
 
 A workflow that takes every single-frame latent in the shot (latents 0, 5, 10… — the keystone slot, the held context and the new frames) and decodes them at **every sampling step**, so they can be compared side by side. This shows when detail shows up in each one, whether frame 0's detail spreads into the frames behind it, and when (or if) the keystone starts pulling content.
