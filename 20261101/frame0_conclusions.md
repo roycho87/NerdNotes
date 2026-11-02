@@ -93,8 +93,8 @@ Idea: the held tail carries more than one single-frame latent (with 22 held fram
 
 Full-quality video: [fresh_singles_clip10.mp4](media/fresh_singles_clip10.mp4)
 
-- **Colour:** redrawing the two held single-frame latents cut colour drift more than half, on its own, with no clip 1 frame at all. That's slightly better than keystone + capstone in this run.
-- **Sharpness:** about the same as keystone only. The capstone is still the only thing that clearly cut the over-sharpening.
+- **Colour:** redrawing the two held single-frame latents cut colour drift more than half, on its own, with no clip 1 frame at all. That's about the same as keystone + capstone (3.18 vs 3.35 is within run-to-run noise), and the best of any single change so far.
+- **Sharpness:** about the same as keystone only. Keystone + capstone is still better overall, because the capstone is the only thing that clearly cut the over-sharpening.
 - One run, so the colour number could move a little on a rerun, but the drop from 6.83 is far bigger than the run-to-run noise we've seen.
 - It needs no clean source frame, so it should keep working after the scene changes, where Keystone's clip 1 frame no longer fits.
 
