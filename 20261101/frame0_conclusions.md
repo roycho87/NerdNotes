@@ -38,7 +38,9 @@ The first Late Lock version wrote the capstone into the clip's last single-frame
 
 ![Clip 10, about 20 frames from the end: no Keystone, old capstone, current capstone](media/capstone_retest_clip10.png)
 
-Side-by-side video of clip 10: [capstone_retest_clip10.mp4](media/capstone_retest_clip10.mp4)
+![Clip 10 playing side by side: no Keystone, old capstone, current capstone](media/capstone_retest_clip10.gif)
+
+Full-quality video: [capstone_retest_clip10.mp4](media/capstone_retest_clip10.mp4)
 
 Decoding the capstone added nothing. **The current version is confirmed:** about half the colour drift and much less over-sharpening, with nothing from clip 1 left in the clips.
 
@@ -62,7 +64,9 @@ Clip 10 of each:
 
 ![Clip 10 of each chain, about 20 frames from the end](media/frame0_chains_clip10.png)
 
-Side-by-side video of clip 10: [frame0_chains_clip10.mp4](media/frame0_chains_clip10.mp4)
+![Clip 10 of every chain playing side by side: no Keystone, clean, blur, dark, green, degrade, keystone + capstone](media/frame0_chains_clip10.gif)
+
+Full-quality video: [frame0_chains_clip10.mp4](media/frame0_chains_clip10.mp4)
 
 - **Colour:** even a heavily blurred or green frame 0 holds the colour almost as well as a clean one, and still beats no Keystone. Having the same fixed frame 0 in every clip seems to be what stops the colour drifting, not how good that frame looks.
 - **Sharpness:** a bad frame 0 makes the chain bake much harder: about 58–65 by clip 10, against 47.5 with a clean one. All four bad versions (blur, dark, green, degrade) did it. So frame 0's quality does matter, for the over-sharpened look.
