@@ -220,7 +220,7 @@ A rough timeline of how people have extended H3 clips since the open weights cam
 
 ### Cut more often
 
-The simplest fix. A hard cut or a new camera angle every ~30 s resets the drift. Ethanfel plans a camera cut about every 30 seconds and uses "semantic anchors" in the prompts so details carry over.
+The simplest fix. A hard cut or a new camera angle every ~30 s resets the drift. RuneX (Nov 2026) puts it the same way: a new camera angle is basically a fresh video with the same subject and scene, and long continuous shots are rare in real films anyway. He also tried tail latents with a mask, plus a latent guide or an image guide, and found none of them perfect. Ethanfel plans a camera cut about every 30 seconds and uses "semantic anchors" in the prompts so details carry over.
 
 ### Colour correction / colour matching
 
@@ -335,6 +335,7 @@ The common thread: **models drift because they trust their own previous output t
 - **KingGore2023** (7 Sep 2026), describing the look as "Dark. Blury. Error accumulated." His fix: "You rectify the end part when the degradation appeared. Then lock start and end. Then regenerate."
 - **Miku** (20 Aug 2026): re-using a finished video as input again and again degrades it because of the mp4 output, and because the default VHS loader uses OpenCV. Switching the output to ffv1 and loading with the VHS FFmpeg path loader avoids it.
 - **JalenBrunson** (8 Sep 2026): a "fix" for degradation in later loops based on the Rolling Diffusion paper, as the `h3-hybrid-resume` branch of ComfyUI-MMH3Tools: a sampler that runs 2 passes.
+- **RuneX** (2 Nov 2026): the simplest degradation "fix" is to "change camera (aka new fresh video with same subject/scene)". He tried "tail latent with mask, tail latent with mask + latent guide, tail latent with mask + image guide, but none were perfect".
 - **Ryko** (2 Nov 2026): "pushing any kind of guide seems to inspire the degradation". He first suspected the VAE decode, but "using saved latents that aren't vae decoded will also produce degradation. So anything that serves as a guide latent seems to be the factor."
 - **Lumifel** (20 Aug 2026): all his methods suffered "burn in" at 60 s or more, with "the color get warmer and warmer when the scene doesn't change with a cut". His fix "recalculate[s] how much of the sampler's current noise to apply to the context every sampling steps, while fading that treatment to zero near the end of the context so the join stays clean."
 
