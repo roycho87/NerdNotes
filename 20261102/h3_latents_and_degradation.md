@@ -259,6 +259,17 @@ KingGore's approach for chains that get dark and blurry after ~3 links: only fix
 - **Lumifel (Aug 2026):** at each step, add some of the sampler's current noise to the held context, fading it out toward the join. He reported it removed burn-in and artifacts past 60 s, but didn't fully fix colour drift.
 - **Step Echo** (our test): use the last clip's real in-between step latents for the held frames instead of fresh noise. Results are in our [conclusions, section 7](../20261101/frame0_conclusions.md).
 
+### Community tests: ucost4 (Reddit, Nov 2026)
+
+ucost4 replied on r/StableDiffusion with four approaches he tested:
+
+1. **PNG of the last frame** as the next clip's start. PNG is lossless, so it avoids mp4 loss, but a single frame carries no motion, so movement can break at the join.
+2. **A very similar text prompt with the same sigmas and seed** for each clip, to keep the clips consistent.
+3. **The previous clip's video latent** as the start of the next one. This is the same idea as Motion Context and Clown Context.
+4. **Writing the last clip's prompt so the next clip is an angle cut** that makes sense by the rules of cinema.
+
+He found 3 the most promising and plans more tests on it. For now he uses 4 (cutting to a new angle), which resets the drift.
+
 ### Plumbing that helps
 
 - Pass **latents** between clips, or save intermediates as **lossless** video (ffv1), not mp4.
@@ -325,6 +336,9 @@ The common thread: **models drift because they trust their own previous output t
 - **Miku** (20 Aug 2026): re-using a finished video as input again and again degrades it because of the mp4 output, and because the default VHS loader uses OpenCV. Switching the output to ffv1 and loading with the VHS FFmpeg path loader avoids it.
 - **JalenBrunson** (8 Sep 2026): a "fix" for degradation in later loops based on the Rolling Diffusion paper, as the `h3-hybrid-resume` branch of ComfyUI-MMH3Tools: a sampler that runs 2 passes.
 - **Lumifel** (20 Aug 2026): all his methods suffered "burn in" at 60 s or more, with "the color get warmer and warmer when the scene doesn't change with a cut". His fix "recalculate[s] how much of the sampler's current noise to apply to the context every sampling steps, while fading that treatment to zero near the end of the context so the join stays clean."
+
+**From Reddit**
+- **ucost4** (r/StableDiffusion, Nov 2026): tested a last-frame PNG, a similar prompt with the same sigmas and seed, the previous clip's video latent, and prompting an angle cut by cinema rules; found the video latent "looking promising", using angle cuts until a solid solution turns up.
 
 **Papers**
 - [FramePack: Frame Context Packing and Drift Prevention in Next-Frame-Prediction Video Diffusion Models](https://arxiv.org/abs/2504.12626)
