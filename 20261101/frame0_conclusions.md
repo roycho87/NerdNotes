@@ -80,12 +80,16 @@ When Clown Context (or Motion Context) carries the held frames over on a block e
 
 Idea: the held tail carries more than one single-frame latent (with 22 held frames: latents 0 and 5, frames 0 and 17), and each one is a full picture copied forward from the drifted clip. Clown Fresh Singles unlocks just those while sampling, so the model draws fresh ones, and puts the real ones back afterwards. The 4-frame latents stay locked and carry the motion. No Keystone, no capstone. Same walk chain, seed and prompts as everything above.
 
-| Run | Colour drift | Sharpness |
-|---|---|---|
-| No Keystone (baseline) | 6.83 | 49.2 |
-| Keystone only (clean frame 0) | 5.17 | 47.5 |
-| **Fresh Singles (latents 0 + 5 redrawn)** | **3.18** | 46.7 |
-| Keystone + capstone | 3.35 | 40.0 |
+**Correction:** my first number for this run (whole-frame colour drift 3.18) made it look as good as keystone + capstone. Looking at the clips, it isn't: the floor is as blotchy as the no-Keystone run. The whole-frame average hides that, because brightness differences in different parts of the frame cancel out. So I re-measured by region, clip 10 against clip 1:
+
+| Run | Floor colour drift | Floor blotchiness (clip 1 = 6.1) | Ceiling colour drift | Whole-frame drift (first measure) |
+|---|---|---|---|---|
+| No Keystone (baseline) | 12.45 | 10.81 | 6.43 | 6.83 |
+| Keystone only | 8.03 | 10.71 | 5.25 | 5.17 |
+| Fresh Singles (latents 0 + 5) | 9.81 | 10.64 | 3.46 | 3.18 |
+| Keystone + capstone | **5.34** | **8.63** | **3.08** | 3.35 |
+
+(Floor = the bottom 28% of the frame, below her feet. Blotchiness = how much the floor's brightness varies. Ceiling = the top 8%.)
 
 ![Clip 10, about 20 frames from the end: no Keystone, keystone only, Fresh Singles, keystone + capstone](media/fresh_singles_clip10.png)
 
@@ -93,12 +97,11 @@ Idea: the held tail carries more than one single-frame latent (with 22 held fram
 
 Full-quality video: [fresh_singles_clip10.mp4](media/fresh_singles_clip10.mp4)
 
-- **Colour:** redrawing the two held single-frame latents cut colour drift more than half, on its own, with no clip 1 frame at all. That's about the same as keystone + capstone (3.18 vs 3.35 is within run-to-run noise), and the best of any single change so far.
-- **Sharpness:** about the same as keystone only. Keystone + capstone is still better overall, because the capstone is the only thing that clearly cut the over-sharpening.
-- One run, so the colour number could move a little on a rerun, but the drop from 6.83 is far bigger than the run-to-run noise we've seen.
-- It needs no clean source frame, so it should keep working after the scene changes, where Keystone's clip 1 frame no longer fits.
+- **Fresh Singles helps some colour** (floor 9.81 vs 12.45, ceiling 3.46 vs 6.43), but it does **not** stop the floor going blotchy, which stays at the no-Keystone level.
+- **Keystone + capstone is clearly the best** on every regional measure.
+- The whole-frame average used in sections 3 and 4 is too crude on its own. From here on, results use the regional measures; the earlier tables still show the right order between runs, but the gaps are better read from the regional numbers.
 
-Running next: Keystone (clean frame 0) + Fresh Singles on latent 5 only.
+Running next: Keystone + Fresh Singles on latent 5, then keystone + capstone + Fresh Singles on latent 5.
 
 ## Running now
 
