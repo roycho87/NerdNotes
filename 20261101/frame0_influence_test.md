@@ -71,8 +71,8 @@ FreeNoise (a Step Echo option): the held frames get the last clip's exact starti
 
 **Context noise, after Lumifel's method** (node: Clown Context Noise). Lumifel (Banodoco, Aug 2026) gave the held context part of the sampler's current noise at every step, fading to none at the end of the context so the join stays clean. He reported no burn-in up to about 60 s, but the colour still drifted warmer. Here it's done with H3's partial masks: a mask value m puts a held latent at m × the current noise level, and the model is told so. The held latents ramp from 0.8 at the start of the held part to 0 at the join. The real held latents are put back after sampling.*
 
-4. Context noise + Keystone (clip 1's clean frame 0 locked at latent 0, no capstone). The question: does a clean frame 0 fix the colour drift Lumifel had left? *(queued)*
-5. Context noise + Keystone + Late Lock capstone. *(queued after 4)*
+4. Context noise + Keystone (clip 1's clean frame 0 locked at latent 0, no capstone). The question: does a clean frame 0 fix the colour drift Lumifel had left? *(done)*
+5. Context noise + Keystone + Late Lock capstone. *(done)*
 
 Compared against: no Keystone, keystone only, keystone + capstone, keystone + capstone + Fresh Singles on latent 5, and the Step Echo runs.*
 

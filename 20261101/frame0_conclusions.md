@@ -207,6 +207,42 @@ Every clip of the chain, about 20 frames from the end:
 - **The colour still drifts darker** (ceiling −4.41 vs −2.75 for keystone + capstone). Nothing pulls the colour back toward clip 1, so the locked frames pass the last clip's colour forward.
 - So far: locking the single-frame latents and echoing the 4-frame ones keeps the scene and the motion while cutting the baking. Colour is what's left.
 
+### Fourth and fifth runs: context noise, after Lumifel
+
+Lumifel (Banodoco, Aug 2026) gave the held context part of the sampler's current noise at every step, fading to none at the end of the context so the join stays clean. He reported no burn-in up to about 60 s, but the colour still drifted warmer. These runs test whether a clean frame 0 (and then the capstone) takes care of the colour he had left.
+
+How it's done here (node: Clown Context Noise): H3 supports partial masks, where a mask value m puts a held latent at m × the current noise level and the model is told so. The held latents after latent 0 ramp from 0.8 at the start of the held part down to 0 at the join (latents 1–5: 0.8, 0.64, 0.48, 0.32, 0.16; latent 6 stays locked). Latent 0 is clip 1's clean frame 0 (Keystone), locked. The real held latents are put back after sampling, so the join lines up. Same walk chain, seed and prompts as everything above.
+
+| Run (clip 10) | Ceiling colour drift | Ceiling brightness | Floor blotches | Floor grit | Join jump |
+|---|---|---|---|---|---|
+| Clip 1 | 0 | 0 | 4.47 | 1.25 | |
+| No Keystone | 6.17 | −5.64 | 7.21 | 4.92 | 1.4 |
+| Keystone only | 5.18 | −4.71 | 7.61 | 4.27 | |
+| Keystone + capstone | 3.06 | −2.75 | 5.88 | 2.61 | 1.0 |
+| Keystone + capstone + Fresh Singles on latent 5 | 1.69 | −1.42 | 5.42 | 2.39 | 1.8 |
+| Keystone + context noise | 3.53 | −3.47 | 5.75 | 2.38 | 1.3 (worst 2.0) |
+| **Keystone + capstone + context noise** | **1.59** | −1.57 | **4.93** | **1.73** | 1.4 (worst 1.9) |
+
+![Clip 10: clip 1, no Keystone, keystone only, keystone + capstone, keystone + context noise, keystone + capstone + context noise](media/ctxnoise_clip10.png)
+
+![Clip 10 playing side by side: keystone only, keystone + capstone, keystone + context noise, keystone + capstone + context noise](media/ctxnoise_clip10.gif)
+
+Full-quality video: [ctxnoise_clip10.mp4](media/ctxnoise_clip10.mp4)
+
+Every clip, about 20 frames from the end. Keystone + context noise:
+
+![Keystone + context noise, clips 1 to 10](media/ctxnoise_key_every_clip.png)
+
+Keystone + capstone + context noise:
+
+![Keystone + capstone + context noise, clips 1 to 10](media/ctxnoise_keycap_every_clip.png)
+
+- **Keystone + capstone + context noise is the best run so far on every measure.** The floor is nearly back to clip 1 (blotches 4.93 vs 4.47, grit 1.73 vs 1.25), and the colour drift is the lowest of any run (1.59).
+- **Context noise with only the keystone already matches keystone + capstone**: about the same floor (slightly less grit) and close on colour, with no capstone.
+- **The scene and the motion hold.** Unlike Step Echo, the held frames still carry the picture, just not fully clean, so the room, the framing and the motion across the joins stay normal (join jump 1.3–1.4, the same as a plain chain).
+- **The colour still drifts a little** (slightly darker by clip 10) without the capstone. With it, colour is the best of anything tested.
+- It's one 10-clip chain (about 73 s) on one moving shot. Next checks: a longer chain (20+ clips), and a static shot, where drift shows worst.
+
 ## Running now
 
 After the Step Echo runs, the grid continues:
