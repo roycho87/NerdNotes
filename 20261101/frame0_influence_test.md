@@ -87,6 +87,7 @@ A second workflow decodes every single-frame latent at each sampling step, to se
 - Frame 0 as an all-zero latent.
 - Frame 0 from an unrelated image (landscape, no clown).
 - Swap the single frame at the start of a later block instead of frame 0, to see if position matters.
+- The other single-frame latents in the held context.* The held tail usually contains more than one single-frame latent (with Clown Context 39 / drop last 17: latents 0 and 5, frames 0 and 17). Keystone only replaces latent 0, so latent 5 is copied forward from the drifted tail every clip. Test whether it has an impact too: swap a clean or effected latent into slot 5 as well, or unlock it, and compare over a 10-clip chain.
 
 ---
 
