@@ -6,9 +6,16 @@ All numbers are from single runs. Small motion differences between runs move the
 
 ## How things are measured
 
-- Colour drift: average Lab colour of clip 10 against clip 1, over 10 frames about 20 frames from the end. Higher = more drift.
-- Sharpness: how strong the fine edges are over the same frames. Clip 1 is 24.8. Higher = more over-sharpened, the "baked" look.
+Every chain is measured on clip 10, averaged over 10 frames about 20 frames from the end, against clip 1 at the same frames. Only two patches the woman never walks into are measured, because she stands in a different place in every run:
+
+![The two measured patches on clip 1: wall (yellow) and floor (cyan)](media/measure_regions.png)
+
+- **Wall colour drift** (yellow patch, the wall on the right behind her): how far its average colour has moved from clip 1. Higher = more colour drift.
+- **Floor sharpness** (cyan patch, bottom-right floor): how strong the fine grit and edges are. Clip 1 is 3.3. Higher = more over-sharpened, the "baked" look.
+- **Floor blotchiness** (same patch): how much the floor's brightness varies. Clip 1 is 5.0. Higher = blotchier.
 - Same workflow, seed and prompts for every chain (clown walk: 8-second clips, 9:16 at 0.5 MP, Clown Context 39 with drop last 17).
+
+An earlier version of these notes averaged the whole frame. That mixed in the woman and let different parts of the frame cancel out, so all tables below have been re-measured on these two patches.
 
 ## 1. One clip isn't enough to see anything
 
@@ -30,11 +37,11 @@ The keystone and capstone gains were measured near the end of clip 10, far outsi
 
 The first Late Lock version wrote the capstone into the clip's last single-frame slot, where it got decoded. The current version only tacks it on during sampling, cuts it off, and puts the real frame 0 back. Same workflow, rerun for 10 clips:
 
-| Run | Colour drift | Sharpness |
-|---|---|---|
-| No Keystone (baseline) | 6.83 | 49.2 |
-| Keystone + capstone, old (capstone decoded in the clip) | 3.39 | 38.9 |
-| Keystone + capstone, current (capstone cut off) | 3.35 | 40.0 |
+| Run | Wall colour drift | Floor sharpness | Floor blotchiness |
+|---|---|---|---|
+| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
+| Keystone + capstone, old (capstone decoded in the clip) | 2.52 | 22.0 | 6.64 |
+| Keystone + capstone, current (capstone cut off) | 2.32 | 21.8 | 7.59 |
 
 ![Clip 10, about 20 frames from the end: no Keystone, old capstone, current capstone](media/capstone_retest_clip10.png)
 
@@ -42,25 +49,25 @@ The first Late Lock version wrote the capstone into the clip's last single-frame
 
 Full-quality video: [capstone_retest_clip10.mp4](media/capstone_retest_clip10.mp4)
 
-Decoding the capstone added nothing. **The current version is confirmed:** about half the colour drift and much less over-sharpening, with nothing from clip 1 left in the clips.
+Decoding the capstone added nothing. **The current version is confirmed:** less colour drift, a smoother floor and much less over-sharpening, with nothing from clip 1 left in the clips.
 
-## 4. A steady frame 0 matters most for colour; a clean one matters for sharpness
+## 4. A bad frame 0 makes the chain bake much harder
 
 Phase 1b: the top row of the grid as 10-clip chains. The frame 0 each chain used, on every clip from 2 to 10 (all at full strength):
 
-![The five frame 0 pictures: clean, blur, dark, green tint, degrade](media/frame0_pictures_used.png)
+![The five frame 0 pictures: clean, blur, black, green tint, degrade](media/frame0_pictures_used.png)
 
 Clip 10 of each:
 
-| Chain (keystone front only) | Colour drift | Sharpness |
-|---|---|---|
-| No Keystone (baseline) | 6.83 | 49.2 |
-| Frame 0 clean | 5.17 | 47.5 |
-| Frame 0 blur | 5.37 | 63.6 |
-| Frame 0 dark | 6.02 | 65.4 |
-| Frame 0 green tint | 5.27 | 59.6 |
-| Frame 0 degrade | 5.68 | 58.5 |
-| Keystone + capstone (clean, for comparison) | 3.35 | 40.0 |
+| Chain (keystone front only) | Wall colour drift | Floor sharpness | Floor blotchiness |
+|---|---|---|---|
+| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
+| Frame 0 clean | 3.47 | 28.4 | 8.54 |
+| Frame 0 blur | 2.64 | 46.6 | 10.14 |
+| Frame 0 black (the "dark" effect came out nearly black) | 4.13 | 57.7 | 9.62 |
+| Frame 0 green tint | 4.13 | 54.6 | 10.84 |
+| Frame 0 degrade | 3.97 | 63.7 | 9.43 |
+| Keystone + capstone (clean, for comparison) | 2.32 | 21.8 | 7.59 |
 
 ![Clip 10 of each chain, about 20 frames from the end](media/frame0_chains_clip10.png)
 
@@ -68,9 +75,9 @@ Clip 10 of each:
 
 Full-quality video: [frame0_chains_clip10.mp4](media/frame0_chains_clip10.mp4)
 
-- **Colour:** even a heavily blurred or green frame 0 holds the colour almost as well as a clean one, and still beats no Keystone. Having the same fixed frame 0 in every clip seems to be what stops the colour drifting, not how good that frame looks.
-- **Sharpness:** a bad frame 0 makes the chain bake much harder: about 58–65 by clip 10, against 47.5 with a clean one. All four bad versions (blur, dark, green, degrade) did it. So frame 0's quality does matter, for the over-sharpened look.
-- **The capstone does more than half of the colour work:** keystone alone 5.17, keystone + late capstone 3.35.
+- **Sharpness:** this is the clear result. Every bad frame 0 (blur, black, green, degrade) made the floor bake far harder by clip 10: 47–64, against 28 with a clean frame 0. So frame 0's quality matters, and it shows as the over-sharpened look.
+- **Colour:** a clean frame 0 on its own only nudged the wall colour (3.47 vs 3.83), and the bad versions landed on both sides of it. Frame 0 alone isn't what holds the colour.
+- **The capstone does most of the work:** keystone + capstone has the least wall drift, the least over-sharpening and a smoother floor than keystone alone.
 
 ## 5. Moving held frames forward is clean; the drift comes from inside each clip
 
@@ -80,19 +87,17 @@ When Clown Context (or Motion Context) carries the held frames over on a block e
 
 Idea: the held tail carries more than one single-frame latent (with 22 held frames: latents 0 and 5, frames 0 and 17), and each one is a full picture copied forward from the drifted clip. Clown Fresh Singles unlocks just those while sampling, so the model draws fresh ones, and puts the real ones back afterwards. The 4-frame latents stay locked and carry the motion. No Keystone, no capstone. Same walk chain, seed and prompts as everything above.
 
-**Correction:** my first number for this run (whole-frame colour drift 3.18) made it look as good as keystone + capstone. Looking at the clips, it isn't: the floor is as blotchy as the no-Keystone run. The whole-frame average hid that, and it also mixed in the woman, who stands in a different place in every run. So I re-measured on two strips she never enters: the bottom 14% of the frame (floor) and the top 7% (ceiling and lights), clip 10 against clip 1, 10 frames averaged:
+A second version was run with Keystone on: clip 1's clean frame 0 in latent 0, and only latent 5 redrawn (and put back afterwards).
 
-| Run | Floor colour drift | Floor blotchiness (clip 1 = 6.1) | Ceiling colour drift | Whole-frame drift (first measure) |
-|---|---|---|---|---|
-| No Keystone (baseline) | 14.02 | 10.25 | 6.20 | 6.83 |
-| Keystone only | 9.11 | 9.66 | 5.12 | 5.17 |
-| Fresh Singles (latents 0 + 5) | 11.97 | 9.37 | 3.31 | 3.18 |
-| Keystone + capstone | **6.80** | **6.93** | **3.01** | 3.35 |
-| Keystone + capstone (old version) | 6.28 | 7.00 | 3.17 | 3.39 |
+| Run | Wall colour drift | Floor sharpness | Floor blotchiness |
+|---|---|---|---|
+| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
+| Keystone only | 3.47 | 28.4 | 8.54 |
+| Fresh Singles (latents 0 + 5 redrawn) | 3.72 | 19.4 | 9.33 |
+| Keystone + Fresh Singles on latent 5 | 2.33 | 31.9 | 9.16 |
+| **Keystone + capstone** | **2.32** | 21.8 | **7.59** |
 
-The two strips that were measured, clip 10 of each run left to right (clip 1, no Keystone, keystone only, Fresh Singles, keystone + capstone, old keystone + capstone), floor on top, ceiling below:
-
-![Measured strips: floor and ceiling of clip 10 for each run](media/measure_strips_clip10.png)
+My first number for Fresh Singles (whole-frame drift 3.18) made it look as good as keystone + capstone. Looking at the clips, it isn't: its floor is nearly as blotchy as the no-Keystone run. That's what led to measuring only the two patches above.
 
 ![Clip 10, about 20 frames from the end: no Keystone, keystone only, Fresh Singles, keystone + capstone](media/fresh_singles_clip10.png)
 
@@ -100,11 +105,11 @@ The two strips that were measured, clip 10 of each run left to right (clip 1, no
 
 Full-quality video: [fresh_singles_clip10.mp4](media/fresh_singles_clip10.mp4)
 
-- **Fresh Singles helps some colour** (floor 11.97 vs 14.02, ceiling 3.31 vs 6.20), but it does **not** stop the floor going blotchy, which stays near the no-Keystone level.
-- **Keystone + capstone is clearly the best** on every strip measure, and its floor stays almost as smooth as clip 1. The old and new capstone versions still match.
-- The whole-frame average used in sections 3 and 4 is too crude on its own. From here on, results use the floor and ceiling strips; the earlier tables still show the right order between runs, but the gaps are better read from the regional numbers.
+- **Fresh Singles alone** gave the least floor grit of any run (19.4), but the wall colour barely moved and the floor stayed blotchy.
+- **Keystone + Fresh Singles on latent 5** matched keystone + capstone on wall colour (2.33 vs 2.32), the best colour of anything without a capstone, but the floor still baked and stayed blotchy.
+- **Keystone + capstone is still the best overall**: best colour and the smoothest floor.
 
-Running next: Keystone + Fresh Singles on latent 5, then keystone + capstone + Fresh Singles on latent 5.
+Running next: keystone + capstone + Fresh Singles on latent 5, to see whether redrawing latent 5 adds anything on top of the best setup.
 
 ## Running now
 
