@@ -4,7 +4,7 @@ What the frame 0 tests have shown so far, MiniMax H3 in ComfyUI. Updated as test
 
 All numbers are from single runs. Small motion differences between runs move them a little, so read the direction, not the exact values.
 
-> **Best result so far (2 Nov 2026): Keystone + Late Lock capstone + context noise** ([section 7](#fourth-and-fifth-runs-context-noise-after-lumifel)). Clip 1's clean frame 0 locked at the start of every shot, clip 1's capstone tacked onto the end, and the held frames given part of each step's noise, fading to clean at the join (after Lumifel's method). After 10 clips (about 73 s) there's no visible degradation: the floor is nearly back to clip 1, the colour drift is the lowest of any run, and the scene and motion hold. Still to check: a 20+ clip chain and a static shot.
+> **Best result so far (2 Nov 2026): Keystone + Late Lock capstone + context noise** ([section 7](#fourth-and-fifth-runs-context-noise-after-lumifel)). Clip 1's clean frame 0 locked at the start of every shot, clip 1's capstone tacked onto the end, and the held frames given part of each step's noise, fading to clean at the join (after Lumifel's method). After 10 clips (about 73 s) there's no visible degradation: the floor is nearly back to clip 1, the colour drift is the lowest of any run, and the scene and motion hold. At 20 clips on the walk it still holds with no build-up. On a locked-off static shot the texture holds but the colour still slowly darkens ([section 9](#9-grid-2-methods--frame-0-content-studio-scene-20-clips)), so for static shots it's a texture fix more than a colour fix.
 
 ## How things are measured
 
@@ -389,19 +389,51 @@ Full-quality video: [grid_clip10.mp4](media/grid_clip10.mp4)
 - **Static shots drift mostly in colour.** Every chain, clean included, got darker (about −4 to −6) and the red backdrop went deeper and a bit duller. The grit only went from 0.31 to about 0.5–0.8, much less than the floor baking in the walk scene. So on this locked-off shot, degradation is mainly darkening, not texture.
 - All 25 chains use keystone only. They show how much frame 0 alone does on a static shot; the best setup from section 7 (keystone + capstone + context noise) is being tested on this same studio scene for 20 clips.
 
+## 9. Grid 2: methods × frame 0 content (studio scene, 20 clips)
+
+The same studio scene and frame 0 pictures as section 8, all clean, with the methods as columns. 12 chains, 20 clips each (about 1½ minutes). Baseline and context noise only don't use frame 0, so they ran once and are repeated in every row.
+
+- **Rows:** the five clean frame 0 pictures from section 8 (control, blue background, child, close-up, all three). The keystone and the capstone both come from that row's picture.
+- **Columns:** baseline, keystone + capstone, context noise only, context noise + keystone + capstone.
+- Measured the same way as section 8 (backdrop top corners, about 20 frames from the end of the clip).
+
+Clip 20 of every chain, about 20 frames from the end (clip 1 in the first column):
+
+![Grid 2, clip 20](media/grid2_clip20.png)
+
+**Colour drift at clip 20** (brightness change in brackets; clip 1 = 0):
+
+| Frame 0 \ method | Baseline | Keystone + capstone | Context noise | Noise + key + cap |
+|---|---|---|---|---|
+| control | 10.8 (−6.7) | **2.9 (−1.7)** | 13.1 (−8.3) | 4.1 (−3.3) |
+| blue background | 10.8 (−6.7) | 8.0 (−5.2) | 13.1 (−8.3) | 14.3 (−8.6) |
+| child | 10.8 (−6.7) | 8.9 (−5.7) | 13.1 (−8.3) | 16.1 (−8.7) |
+| close-up | 10.8 (−6.7) | 8.5 (−5.6) | 13.1 (−8.3) | 16.2 (−8.7) |
+| all three | 10.8 (−6.7) | 8.4 (−5.7) | 13.1 (−8.3) | 14.0 (−8.4) |
+
+**Grit at clip 20** (clip 1 = 0.31):
+
+| Frame 0 \ method | Baseline | Keystone + capstone | Context noise | Noise + key + cap |
+|---|---|---|---|---|
+| control | 1.94 | **0.28** | 1.02 | **0.30** |
+| blue background | 1.94 | 1.88 | 1.02 | 0.65 |
+| child | 1.94 | 1.00 | 1.02 | 0.65 |
+| close-up | 1.94 | 0.99 | 1.02 | 0.69 |
+| all three | 1.94 | 1.25 | 1.02 | 0.64 |
+
+Clip 10 and clip 15 numbers are in the same pattern: at clip 10 the colour drift is 6–7 for baseline and keystone + capstone, and 8–10 for the two context noise columns.
+
+**Backdrop brightness clip by clip** (control row):
+
+![Grid 2 brightness clip by clip](media/grid2_brightness.png)
+
+- **Every method still darkens on this static shot.** Clip by clip the backdrop gets steadily darker in all four columns. None of them stops it.
+- **Context noise makes the colour worse and the texture better here.** Context noise alone ends darker than baseline (−8.3 vs −6.7) but with about half the grit (1.02 vs 1.94). Adding it to keystone + capstone does the same: the most darkening of any column, and the least grit. On the walk it helped both; on this static shot it trades colour for texture.
+- **Keystone + capstone is the best for colour** in every row (about 8–9 vs 10.8 for baseline), but its grit varies a lot by row (1.0 to 1.9).
+- **The control row recovered by itself near the end, in both keystone columns.** Keystone + capstone sat at −5.8 through clip 19, then jumped back to −1.7 at clip 20. Noise + key + cap fell to −8.4 by clip 17, then jumped back to −1.9 at clip 18. The backdrop grit also went back to clip 1's level. It's the same thing as the clip 19 recovery in the static test (section 7), which also used the control picture.
+- **The other rows never recovered.** Their frame 0 pictures don't quite match the video (blue background, child, close-up), so it looks like the reset only happens when the keystone and capstone match the scene closely. That's also why the control row looks best in the still above: it has just reset, not because it never drifted.
+- So on a locked-off shot, context noise is a texture fix, not a colour fix. The colour still needs something else: a matching keystone/capstone (and whatever triggers the reset), a join correction like NikoDemon80's Join Match, or colour matching.
+
 ## Running now
 
-**Grid 2: methods × frame 0 content** (studio scene, 20 clips per chain, about 6½ hours, started 2 Nov 2026 ~10:00 ET).
-
-Same layout as the grid in section 8, but with no frame 0 effects: every frame 0 is clean. The columns are the methods instead.
-
-- **Rows:** the five clean frame 0 pictures from section 8: control (red, dog, mid), blue background, child, close-up, all three.
-- **Columns:**
-  1. Baseline (plain chain)
-  2. Keystone + capstone
-  3. Context noise only
-  4. Context noise + keystone + capstone
-- The keystone and the capstone both come from that row's frame 0 picture.
-- Baseline and context noise only don't use frame 0, so each is run once and applies to every row: 12 chains, 228 renders.
-- Same studio scene and control prompt on every clip, 5-second clips, clip 1 = the shared studio control clip.
-- Measured at clips 10 and 20 on the backdrop corners from section 8 (colour drift, brightness, grit), plus brightness clip by clip, to see whether the capstone pull and the clip-19 recovery from the static test show up again.
+**Final test: the beach benchmark** (being set up). BittiAI on Reddit suggested a woman running on a beach as a hard benchmark: still and moving parts in the background, exposed skin, and constant movement, which all start to break after about a minute.
