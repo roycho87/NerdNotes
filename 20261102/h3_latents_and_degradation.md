@@ -89,7 +89,9 @@ H3 is a flow-matching model: each step moves the latent from noise toward a clea
 1.00 → 0.99 → 0.98 → 0.96 → 0.92 → 0.86 → 0.72 → 0.42 → 0
 ```
 
-So **the picture only really forms in the last two steps.** For six of eight steps, everything is mostly noise.
+So **the visible picture only really forms in the last two steps.** For six of eight steps, everything is mostly noise.
+
+But NikoDemon80 logged the model's guess at the finished clip after every step and found **contrast and colour are already decided at step 0**, before there's any picture. Saturation is settled by step 1; only fine detail is added later, around steps 2–4. So the look of a clip is part of the model's plan from the start, and last-step tricks only reach detail. This held even for a clip with nothing pinned: clip 1 on its own gained 8–16 brightness levels over 124 frames. ([his notes, section 4](community/NikoDemon80_H3_drift_notes.md))
 
 H3's turbo / PDD schedules are tuned for `er_sde` + `beta`; community tests found generic samplers degrade them.
 
@@ -141,7 +143,15 @@ Several causes stack. Here's what we know, roughly from best-supported to more s
 
 This is the core of it, and the papers call it **exposure bias** or **error accumulation**. The model was trained to continue from clean, real video. In a chain it continues from its **own** output, which has small errors. It treats those errors as truth, adds its own, and passes everything on. xyzDist calls it the **"photocopy effect"**: a copy of a copy of a copy.
 
-NikoDemon80 measured that **most colour drift builds up inside each clip while it generates**, not at the handover. The handover is just how it gets passed forward.
+Where the drift happens depends on the shot (NikoDemon80, [his notes, section 3](community/NikoDemon80_H3_drift_notes.md)):
+
+- **Moving shots:** 85–95% of contrast and 88–97% of saturation drift builds up **inside each clip** while it generates. The handover just passes it on.
+- **Locked-off shots with a subject doing something:** a lot of it is a **step at each join**, about 1% brightness and 1.5% colour per join. The first new frames sat about 2.8× further from the held frames than normal motion. Correcting only that step held the levels.
+- **Still subject, locked camera, calm scene:** contrast stayed flat over 5 clips, but saturation still rose, mostly at the joins.
+
+So "static shots are worst" depends on what's static: a still subject, a still camera and a still background are different cases.
+
+He also measured the handover itself: H3 returns the held picture almost exactly (0.9975 correlation) but about **1.027× hotter**. That doesn't simply feed forward, though: each clip's tail comes back settled, and the held latent is only about 1.003× hotter link to link. The rows that come back hot are the ones that get trimmed.
 
 ### 4.2 The model copies finished held frames very closely
 
@@ -161,7 +171,7 @@ The first single-frame latent of a clip acts like the "starting image" of an ima
 
 Chaining through pixels (decode, save as video, load, re-encode) loses detail every time, and saving intermediates as compressed mp4 adds more. Saving as lossless video (ffv1) or passing latents directly avoids that part.
 
-But Ablejones showed that **chaining purely in latents still degrades**, faster than expected. So the VAE isn't the main cause. Ryko (Nov 2026) found the same: saved latents that were never VAE-decoded still degrade, so it seems to be anything that serves as a guide latent (any clean, finished frames handed to the next clip) that causes it. That matches 4.2.
+But Ablejones showed that **chaining purely in latents still degrades**, faster than expected. So the VAE isn't the main cause. NikoDemon80 ruled out more suspects one by one: a lossy codec (same drift on lossless), int8 vs fp16 video VAE (identical to 3 decimals), where in the clip the decode happens, clip length, audio grid alignment, the FastH3 distillation (20 steps with no LoRA drifted *more*), resolution up to ~0.8 MP on a calm scene, and the reference image (for contrast). Above ~0.8 MP is untested; joeygambino reported drift growing with canvas size. Ryko (Nov 2026) found the same: saved latents that were never VAE-decoded still degrade, so it seems to be anything that serves as a guide latent (any clean, finished frames handed to the next clip) that causes it. That matches 4.2.
 
 ### 4.5 Settings that make it worse
 
@@ -245,7 +255,32 @@ KingGore's approach for chains that get dark and blurry after ~3 links: only fix
 
 - **Keystone / capstone** (Clown Context Suite): put clip 1's clean frame 0 at the start of every shot (keystone), and clip 1's last single-frame latent tacked onto the end during sampling (capstone). The capstone does most of the colour work.
 - **Anchor 5 frames as context** (Ethanfel): pack composition context as 5 frames of one clip plus 17 of others.
-- Niko's caveat: a frame carries pose, camera and background, not just colour. On moving shots, a clip-1 anchor drags the shot back toward clip 1.
+- Niko's caveat: a frame carries pose, camera and background, not just colour. On moving shots, a clip-1 anchor drags the shot back toward clip 1. All our keystone/capstone tests so far hold the camera still; how it behaves with a moving camera is still open.
+
+### NikoDemon80's stack (Motion Context)
+
+From [his notes, section 5](community/NikoDemon80_H3_drift_notes.md). It slows drift; it doesn't stop it.
+
+- **Join Match:** corrects the step at each join on locked-off shots. Over 6 clips: darkening 5% → 0.3%, contrast loss 2.4% → 0.5%, colour loss 7% → 2.4%. Texture unchanged. It stands down on moving shots.
+- **One-step Refine Blend, then Join Match:** a refine of just the last step (split at step 7 of 8), blended in. Detail growth +14.9% (was +23.5%), texture +11.4% (was +23.4%), saturation and brightness flat. Order matters: Join Match has to run after the refine. A 0.5-denoise refine aged the subject 5–10 years by clip 5 in his setup.
+- **Sigmas Tail** (`tail_steps` 3, strength 0.5): texture build-up 18% vs 23–26% without; faces stopped aging on calm backgrounds. It's tuned to FastH3's schedule (last jump 0.63 → 0); untested on the 0.42 schedule above.
+- **Reference images:** a character sheet on a solid background helps pull the subject back. A clip-1 frame as the reference repeats the background on moving shots.
+
+**Prompt levers** (free):
+
+- State colour, lighting, contrast, saturation and level of detail as constant.
+- Describe detail as natural and steady. Dropping "sharp" and "crisp" cut build-up by about a third. Avoid "saturated" and "bright highlights".
+- Name hair colour and wardrobe in every clip.
+- H3 reads hex colour codes: good on backgrounds and major colours, poor on hair and near-black.
+- Without a look/detail recipe his moving chains ran 1.12–1.21× on contrast; with one, 0.94–0.97×.
+
+**What failed for him:** Pin Gain, Pin Shift, Noise Aug, Level lock, Detail Match, Pin Noise, Chain Memory, a motion-aware Join Match, and masking instead of pinning (picture matched, but the audio dipped 3–30 dB at the join). Pin Noise wrote a *fixed* noise pattern into the held latent and the model copied it; that's a different thing from Lumifel's context noise, which changes every step and tells the model the noise level.
+
+**Seed noise is large:** four chains of the same prompt ranged 0.98× to 1.13× on contrast, more than the effect of the setting being tested. One chain vs one chain can be luck, and that includes our tests.
+
+**Audio** is the least solved part. How well held audio carries through depends on the material (0.45–0.96 correlation on the same settings); dialogue holds, thin ambience doesn't. An 18-frame audio pin worked best by ear. For music, use a real audio file.
+
+Two unrelated scenes moved the same latent channels the same way (20 of 24), which suggests the drift comes from the model, not the scene.
 
 ### Context windows
 
@@ -313,6 +348,8 @@ The common thread: **models drift because they trust their own previous output t
 - Refine pass at 0.5–0.6 denoise, blended in after the held frames (xyzDist)
 - Colour match to a clean clip-1 frame, on a masked or similar area
 - Context windows as a second stage for long takes
+- Locked-off shots: correct the step at each join (Join Match)
+- Prompts: state the look as constant, drop "sharp"/"crisp", name hair and wardrobe every clip
 - Watch static shots most closely
 
 ---
@@ -338,6 +375,9 @@ The common thread: **models drift because they trust their own previous output t
 - **RuneX** (2 Nov 2026): the simplest degradation "fix" is to "change camera (aka new fresh video with same subject/scene)". He tried "tail latent with mask, tail latent with mask + latent guide, tail latent with mask + image guide, but none were perfect".
 - **Ryko** (2 Nov 2026): "pushing any kind of guide seems to inspire the degradation". He first suspected the VAE decode, but "using saved latents that aren't vae decoded will also produce degradation. So anything that serves as a guide latent seems to be the factor."
 - **Lumifel** (20 Aug 2026): all his methods suffered "burn in" at 60 s or more, with "the color get warmer and warmer when the scene doesn't change with a cut". His fix "recalculate[s] how much of the sampler's current noise to apply to the context every sampling steps, while fading that treatment to zero near the end of the context so the join stays clean."
+
+**From GitHub issues**
+- **NikoDemon80** (Nov 2026): three months of H3 drift tests, including what failed. Kept in this repo as is: [community/NikoDemon80_H3_drift_notes.md](community/NikoDemon80_H3_drift_notes.md).
 
 **From Reddit**
 - **ucost4** (r/StableDiffusion, Nov 2026): tested a last-frame PNG, a similar prompt with the same sigmas and seed, the previous clip's video latent, and prompting an angle cut by cinema rules; found the video latent "looking promising", using angle cuts until a solid solution turns up.
