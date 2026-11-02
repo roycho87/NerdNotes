@@ -161,7 +161,7 @@ The first single-frame latent of a clip acts like the "starting image" of an ima
 
 Chaining through pixels (decode, save as video, load, re-encode) loses detail every time, and saving intermediates as compressed mp4 adds more. Saving as lossless video (ffv1) or passing latents directly avoids that part.
 
-But Ablejones showed that **chaining purely in latents still degrades**, faster than expected. So the VAE isn't the main cause.
+But Ablejones showed that **chaining purely in latents still degrades**, faster than expected. So the VAE isn't the main cause. Ryko (Nov 2026) found the same: saved latents that were never VAE-decoded still degrade, so it seems to be anything that serves as a guide latent (any clean, finished frames handed to the next clip) that causes it. That matches 4.2.
 
 ### 4.5 Settings that make it worse
 
@@ -335,6 +335,7 @@ The common thread: **models drift because they trust their own previous output t
 - **KingGore2023** (7 Sep 2026), describing the look as "Dark. Blury. Error accumulated." His fix: "You rectify the end part when the degradation appeared. Then lock start and end. Then regenerate."
 - **Miku** (20 Aug 2026): re-using a finished video as input again and again degrades it because of the mp4 output, and because the default VHS loader uses OpenCV. Switching the output to ffv1 and loading with the VHS FFmpeg path loader avoids it.
 - **JalenBrunson** (8 Sep 2026): a "fix" for degradation in later loops based on the Rolling Diffusion paper, as the `h3-hybrid-resume` branch of ComfyUI-MMH3Tools: a sampler that runs 2 passes.
+- **Ryko** (2 Nov 2026): "pushing any kind of guide seems to inspire the degradation". He first suspected the VAE decode, but "using saved latents that aren't vae decoded will also produce degradation. So anything that serves as a guide latent seems to be the factor."
 - **Lumifel** (20 Aug 2026): all his methods suffered "burn in" at 60 s or more, with "the color get warmer and warmer when the scene doesn't change with a cut". His fix "recalculate[s] how much of the sampler's current noise to apply to the context every sampling steps, while fading that treatment to zero near the end of the context so the join stays clean."
 
 **From Reddit**
