@@ -248,7 +248,7 @@ Every clip of the chain, about 20 frames from the end:
 
 ### Fourth and fifth runs: context noise, after Lumifel
 
-Lumifel (Banodoco, Aug 2026) gave the held context part of the sampler's current noise at every step, fading to none at the end of the context so the join stays clean. He reported no burn-in up to about 60 s, but the colour still drifted warmer. These runs test whether a clean frame 0 (and then the capstone) takes care of the colour he had left.
+Lumifel (Banodoco, Aug 2026) gave the held context part of the sampler's current noise at every step, fading to none at the end of the context so the join stays clean. He reported no burn-in up to about 60 s, but the colour still drifted warmer. These runs test whether a clean frame 0 (and then the capstone) takes care of the colour he had left. Asked directly (2 Nov 2026), Lumifel said motion was pretty good with his method and the colour shift was the only issue.
 
 How it's done here (node: Clown Context Noise): H3 supports partial masks, where a mask value m puts a held latent at m × the current noise level and the model is told so. The held latents after latent 0 ramp from 0.8 at the start of the held part down to 0 at the join (latents 1–5: 0.8, 0.64, 0.48, 0.32, 0.16; latent 6 stays locked). Latent 0 is clip 1's clean frame 0 (Keystone), locked. The real held latents are put back after sampling, so the join lines up. Same walk chain, seed and prompts as everything above.
 
