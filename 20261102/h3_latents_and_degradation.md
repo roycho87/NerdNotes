@@ -315,17 +315,16 @@ The common thread: **models drift because they trust their own previous output t
 - [roycho87 / clown_context_suite](https://github.com/roycho87/clown_context_suite)
 - [Kijai / ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes) (ColorMatch)
 
-**Banodoco Discord** (community discussion; links need a Banodoco account)
-- [Kijai: extend first, context windows for the last 2 of 8 steps](https://discord.com/channels/1076117621407223829/1532625331960152124/1565313136737656853)
-- [Kijai: context windows give no length degradation, best as a second stage](https://discord.com/channels/1076117621407223829/1532625331960152124/1565304604256636979)
-- [Ablejones: latent-only native extends still degrade](https://discord.com/channels/1076117621407223829/1532625331960152124/1549259373048500465)
-- [seitanism's degradation example](https://discord.com/channels/1076117621407223829/1532625331960152124/1548725476942422036)
-- [Rectify the degraded tail](https://discord.com/channels/1076117621407223829/1532625331960152124/1546541049281913005)
-- [toyxyz: R2V extends degrade every pass](https://discord.com/channels/1076117621407223829/1532625331960152124/1541719603644993576)
-- [Washed-out tails on long chains](https://discord.com/channels/1076117621407223829/1535700117452226560/1541209912028307537)
-- [Save/reload losses; ffv1](https://discord.com/channels/1076117621407223829/1535700117452226560/1539825508928192604)
-- [JalenBrunson: Rolling Diffusion hybrid windows](https://discord.com/channels/1076117621407223829/1540391549731471461/1547017719214243851)
-- [Lumifel: noise on the held context, fading toward the join](https://discord.com/channels/1076117621407223829/1535700117452226560/1540092434946723900)
+**From the Banodoco Discord** (quotes from the community discussion)
+- **Kijai** (29 Oct 2026), on context windows: "by default zero degradation for length, but only really useful for 2nd stage or with some control signal".
+- **Kijai** (29 Oct 2026): "out of 8 steps, first 6 just extend with latent inpainting, then last 2 steps full context windows to stabilize and remove degradation".
+- **Ablejones** (15 Sep 2026), after chaining 6 six-second clips with plain ref2va: "I honestly didn't know it was this bad". On the VAE theory: "H3 is natively just continuing from its own generations. I honestly expected it to just work, I don't have a mechanism for *how* it's degrading."
+- **toyxyz** (25 Aug 2026), extending a 5-second clip with R2V and Add Guide: "there is noticeable image quality degradation with each extension."
+- **RetroMidget** (23 Aug 2026), comparing it to WAN's last-frame chaining: "It's more subtle."
+- **KingGore2023** (7 Sep 2026), describing the look as "Dark. Blury. Error accumulated." His fix: "You rectify the end part when the degradation appeared. Then lock start and end. Then regenerate."
+- **Miku** (20 Aug 2026): re-using a finished video as input again and again degrades it because of the mp4 output, and because the default VHS loader uses OpenCV. Switching the output to ffv1 and loading with the VHS FFmpeg path loader avoids it.
+- **JalenBrunson** (8 Sep 2026): a "fix" for degradation in later loops based on the Rolling Diffusion paper, as the `h3-hybrid-resume` branch of ComfyUI-MMH3Tools: a sampler that runs 2 passes.
+- **Lumifel** (20 Aug 2026): all his methods suffered "burn in" at 60 s or more, with "the color get warmer and warmer when the scene doesn't change with a cut". His fix "recalculate[s] how much of the sampler's current noise to apply to the context every sampling steps, while fading that treatment to zero near the end of the context so the join stays clean."
 
 **Papers**
 - [FramePack: Frame Context Packing and Drift Prevention in Next-Frame-Prediction Video Diffusion Models](https://arxiv.org/abs/2504.12626)
