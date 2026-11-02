@@ -80,16 +80,19 @@ When Clown Context (or Motion Context) carries the held frames over on a block e
 
 Idea: the held tail carries more than one single-frame latent (with 22 held frames: latents 0 and 5, frames 0 and 17), and each one is a full picture copied forward from the drifted clip. Clown Fresh Singles unlocks just those while sampling, so the model draws fresh ones, and puts the real ones back afterwards. The 4-frame latents stay locked and carry the motion. No Keystone, no capstone. Same walk chain, seed and prompts as everything above.
 
-**Correction:** my first number for this run (whole-frame colour drift 3.18) made it look as good as keystone + capstone. Looking at the clips, it isn't: the floor is as blotchy as the no-Keystone run. The whole-frame average hides that, because brightness differences in different parts of the frame cancel out. So I re-measured by region, clip 10 against clip 1:
+**Correction:** my first number for this run (whole-frame colour drift 3.18) made it look as good as keystone + capstone. Looking at the clips, it isn't: the floor is as blotchy as the no-Keystone run. The whole-frame average hid that, and it also mixed in the woman, who stands in a different place in every run. So I re-measured on two strips she never enters: the bottom 14% of the frame (floor) and the top 7% (ceiling and lights), clip 10 against clip 1, 10 frames averaged:
 
 | Run | Floor colour drift | Floor blotchiness (clip 1 = 6.1) | Ceiling colour drift | Whole-frame drift (first measure) |
 |---|---|---|---|---|
-| No Keystone (baseline) | 12.45 | 10.81 | 6.43 | 6.83 |
-| Keystone only | 8.03 | 10.71 | 5.25 | 5.17 |
-| Fresh Singles (latents 0 + 5) | 9.81 | 10.64 | 3.46 | 3.18 |
-| Keystone + capstone | **5.34** | **8.63** | **3.08** | 3.35 |
+| No Keystone (baseline) | 14.02 | 10.25 | 6.20 | 6.83 |
+| Keystone only | 9.11 | 9.66 | 5.12 | 5.17 |
+| Fresh Singles (latents 0 + 5) | 11.97 | 9.37 | 3.31 | 3.18 |
+| Keystone + capstone | **6.80** | **6.93** | **3.01** | 3.35 |
+| Keystone + capstone (old version) | 6.28 | 7.00 | 3.17 | 3.39 |
 
-(Floor = the bottom 28% of the frame, below her feet. Blotchiness = how much the floor's brightness varies. Ceiling = the top 8%.)
+The two strips that were measured, clip 10 of each run left to right (clip 1, no Keystone, keystone only, Fresh Singles, keystone + capstone, old keystone + capstone), floor on top, ceiling below:
+
+![Measured strips: floor and ceiling of clip 10 for each run](media/measure_strips_clip10.png)
 
 ![Clip 10, about 20 frames from the end: no Keystone, keystone only, Fresh Singles, keystone + capstone](media/fresh_singles_clip10.png)
 
@@ -97,9 +100,9 @@ Idea: the held tail carries more than one single-frame latent (with 22 held fram
 
 Full-quality video: [fresh_singles_clip10.mp4](media/fresh_singles_clip10.mp4)
 
-- **Fresh Singles helps some colour** (floor 9.81 vs 12.45, ceiling 3.46 vs 6.43), but it does **not** stop the floor going blotchy, which stays at the no-Keystone level.
-- **Keystone + capstone is clearly the best** on every regional measure.
-- The whole-frame average used in sections 3 and 4 is too crude on its own. From here on, results use the regional measures; the earlier tables still show the right order between runs, but the gaps are better read from the regional numbers.
+- **Fresh Singles helps some colour** (floor 11.97 vs 14.02, ceiling 3.31 vs 6.20), but it does **not** stop the floor going blotchy, which stays near the no-Keystone level.
+- **Keystone + capstone is clearly the best** on every strip measure, and its floor stays almost as smooth as clip 1. The old and new capstone versions still match.
+- The whole-frame average used in sections 3 and 4 is too crude on its own. From here on, results use the floor and ceiling strips; the earlier tables still show the right order between runs, but the gaps are better read from the regional numbers.
 
 Running next: Keystone + Fresh Singles on latent 5, then keystone + capstone + Fresh Singles on latent 5.
 
