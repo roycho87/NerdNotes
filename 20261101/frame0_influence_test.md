@@ -57,6 +57,25 @@ Phase 3 swaps the Phase 2 frame 0 latents into a chain that is already degraded,
 3. Swap in each frame 0 from the Phase 2 grid: the clean related and unrelated images, the in-betweens, and the degraded versions chosen in Phase 2.
 4. Compare how degraded each result is with the degraded control.
 
+## Later tests: how the held frames are fed in*
+
+Added after the frame 0 tests.* Reading the H3 code showed that the frames Clown Context holds are handed to the model almost clean (0.999) at every step, even on step 1 when the new frames are pure noise. These tests change how the held frames are fed in. All are 10-clip chains of the same clown walk workflow (seed, prompts, Clown Context 39 / drop last 17). Results are in [frame0_conclusions.md](frame0_conclusions.md), section 7.*
+
+**Step Echo** (node: Clown Step Echo). Save the clip's latent at every one of the 8 steps. On the next clip, at each step, swap the held frames for the same frames at the same step of the last clip, so they sit at the same noise level as the new frames. Put the real held latents back after sampling.*
+
+1. Every held frame echoed, no Keystone. *(done)*
+2. Frame 0 of the held context (from the last clip) locked and finished, the rest echoed, FreeNoise on. *(done)*
+3. Both held single-frame latents (0 and 5) locked, the 4-frame latents echoed, FreeNoise on. *(done)*
+
+FreeNoise (a Step Echo option): the held frames get the last clip's exact starting noise, so the noise print runs straight across the join; the new frames reuse that noise reshuffled instead of fresh random noise.*
+
+**Context noise, after Lumifel's method** (node: Clown Context Noise). Lumifel (Banodoco, Aug 2026) gave the held context part of the sampler's current noise at every step, fading to none at the end of the context so the join stays clean. He reported no burn-in up to about 60 s, but the colour still drifted warmer. Here it's done with H3's partial masks: a mask value m puts a held latent at m × the current noise level, and the model is told so. The held latents ramp from 0.8 at the start of the held part to 0 at the join. The real held latents are put back after sampling.*
+
+4. Context noise + Keystone (clip 1's clean frame 0 locked at latent 0, no capstone). The question: does a clean frame 0 fix the colour drift Lumifel had left? *(queued)*
+5. Context noise + Keystone + Late Lock capstone. *(queued after 4)*
+
+Compared against: no Keystone, keystone only, keystone + capstone, keystone + capstone + Fresh Singles on latent 5, and the Step Echo runs.*
+
 ## Kept the same in every run
 
 - Prompt: the control prompt, unchanged. If it pulls runs back towards the control, that is a result.
