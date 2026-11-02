@@ -73,6 +73,8 @@ FreeNoise (a Step Echo option): the held frames get the last clip's exact starti
 
 4. Context noise + Keystone (clip 1's clean frame 0 locked at latent 0, no capstone). The question: does a clean frame 0 fix the colour drift Lumifel had left? *(done)*
 5. Context noise + Keystone + Late Lock capstone. *(done)*
+6. Test 5 extended to 20 clips on the walk (clips 11–20 repeat the 10 walk prompts). *(done)*
+7. Test 5 on a locked-off static shot (the red studio scene from the grid), 20 clips. *(done)*
 
 Compared against: no Keystone, keystone only, keystone + capstone, keystone + capstone + Fresh Singles on latent 5, and the Step Echo runs.*
 

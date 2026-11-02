@@ -246,6 +246,60 @@ Keystone + capstone + context noise:
 - **The colour still drifts a little** (slightly darker by clip 10) without the capstone. With it, colour is the best of anything tested.
 - It's one 10-clip chain (about 73 s) on one moving shot. Next checks: a longer chain (20+ clips), and a static shot, where drift shows worst.
 
+### Longer and static tests: keystone + capstone + context noise
+
+The best setup (keystone + Late Lock capstone + context noise) run for 20 clips, on the walk and on a locked-off static shot.
+
+**Walk, 20 clips (about 2½ minutes).** The same chain as above, continued from clip 11 to clip 20. Clips 11–20 repeat the 10 walk prompts.
+
+| Walk | Ceiling colour drift | Ceiling brightness | Floor blotches | Floor grit |
+|---|---|---|---|---|
+| Clip 1 | 0 | 0 | 4.47 | 1.25 |
+| No Keystone, clip 10 | 6.17 | −5.64 | 7.21 | 4.92 |
+| Keystone + capstone, clip 10 | 3.06 | −2.75 | 5.88 | 2.61 |
+| Key + cap + context noise, clip 5 | 0.97 | −0.95 | 4.82 | 1.39 |
+| Key + cap + context noise, clip 10 | 1.59 | −1.57 | 4.93 | 1.73 |
+| Key + cap + context noise, clip 15 | 1.07 | −1.05 | 4.90 | 1.42 |
+| **Key + cap + context noise, clip 20** | **1.67** | −1.66 | **5.12** | **1.89** |
+
+Join jump over clips 11–20: 1.14× normal motion on average, 1.90× at worst.
+
+![Walk: clip 1, no Keystone clip 10, key + cap + context noise clip 10 and clip 20](media/long_walk_compare.png)
+
+![Walk clip 1, clip 10 and clip 20 playing side by side](media/long_walk.gif)
+
+Full-quality video: [long_walk.mp4](media/long_walk.mp4)
+
+![Walk, every clip 1 to 20](media/long_walk_every_clip.png)
+
+- **No build-up from clip 10 to clip 20.** Colour drift stays around 1–1.7 the whole way and the floor stays near clip 1. It goes up and down a little from clip to clip instead of climbing. The joins stay smooth.
+
+**Static studio shot, 20 clips (about 1½ minutes).** The red studio backdrop with a locked-off camera from section 8, control prompt on every clip, 5-second clips. Measured on the two top corners of the backdrop (section 8).
+
+| Static | Backdrop colour drift | Backdrop brightness | Backdrop grit |
+|---|---|---|---|
+| Clip 1 | 0 | 0 | 0.31 |
+| Keystone only, clip 10 (section 8) | 6.90 | −4.57 | 0.52 |
+| Key + cap + context noise, clip 5 | 3.92 | −1.96 | 0.31 |
+| Key + cap + context noise, clip 10 | 5.32 | −2.85 | 0.35 |
+| Key + cap + context noise, clip 15 | 7.40 | −4.04 | 0.42 |
+| Key + cap + context noise, clip 18 | 9.2 | −5.0 | 0.48 |
+| Key + cap + context noise, clip 20 | 2.97 | −1.38 | 0.33 |
+
+![Static: clip 1, keystone only clip 10, key + cap + context noise clips 10, 18 and 20](media/long_static_compare.png)
+
+![Static clip 1, 10, 18 and 20 playing side by side](media/long_static.gif)
+
+Full-quality video: [long_static.mp4](media/long_static.mp4)
+
+![Static, every clip 1 to 20](media/long_static_every_clip.png)
+
+- **The texture stays clean.** The backdrop grit barely moves (0.31 → 0.35 at clip 10, 0.48 at its worst), less than keystone alone (0.52 at clip 10). No baking.
+- **The colour still drifts on the static shot.** The backdrop gets darker and a deeper, duller red, slowly and steadily, from clip 2 to clip 18 (brightness −5 by clip 18). It's slower than keystone alone (−2.85 vs −4.57 at clip 10), but it doesn't stop.
+- **The capstone pulls the end of every clip back.** Within each clip, the last ~15 frames brighten back toward clip 1 (the backdrop jumps from about 97 back to 116 in red at the end of clip 18). Those end frames are the ones Clown Context drops when it carries the clip forward, so the next clip still continues from the darker middle. In a stitched video they're replaced by the next clip, so it's mostly hidden, but it means the capstone's pull doesn't carry into the next clip on a static shot.
+- **At clip 19 the chain recovered by itself.** Clip 19 starts dark and brightens over its 5 seconds back to about clip 1's level, and clip 20 stays there. It happened once; it's not clear yet whether it repeats.
+- So: on a moving shot this setup holds for 20 clips with no build-up. On a locked-off shot the texture holds but the colour still drifts slowly, and the capstone's correction gets dropped with the clip's tail. Next idea: carry the corrected end forward, or hold the context from earlier in the clip, so the capstone's pull is kept.
+
 ## 8. The full grid: frame 0 content × frame 0 quality (studio scene)
 
 The grid from the proposal, run as 25 ten-clip chains in the studio scene the grid pictures came from: a locked-off camera, a plain red backdrop, the clown with a beagle. Clip 1 is the shared studio control clip. Shots 2–10 use the **control prompt** and that chain's frame 0 through Keystone (front only, no capstone, no context noise). 5-second clips.
@@ -300,5 +354,4 @@ Full-quality video: [grid_clip10.mp4](media/grid_clip10.mp4)
 
 ## Running now
 
-- The keystone + capstone + context noise walk chain, extended to 20 clips (clips 11–20 repeat the 10 walk prompts).
-- Keystone + capstone + context noise on the static studio scene, 20 clips.
+Nothing queued.
