@@ -40,16 +40,17 @@ The first Late Lock version wrote the capstone into the clip's last single-frame
 | Run | Wall colour drift | Floor sharpness | Floor blotchiness |
 |---|---|---|---|
 | No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
+| Keystone only (no capstone) | 3.47 | 28.4 | 8.54 |
 | Keystone + capstone, old (capstone decoded in the clip) | 2.52 | 22.0 | 6.64 |
 | Keystone + capstone, current (capstone cut off) | 2.32 | 21.8 | 7.59 |
 
-![Clip 10, about 20 frames from the end: no Keystone, old capstone, current capstone](media/capstone_retest_clip10.png)
+![Clip 10, about 20 frames from the end: no Keystone, keystone only, old capstone, current capstone](media/capstone_retest_clip10.png)
 
-![Clip 10 playing side by side: no Keystone, old capstone, current capstone](media/capstone_retest_clip10.gif)
+![Clip 10 playing side by side: no Keystone, keystone only, old capstone, current capstone](media/capstone_retest_clip10.gif)
 
 Full-quality video: [capstone_retest_clip10.mp4](media/capstone_retest_clip10.mp4)
 
-Decoding the capstone added nothing. **The current version is confirmed:** less colour drift, a smoother floor and much less over-sharpening, with nothing from clip 1 left in the clips.
+Keystone alone only helps a little; adding the capstone is what makes the big difference. Decoding the capstone added nothing. **The current version is confirmed:** less colour drift, a smoother floor and much less over-sharpening, with nothing from clip 1 left in the clips.
 
 ## 4. A bad frame 0 makes the chain bake much harder
 
@@ -87,7 +88,7 @@ When Clown Context (or Motion Context) carries the held frames over on a block e
 
 Idea: the held tail carries more than one single-frame latent (with 22 held frames: latents 0 and 5, frames 0 and 17), and each one is a full picture copied forward from the drifted clip. Clown Fresh Singles unlocks just those while sampling, so the model draws fresh ones, and puts the real ones back afterwards. The 4-frame latents stay locked and carry the motion. No Keystone, no capstone. Same walk chain, seed and prompts as everything above.
 
-A second version was run with Keystone on: clip 1's clean frame 0 in latent 0, and only latent 5 redrawn (and put back afterwards).
+Two more versions were run with Keystone on: clip 1's clean frame 0 in latent 0, and only latent 5 redrawn (and put back afterwards). One with keystone front only, one with keystone + capstone.
 
 | Run | Wall colour drift | Floor sharpness | Floor blotchiness |
 |---|---|---|---|
@@ -95,7 +96,8 @@ A second version was run with Keystone on: clip 1's clean frame 0 in latent 0, a
 | Keystone only | 3.47 | 28.4 | 8.54 |
 | Fresh Singles (latents 0 + 5 redrawn) | 3.72 | 19.4 | 9.33 |
 | Keystone + Fresh Singles on latent 5 | 2.33 | 31.9 | 9.16 |
-| **Keystone + capstone** | **2.32** | 21.8 | **7.59** |
+| Keystone + capstone | 2.32 | 21.8 | 7.59 |
+| **Keystone + capstone + Fresh Singles on latent 5** | **1.40** | **15.9** | **7.26** |
 
 My first number for Fresh Singles (whole-frame drift 3.18) made it look as good as keystone + capstone. Looking at the clips, it isn't: its floor is nearly as blotchy as the no-Keystone run. That's what led to measuring only the two patches above.
 
@@ -105,11 +107,18 @@ My first number for Fresh Singles (whole-frame drift 3.18) made it look as good 
 
 Full-quality video: [fresh_singles_clip10.mp4](media/fresh_singles_clip10.mp4)
 
+The Keystone versions next to keystone only and keystone + capstone:
+
+![Clip 10, about 20 frames from the end: clip 1, no Keystone, keystone only, keystone + fresh 5, keystone + capstone, keystone + capstone + fresh 5](media/fresh5_clip10.png)
+
+![Clip 10 playing side by side: no Keystone, keystone only, keystone + fresh 5, keystone + capstone, keystone + capstone + fresh 5](media/fresh5_clip10.gif)
+
+Full-quality video: [fresh5_clip10.mp4](media/fresh5_clip10.mp4)
+
 - **Fresh Singles alone** gave the least floor grit of any run (19.4), but the wall colour barely moved and the floor stayed blotchy.
 - **Keystone + Fresh Singles on latent 5** matched keystone + capstone on wall colour (2.33 vs 2.32), the best colour of anything without a capstone, but the floor still baked and stayed blotchy.
-- **Keystone + capstone is still the best overall**: best colour and the smoothest floor.
-
-Running next: keystone + capstone + Fresh Singles on latent 5, to see whether redrawing latent 5 adds anything on top of the best setup.
+- **Keystone + capstone + Fresh Singles on latent 5 is the best so far, on all three patches**: the wall drifted about 40% less than keystone + capstone (1.40 vs 2.32), the floor baked less (15.9 vs 21.8) and it was a little less blotchy (7.26 vs 7.59).
+- So latent 5 matters too: copying it forward from the drifted clip adds drift, and redrawing it on top of the keystone and capstone removes some of that.
 
 ## Running now
 
