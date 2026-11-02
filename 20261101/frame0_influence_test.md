@@ -75,6 +75,7 @@ FreeNoise (a Step Echo option): the held frames get the last clip's exact starti
 5. Context noise + Keystone + Late Lock capstone. *(done)*
 6. Test 5 extended to 20 clips on the walk (clips 11–20 repeat the 10 walk prompts). *(done)*
 7. Test 5 on a locked-off static shot (the red studio scene from the grid), 20 clips. *(done)*
+8. Grid 2: the five clean frame 0 pictures (rows) × baseline / keystone + capstone / context noise / context noise + keystone + capstone (columns), studio scene, 20 clips each. Keystone and capstone from the row's picture; baseline and noise-only run once. *(running)*
 
 Compared against: no Keystone, keystone only, keystone + capstone, keystone + capstone + Fresh Singles on latent 5, and the Step Echo runs.*
 

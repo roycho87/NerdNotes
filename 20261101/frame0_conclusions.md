@@ -391,4 +391,17 @@ Full-quality video: [grid_clip10.mp4](media/grid_clip10.mp4)
 
 ## Running now
 
-Nothing queued.
+**Grid 2: methods × frame 0 content** (studio scene, 20 clips per chain, about 6½ hours, started 2 Nov 2026 ~10:00 ET).
+
+Same layout as the grid in section 8, but with no frame 0 effects: every frame 0 is clean. The columns are the methods instead.
+
+- **Rows:** the five clean frame 0 pictures from section 8: control (red, dog, mid), blue background, child, close-up, all three.
+- **Columns:**
+  1. Baseline (plain chain)
+  2. Keystone + capstone
+  3. Context noise only
+  4. Context noise + keystone + capstone
+- The keystone and the capstone both come from that row's frame 0 picture.
+- Baseline and context noise only don't use frame 0, so each is run once and applies to every row: 12 chains, 228 renders.
+- Same studio scene and control prompt on every clip, 5-second clips, clip 1 = the shared studio control clip.
+- Measured at clips 10 and 20 on the backdrop corners from section 8 (colour drift, brightness, grit), plus brightness clip by clip, to see whether the capstone pull and the clip-19 recovery from the static test show up again.
