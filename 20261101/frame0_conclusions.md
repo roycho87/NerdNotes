@@ -128,13 +128,30 @@ Reading the H3 code showed something about how held frames are fed in: at every 
 
 Prior work: the closest is Lumifel on Banodoco (20 Aug 2026), who added the sampler's current noise to the held context each step, fading it out near the join. He said it removed the burn-in and artifacts past 60 s but didn't fully fix the colour drift. Step Echo uses the last clip's real in-between latents instead of fresh noise on finished frames. Nothing found that replays the saved steps.
 
-First run: the plain walk chain (no Keystone), Step Echo from shot 3 (clip 1 was rendered before Step Echo existed, so shot 2 only recorded).
+### How the Step Echo runs are measured
 
-| Run | Wall colour drift | Floor sharpness | Floor blotchiness |
-|---|---|---|---|
-| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
-| Keystone + capstone + Fresh Singles on latent 5 | 1.40 | 15.9 | 7.26 |
-| **Step Echo** | 7.35 | **14.2** | **3.74** |
+Step Echo changes the scene more than the earlier runs: the light streaks on the wall move around, the framing changes, and her reflection runs through the bottom-right floor patch. So the two patches from the top of this page don't work here. The wall patch was measuring where the streaks happen to be, not colour drift, and the floor patch was picking up her reflection. My first numbers for these runs were wrong because of that. All the runs below (old ones included, for comparison) were re-measured on patches the scene changes don't touch:
+
+![Step Echo measuring patches: ceiling band (yellow) and two floor corners (cyan); clip 1, no Keystone, keystone + capstone, Step Echo, frame 0 locked, 0 + 5 locked](media/step_echo_measure_regions.png)
+
+- **Ceiling brightness / colour drift** (yellow, the ceiling band along the top): the same structure in every run, so it shows the overall darkening and colour shift. Not usable for plain Step Echo, which zoomed in so far the ceiling is out of shot.
+- **Floor blotches** (cyan, two bottom corners clear of her and her reflection): how much the floor's brightness varies in large patches. Clip 1 is 4.5.
+- **Floor grit**: how strong the fine grain is (the baked look). Clip 1 is 1.25.
+- **Join jump**: how big the change is from the last held frame to the first new frame, compared with normal frame-to-frame motion in the same clip (averaged over clips 2–10; 1.0 = no jump). For the earlier chains only clip 10 was available here.
+
+| Run (clip 10) | Ceiling colour drift | Ceiling brightness | Floor blotches | Floor grit | Join jump |
+|---|---|---|---|---|---|
+| Clip 1 | 0 | 0 | 4.47 | 1.25 | |
+| No Keystone | 6.17 | −5.64 | 7.21 | 4.92 | 1.4 |
+| Keystone + capstone | 3.06 | −2.75 | 5.88 | 2.61 | 1.0 |
+| Keystone + capstone + Fresh Singles on latent 5 | 1.69 | −1.42 | 5.42 | 2.39 | 1.8 |
+| Step Echo (all held frames echoed) | n/a | n/a | **2.08** | **1.50** | 4.3 (worst 34) |
+| Step Echo, frame 0 locked + FreeNoise | 5.52 | −5.09 | 5.98 | 3.73 | 2.5 (worst 5.6) |
+| Step Echo, latents 0 + 5 locked + FreeNoise | 6.25 | −4.41 | 5.02 | 2.62 | 1.5 (worst 2.1) |
+
+### First run: every held frame echoed
+
+The plain walk chain (no Keystone), Step Echo from shot 3 (clip 1 was rendered before Step Echo existed, so shot 2 only recorded).
 
 ![Clip 10: clip 1, no Keystone, keystone + capstone + fresh 5, Step Echo](media/step_echo_clip10.png)
 
@@ -146,21 +163,14 @@ Every clip of the Step Echo chain, about 20 frames from the end:
 
 ![Step Echo chain, clips 1 to 10](media/step_echo_every_clip.png)
 
-- **No degradation.** The floor is the cleanest of any chain by clip 10, with no baking and no blotches. It looks like a fresh generation.
-- **But it doesn't hold the scene.** The framing jumps in and out from clip to clip, the ceiling lights come and go, and by clip 10 the wall behind her reads more like a door. The wall colour number (7.35) is high because the wall itself changed, not because of colour drift.
+- **No degradation.** The floor is the cleanest of any chain by clip 10 (blotches 2.08, grit 1.50, about the same as clip 1). It looks like a fresh generation.
+- **But it doesn't hold the scene.** The framing jumps in and out from clip to clip, the ceiling lights come and go, and by clip 10 the wall behind her reads more like a door. The joins jump too (4.3× normal motion on average, 34× at worst).
 - Why: on H3's schedule the saved steps sit at noise levels of about 1.0, 0.99, 0.98, 0.96, 0.92, 0.86, 0.72 and 0.42, so for most of the render the echoed held frames are still mostly noise. The model can't copy them, which stops the baking, but it also has almost nothing to hold the scene to.
 - This points to the drift coming from the model copying finished held frames.
 
 ### Second run: frame 0 of the held context locked, FreeNoise on
 
 Same chain, but the first held latent (frame 0 of the held context, which comes from the last clip) stays locked and finished as an anchor, and only latents 1–6 are echoed. With a new noise option, FreeNoise, on from shot 3: the held frames get the last clip's exact starting noise, so the noise print runs straight across the join, and the new frames reuse that noise reshuffled instead of fresh random noise.
-
-| Run | Wall colour drift | Floor sharpness | Floor blotchiness |
-|---|---|---|---|
-| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
-| Keystone + capstone | 2.32 | 21.8 | 7.59 |
-| Step Echo (all held frames echoed) | 7.35 | 14.2 | 3.74 |
-| Step Echo, frame 0 locked + FreeNoise | 8.63 | 13.5 | 7.60 |
 
 ![Clip 10: clip 1, no Keystone, keystone + capstone, Step Echo, Step Echo with frame 0 locked](media/step_echo_f0_clip10.png)
 
@@ -173,13 +183,29 @@ Every clip of the chain, about 20 frames from the end:
 ![Step Echo with frame 0 locked, clips 1 to 10](media/step_echo_f0_every_clip.png)
 
 - **The scene holds again.** The wall, the ceiling lights and the room stay the same from clip to clip. One finished first frame was enough to anchor it, like an image-to-video start.
-- **But the motion between clips isn't connected.** The movement doesn't carry across the joins: each clip continues from a still picture, not from the motion of the last one. Only frame 0 is solid; the frames that carry the movement are still mostly noise for most of the render.
-- **About half the degradation came back.** The floor grit stayed low (13.5, the lowest of any run), but the floor is blotchy again (7.60, about the same as keystone + capstone), and the picture got darker clip by clip. The high wall number (8.63) is mostly that darkening. By eye it lands about halfway between keystone + capstone and the plain chain.
+- **But the motion between clips isn't connected.** The movement doesn't carry across the joins (2.5× normal motion on average): each clip continues from a still picture, not from the motion of the last one. Only frame 0 is solid; the frames that carry the movement are still mostly noise for most of the render.
+- **About half the degradation came back.** Floor blotches 5.98 and grit 3.73 sit between keystone + capstone and the plain chain, and the picture got darker clip by clip (ceiling −5.09, nearly as dark as the plain chain). By eye it also lands about halfway between keystone + capstone and the plain chain.
 - Why: the locked frame 0 is a finished frame from the last clip, drift included, and the model follows it closely, so its colour and look get passed forward with nothing to pull them back. It's the "bad frame 0" effect from section 4, milder.
 
-### Running next
+### Third run: latents 0 and 5 locked, FreeNoise on
 
-Step Echo with both held single-frame latents locked (latents 0 and 5: frames 0 and 17 of the held context, from the last clip), the 4-frame latents echoed, FreeNoise on. Two finished pictures 17 frames apart should carry the motion across the join, and give the model two anchors that check each other instead of one. Capstone left off on purpose, to see what Step Echo does on its own.
+Both held single-frame latents locked and finished (latents 0 and 5: frames 0 and 17 of the held context, from the last clip), the 4-frame latents echoed, FreeNoise on from shot 3. No Keystone, no capstone, on purpose, to see what Step Echo does on its own.
+
+![Clip 10: clip 1, no Keystone, keystone + capstone, frame 0 locked, 0 + 5 locked](media/step_echo_05_clip10.png)
+
+![Clip 10 playing side by side: no Keystone, keystone + capstone, frame 0 locked, 0 + 5 locked](media/step_echo_05_clip10.gif)
+
+Full-quality video: [step_echo_05_clip10.mp4](media/step_echo_05_clip10.mp4)
+
+Every clip of the chain, about 20 frames from the end:
+
+![Step Echo with latents 0 and 5 locked, clips 1 to 10](media/step_echo_05_every_clip.png)
+
+- **The scene holds**, like the frame-0 run.
+- **The joins are much smoother**: 1.5× normal motion on average and 2.1× at worst, close to a normal chain. Two finished pictures 17 frames apart carry the motion across the join.
+- **The floor is about as clean as keystone + capstone** (blotches 5.02, grit 2.62 vs 5.88 / 2.61), without a keystone or capstone.
+- **The colour still drifts darker** (ceiling −4.41 vs −2.75 for keystone + capstone). Nothing pulls the colour back toward clip 1, so the locked frames pass the last clip's colour forward.
+- So far: locking the single-frame latents and echoing the 4-frame ones keeps the scene and the motion while cutting the baking. Colour is what's left.
 
 ## Running now
 
