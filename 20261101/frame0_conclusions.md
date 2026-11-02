@@ -76,6 +76,30 @@ Full-quality video: [frame0_chains_clip10.mp4](media/frame0_chains_clip10.mp4)
 
 When Clown Context (or Motion Context) carries the held frames over on a block edge, each single-frame latent lands in a single-frame slot. Nothing is lost or squished in the move. The drift comes from each clip adding small errors while it samples, which are then in the tail that gets carried forward.
 
+## 6. Redrawing the held single-frame latents ("Fresh Singles")
+
+Idea: the held tail carries more than one single-frame latent (with 22 held frames: latents 0 and 5, frames 0 and 17), and each one is a full picture copied forward from the drifted clip. Clown Fresh Singles unlocks just those while sampling, so the model draws fresh ones, and puts the real ones back afterwards. The 4-frame latents stay locked and carry the motion. No Keystone, no capstone. Same walk chain, seed and prompts as everything above.
+
+| Run | Colour drift | Sharpness |
+|---|---|---|
+| No Keystone (baseline) | 6.83 | 49.2 |
+| Keystone only (clean frame 0) | 5.17 | 47.5 |
+| **Fresh Singles (latents 0 + 5 redrawn)** | **3.18** | 46.7 |
+| Keystone + capstone | 3.35 | 40.0 |
+
+![Clip 10, about 20 frames from the end: no Keystone, keystone only, Fresh Singles, keystone + capstone](media/fresh_singles_clip10.png)
+
+![Clip 10 playing side by side](media/fresh_singles_clip10.gif)
+
+Full-quality video: [fresh_singles_clip10.mp4](media/fresh_singles_clip10.mp4)
+
+- **Colour:** redrawing the two held single-frame latents cut colour drift more than half, on its own, with no clip 1 frame at all. That's slightly better than keystone + capstone in this run.
+- **Sharpness:** about the same as keystone only. The capstone is still the only thing that clearly cut the over-sharpening.
+- One run, so the colour number could move a little on a rerun, but the drop from 6.83 is far bigger than the run-to-run noise we've seen.
+- It needs no clean source frame, so it should keep working after the scene changes, where Keystone's clip 1 frame no longer fits.
+
+Running next: Keystone (clean frame 0) + Fresh Singles on latent 5 only.
+
 ## Running now
 
 The full grid as 10-clip chains, in the studio scene the grid pictures came from (clown, red background, dog), so the rows really are "more and more different from the video":
