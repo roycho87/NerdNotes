@@ -120,7 +120,46 @@ Full-quality video: [fresh5_clip10.mp4](media/fresh5_clip10.mp4)
 - **Keystone + capstone + Fresh Singles on latent 5 is the best so far, on all three patches**: the wall drifted about 40% less than keystone + capstone (1.40 vs 2.32), the floor baked less (15.9 vs 21.8) and it was a little less blotchy (7.26 vs 7.59).
 - So latent 5 matters too: copying it forward from the drifted clip adds drift, and redrawing it on top of the keystone and capstone removes some of that.
 
+## 7. New direction: Step Echo (held frames at the same noise level as the new ones)
+
+Reading the H3 code showed something about how held frames are fed in: at every step, the frames Clown Context holds go to the model almost clean (0.999), even on step 1 when the new frames are still pure noise. The idea: the drift may come from the model copying finished held frames that aren't forming along with the noise around them.
+
+**Clown Step Echo** (private pack) saves the clip's latent at every one of the 8 steps. On the next clip, at each step the held frames are swapped for the same frames at the same step of the last clip, so they sit at the same noise level as the new frames and "grow" with them, like the overlap in context windows. The real held latents are put back after sampling, so the join lines up.
+
+Prior work: the closest is Lumifel on Banodoco (20 Aug 2026), who added the sampler's current noise to the held context each step, fading it out near the join. He said it removed the burn-in and artifacts past 60 s but didn't fully fix the colour drift. Step Echo uses the last clip's real in-between latents instead of fresh noise on finished frames. Nothing found that replays the saved steps.
+
+First run: the plain walk chain (no Keystone), Step Echo from shot 3 (clip 1 was rendered before Step Echo existed, so shot 2 only recorded).
+
+| Run | Wall colour drift | Floor sharpness | Floor blotchiness |
+|---|---|---|---|
+| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
+| Keystone + capstone + Fresh Singles on latent 5 | 1.40 | 15.9 | 7.26 |
+| **Step Echo** | 7.35 | **14.2** | **3.74** |
+
+![Clip 10: clip 1, no Keystone, keystone + capstone + fresh 5, Step Echo](media/step_echo_clip10.png)
+
+![Clip 10 playing side by side: no Keystone, keystone + capstone + fresh 5, Step Echo](media/step_echo_clip10.gif)
+
+Full-quality video: [step_echo_clip10.mp4](media/step_echo_clip10.mp4)
+
+Every clip of the Step Echo chain, about 20 frames from the end:
+
+![Step Echo chain, clips 1 to 10](media/step_echo_every_clip.png)
+
+- **No degradation.** The floor is the cleanest of any chain by clip 10, with no baking and no blotches. It looks like a fresh generation.
+- **But it doesn't hold the scene.** The framing jumps in and out from clip to clip, the ceiling lights come and go, and by clip 10 the wall behind her reads more like a door. The wall colour number (7.35) is high because the wall itself changed, not because of colour drift.
+- Why: on H3's schedule the saved steps sit at noise levels of about 1.0, 0.99, 0.98, 0.96, 0.92, 0.86, 0.72 and 0.42, so for most of the render the echoed held frames are still mostly noise. The model can't copy them, which stops the baking, but it also has almost nothing to hold the scene to.
+- This points to the drift coming from the model copying finished held frames.
+
+Running next (ahead of the rest of the grid):
+
+- Step Echo with the first held frame (frame 0 of the held context, from the last clip) kept locked and finished as an anchor, and the other held frames echoed. No Keystone.
+- With a new noise option, FreeNoise: the held frames get the last clip's exact starting noise, so the noise print runs straight across the join, and the new frames reuse that noise reshuffled instead of fresh random noise.
+
 ## Running now
+
+After the Step Echo runs, the grid continues:
+
 
 The full grid as 10-clip chains, in the studio scene the grid pictures came from (clown, red background, dog), so the rows really are "more and more different from the video":
 
