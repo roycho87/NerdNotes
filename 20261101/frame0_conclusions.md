@@ -151,10 +151,35 @@ Every clip of the Step Echo chain, about 20 frames from the end:
 - Why: on H3's schedule the saved steps sit at noise levels of about 1.0, 0.99, 0.98, 0.96, 0.92, 0.86, 0.72 and 0.42, so for most of the render the echoed held frames are still mostly noise. The model can't copy them, which stops the baking, but it also has almost nothing to hold the scene to.
 - This points to the drift coming from the model copying finished held frames.
 
-Running next (ahead of the rest of the grid):
+### Second run: frame 0 of the held context locked, FreeNoise on
 
-- Step Echo with the first held frame (frame 0 of the held context, from the last clip) kept locked and finished as an anchor, and the other held frames echoed. No Keystone.
-- With a new noise option, FreeNoise: the held frames get the last clip's exact starting noise, so the noise print runs straight across the join, and the new frames reuse that noise reshuffled instead of fresh random noise.
+Same chain, but the first held latent (frame 0 of the held context, which comes from the last clip) stays locked and finished as an anchor, and only latents 1–6 are echoed. With a new noise option, FreeNoise, on from shot 3: the held frames get the last clip's exact starting noise, so the noise print runs straight across the join, and the new frames reuse that noise reshuffled instead of fresh random noise.
+
+| Run | Wall colour drift | Floor sharpness | Floor blotchiness |
+|---|---|---|---|
+| No Keystone (baseline) | 3.83 | 29.2 | 10.06 |
+| Keystone + capstone | 2.32 | 21.8 | 7.59 |
+| Step Echo (all held frames echoed) | 7.35 | 14.2 | 3.74 |
+| Step Echo, frame 0 locked + FreeNoise | 8.63 | 13.5 | 7.60 |
+
+![Clip 10: clip 1, no Keystone, keystone + capstone, Step Echo, Step Echo with frame 0 locked](media/step_echo_f0_clip10.png)
+
+![Clip 10 playing side by side: no Keystone, keystone + capstone, Step Echo, Step Echo with frame 0 locked](media/step_echo_f0_clip10.gif)
+
+Full-quality video: [step_echo_f0_clip10.mp4](media/step_echo_f0_clip10.mp4)
+
+Every clip of the chain, about 20 frames from the end:
+
+![Step Echo with frame 0 locked, clips 1 to 10](media/step_echo_f0_every_clip.png)
+
+- **The scene holds again.** The wall, the ceiling lights and the room stay the same from clip to clip. One finished first frame was enough to anchor it, like an image-to-video start.
+- **But the motion between clips isn't connected.** The movement doesn't carry across the joins: each clip continues from a still picture, not from the motion of the last one. Only frame 0 is solid; the frames that carry the movement are still mostly noise for most of the render.
+- **About half the degradation came back.** The floor grit stayed low (13.5, the lowest of any run), but the floor is blotchy again (7.60, about the same as keystone + capstone), and the picture got darker clip by clip. The high wall number (8.63) is mostly that darkening. By eye it lands about halfway between keystone + capstone and the plain chain.
+- Why: the locked frame 0 is a finished frame from the last clip, drift included, and the model follows it closely, so its colour and look get passed forward with nothing to pull them back. It's the "bad frame 0" effect from section 4, milder.
+
+### Running next
+
+Step Echo with both held single-frame latents locked (latents 0 and 5: frames 0 and 17 of the held context, from the last clip), the 4-frame latents echoed, FreeNoise on. Two finished pictures 17 frames apart should carry the motion across the join, and give the model two anchors that check each other instead of one. Capstone left off on purpose, to see what Step Echo does on its own.
 
 ## Running now
 
