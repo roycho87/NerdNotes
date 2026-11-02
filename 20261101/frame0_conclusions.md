@@ -4,6 +4,8 @@ What the frame 0 tests have shown so far, MiniMax H3 in ComfyUI. Updated as test
 
 All numbers are from single runs. Small motion differences between runs move them a little, so read the direction, not the exact values.
 
+> **Best result so far (2 Nov 2026): Keystone + Late Lock capstone + context noise** ([section 7](#fourth-and-fifth-runs-context-noise-after-lumifel)). Clip 1's clean frame 0 locked at the start of every shot, clip 1's capstone tacked onto the end, and the held frames given part of each step's noise, fading to clean at the join (after Lumifel's method). After 10 clips (about 73 s) there's no visible degradation: the floor is nearly back to clip 1, the colour drift is the lowest of any run, and the scene and motion hold. Still to check: a 20+ clip chain and a static shot.
+
 ## How things are measured
 
 Every chain is measured on clip 10, averaged over 10 frames about 20 frames from the end, against clip 1 at the same frames. Only two patches the woman never walks into are measured, because she stands in a different place in every run:
@@ -237,6 +239,7 @@ Keystone + capstone + context noise:
 
 ![Keystone + capstone + context noise, clips 1 to 10](media/ctxnoise_keycap_every_clip.png)
 
+- **By eye: no visible degradation by clip 10.** Watching the clips side by side, the keystone + capstone + context noise chain looks as clean at clip 10 as at the start.
 - **Keystone + capstone + context noise is the best run so far on every measure.** The floor is nearly back to clip 1 (blotches 4.93 vs 4.47, grit 1.73 vs 1.25), and the colour drift is the lowest of any run (1.59).
 - **Context noise with only the keystone already matches keystone + capstone**: about the same floor (slightly less grit) and close on colour, with no capstone.
 - **The scene and the motion hold.** Unlike Step Echo, the held frames still carry the picture, just not fully clean, so the room, the framing and the motion across the joins stay normal (join jump 1.3–1.4, the same as a plain chain).
