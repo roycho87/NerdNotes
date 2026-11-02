@@ -19,6 +19,43 @@ Every chain is measured on clip 10, averaged over 10 frames about 20 frames from
 
 An earlier version of these notes averaged the whole frame. That mixed in the woman and let different parts of the frame cancel out, so all tables below have been re-measured on these two patches.
 
+## Prompts used
+
+All prompts use the MiniMax H3 reference-generation format: `subject_definitions`, `summary`, `retention_analysis`, `detailed_description` (with a `[Shot 1]` block), `overall_soundscape` and `non_diegetic_music`. Every prompt holds the camera still and keeps one `[Shot 1]` tag per clip.
+
+**References**
+- **Picture 1:** the clown, an adult woman with pink hair, a red clown nose, a rainbow choker, a pink-and-white winged costume with buttons, pink gloves and rainbow cuffs. Every prompt asks to keep her face, hair, costume and figure exactly.
+- **Picture 2** (walk scene only): an empty room, the background only, with a colourful paneled backdrop and a polished floor.
+
+**Walk scene** (sections 1–7; 8-second clips, 9:16 at 0.5 MP). One prompt per clip, in the folder `input/prompts/clown_walk`. Each says the camera is stationary, in a locked-off wide shot showing her whole body, with quiet room tone, footsteps and costume rustle, and no music. What she does in each clip:
+
+| Clip | Action |
+|---|---|
+| 1 | Walks slowly from the centre to the left and stops to look at the backdrop |
+| 2 | Turns from the backdrop and wanders back to the centre, glancing at the camera |
+| 3 | Strolls to the right, swinging her arms, and does a small twirl |
+| 4 | Looks around from the right side, then walks toward the camera |
+| 5 | Backs away from the camera, waves, and walks toward the back |
+| 6 | Paces slowly along the backdrop from right to left, trailing a hand toward the panels |
+| 7 | Walks diagonally toward the front right, stretching her arms |
+| 8 | Wanders back to the centre, pausing to adjust her gloves |
+| 9 | Walks a slow loop around the centre, looking up at the panels |
+| 10 | Returns to the centre, faces the camera and strikes a happy pose |
+
+For the 20-clip walk test, clips 11–20 repeat clips 1–10 (folder `input/prompts/clown_walk20`).
+
+**Studio scene** (sections 8 and 9, and the static test in section 7; 5-second clips). The five grid prompts, folder `input/prompts/frame0_test`. Each one says she "stands still", the camera is locked off and the scene barely moves, with soft, even studio lighting:
+
+| Prompt | Backdrop | Beside her | Framing |
+|---|---|---|---|
+| 0 control | plain bright red | small brown-and-white beagle | mid shot |
+| 1 blue background | plain bright blue | beagle | mid shot |
+| 2 child | plain bright red | boy of about six, short brown hair, yellow t-shirt | mid shot |
+| 3 close-up | plain bright red | beagle | close-up |
+| 4 all three | plain bright blue | boy | close-up |
+
+The five prompts were used once each to make the five frame 0 pictures. **Every studio chain uses the control prompt (0) on every clip**, so only frame 0 changes between rows.
+
 ## 1. One clip isn't enough to see anything
 
 Phase 1 swapped a blurred, dark, green or degraded frame 0 into a single clip. Using the Difference blend mode against the clean run, the only change was thin outlines on her from tiny motion differences. No blur, darkness or green spread into the video, and the background was identical.
