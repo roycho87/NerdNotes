@@ -246,13 +246,59 @@ Keystone + capstone + context noise:
 - **The colour still drifts a little** (slightly darker by clip 10) without the capstone. With it, colour is the best of anything tested.
 - It's one 10-clip chain (about 73 s) on one moving shot. Next checks: a longer chain (20+ clips), and a static shot, where drift shows worst.
 
+## 8. The full grid: frame 0 content × frame 0 quality (studio scene)
+
+The grid from the proposal, run as 25 ten-clip chains in the studio scene the grid pictures came from: a locked-off camera, a plain red backdrop, the clown with a beagle. Clip 1 is the shared studio control clip. Shots 2–10 use the **control prompt** and that chain's frame 0 through Keystone (front only, no capstone, no context noise). 5-second clips.
+
+- **Rows** (frame 0 content, more and more different from the video): control, blue background, child instead of dog, close-up, all three.
+- **Columns** (frame 0 quality, all at full strength): clean, blur, black, green tint, degrade.
+
+The five frame 0 pictures (before the effects):
+
+![Grid frame 0 pictures: control, blue background, child, close-up, all three](media/grid_frame0_sources.png)
+
+**How it's measured:** the backdrop is plain red, so the two top corners of the backdrop (yellow), which she and the dog never cover, are used for everything:
+
+![Studio measuring patches on clip 1](media/grid_measure_regions.png)
+
+- **Colour drift:** how far the backdrop's average colour has moved from clip 1 (higher = more drift). The table also shows the brightness change.
+- **Grit:** fine grain on the backdrop, which should be smooth. Clip 1 is 0.31. Higher = more baked.
+- Clip 10, averaged over 10 frames about 20 frames from the end, against clip 1 at the same place.
+
+**Colour drift at clip 10** (brightness change in brackets):
+
+| Frame 0 content \ quality | clean | blur | black | green | degrade |
+|---|---|---|---|---|---|
+| control | **6.90** (−4.6) | 8.02 (−5.3) | 8.18 (−5.3) | 8.02 (−5.2) | 7.96 (−5.9) |
+| blue background | **7.22** (−4.8) | 8.03 (−5.3) | 7.46 (−5.0) | 9.01 (−5.4) | 7.08 (−5.0) |
+| child | **6.86** (−4.6) | 8.85 (−5.6) | 8.15 (−4.9) | 6.95 (−4.2) | 7.76 (−5.4) |
+| close-up | **7.24** (−4.6) | 8.63 (−5.7) | 8.03 (−4.7) | 8.65 (−4.9) | 8.01 (−5.4) |
+| all three | **6.15** (−4.0) | 7.75 (−4.9) | 6.79 (−4.1) | 8.53 (−5.1) | 7.61 (−5.1) |
+
+**Grit at clip 10** (clip 1 = 0.31):
+
+| Frame 0 content \ quality | clean | blur | black | green | degrade |
+|---|---|---|---|---|---|
+| control | 0.52 | 0.56 | 0.69 | 0.80 | 0.52 |
+| blue background | 0.67 | 0.71 | 0.61 | 0.64 | 0.58 |
+| child | 0.49 | 0.58 | 0.55 | 0.61 | 0.46 |
+| close-up | 0.49 | 0.56 | 0.52 | 0.61 | 0.46 |
+| all three | 0.54 | 0.61 | 0.57 | 0.57 | 0.51 |
+
+Clip 10 of every chain, about 20 frames from the end (clip 1 in the first column):
+
+![5 x 5 grid of clip 10, about 20 frames from the end](media/grid_clip10.png)
+
+![5 x 5 grid of clip 10 playing](media/grid_clip10.gif)
+
+Full-quality video: [grid_clip10.mp4](media/grid_clip10.mp4)
+
+- **The content of frame 0 doesn't carry through.** None of the blue background, the child or the close-up shows up by clip 10. Every chain is the same red studio with the dog, mid shot. The prompt and the held frames win over a mismatched frame 0. The content rows only change the numbers a little, with no pattern from "close to the video" to "far from it".
+- **The quality of frame 0 does matter.** In every row, the clean frame 0 drifts least (6.2–7.2). Blur, black, green and degrade all drift more (6.8–9.0), and the green tint chains have the most grit. It's the same direction as the walk chains in section 4, just smaller.
+- **Static shots drift mostly in colour.** Every chain, clean included, got darker (about −4 to −6) and the red backdrop went deeper and a bit duller. The grit only went from 0.31 to about 0.5–0.8, much less than the floor baking in the walk scene. So on this locked-off shot, degradation is mainly darkening, not texture.
+- All 25 chains use keystone only. They show how much frame 0 alone does on a static shot; the best setup from section 7 (keystone + capstone + context noise) is being tested on this same studio scene for 20 clips.
+
 ## Running now
 
-After the Step Echo runs, the grid continues:
-
-
-The full grid as 10-clip chains, in the studio scene the grid pictures came from (clown, red background, dog), so the rows really are "more and more different from the video":
-
-- 5 rows (control, blue background, child instead of dog, close-up, all three) x 5 effects (clean, blur, dark, green tint, degrade) = 25 chains.
-- Clip 1 is the studio control clip, shared by every chain. Shots 2–10 use the control prompt and that chain's frame 0 through Keystone (front only, capstone off). 5-second clips.
-- 225 renders, about 10 hours. The top row is redone here so the rows can be compared within one scene.
+- The keystone + capstone + context noise walk chain, extended to 20 clips (clips 11–20 repeat the 10 walk prompts).
+- Keystone + capstone + context noise on the static studio scene, 20 clips.
