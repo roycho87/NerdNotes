@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the adult woman whose appearance comes from <Picture 1>, a character sheet of her standing on a plain grey background. Preserve her face, curvy body proportions, wavy shoulder-length pink hair with bangs, red clown nose, red lipstick, cream sundress with a small pink floral print, a modest rounded neckline, wide sleeveless shoulders, a fitted waist, and a full mid-calf skirt, and pink strappy sandals. Use <Picture 1> for her appearance only, not its grey background or its poses.
+
+summary:
+[reference generation] <Subject 1> walks off the pier onto a flowery cliff-top path above the sea in a tracking shot, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - retain her face, pink hair, clown nose, lipstick, floral sundress, sandals, and curvy figure from <Picture 1> while she walks off the pier onto a flowery cliff-top path above the sea.
+
+detailed_description:
+Photorealistic live-action rendering with the same character appearance as <Picture 1>, moving from the harbour pier up a short flight of stone steps onto a grassy cliff-top path lined with wildflowers, the open sea far below, white cliffs curving along the coast under a clear sky, bright sunshine. The camera tracks in front of her, moving backward at her walking pace in a smooth tracking shot, keeping a medium-wide frame with her full body visible from head to feet as the surroundings change behind her, with no cuts.
+
+[Shot 1] <Subject 1> continues exactly from where the previous shot ended. <Subject 1> walks to the end of the pier, climbs a short flight of stone steps, and walks on along the cliff-top path between the wildflowers, the wind lifting her hair and skirt, the sea glittering far below. Her face, pink hair, red clown nose, floral sundress, and sandals stay exactly as in <Picture 1> the whole time.
+
+overall_soundscape:
+Her sandals on wooden planks and then on stone steps and grass, wind over the cliff top, distant waves crashing on the rocks below, a skylark singing.
+
+non_diegetic_music:
+N/A

@@ -78,11 +78,16 @@ FreeNoise (a Step Echo option): the held frames get the last clip's exact starti
 8. Grid 2: the five clean frame 0 pictures (rows) × baseline / keystone + capstone / context noise / context noise + keystone + capstone (columns), studio scene, 20 clips each. Keystone and capstone from the row's picture; baseline and noise-only run once. *(done, see [conclusions, section 9](frame0_conclusions.md))*
 9. Beach benchmark (BittiAI's idea): the sundress clown running on a beach (20 clips), then a café (10), a walk through a changing town (10), and a garden (10). Best setup vs plain chain, 50 clips each. Keystone source changes to the first clip that fully shows each new still scene (clips 22 and 42); keystone off while the scene keeps changing. *(done, see [conclusions, section 10](frame0_conclusions.md))*
 
-10. Context noise fade and strength sweep: the beach run (clips 1–20 of test 9, same prompts, seed and clip 1), keystone + capstone + context noise, 11 runs. *(running)*
-    - Fade linear at 1.0, 0.6, 0.4.
+10. Context noise fade and strength sweep, 13 runs of 20 clips. *(running)*
+    - Clips 1–9: the beach run from test 9 (same prompts, seed and clip 1), keystone + capstone + context noise.
+    - Clip 10: she leaves the beach up a dune path into a pine forest. Clips 11–20: she keeps walking into a new place every clip (lavender field, village street, market, railway station, riverside, autumn park, greenhouse, library, harbour pier, cliff-top path). Every prompt has her move into the new place from where the last clip ended.
+    - Keystone + capstone off from clip 10, because the scene keeps changing (the same rule as the town walk in test 9). Context noise stays on.
+    - Fade linear at 1.0, 0.8, 0.6, 0.4.
     - Fade ease at 1.0, 0.8, 0.6, 0.4.
     - Fade ethanfel at 1.0, 0.8, 0.6, 0.4: ethanfel's drift_control recipe. Full weight on the held latents with a 4-latent taper to clean at the join, and at every step the values are scaled by next noise level ÷ current noise level. With the 5 held latents here, the taper (1, .75, .5, .25, 0) matches linear, so the per-step scaling is the real difference.
-    - Compared against test 9's 0.8 linear chain and its plain chain, clips 1–20.
+    - Baseline: the plain chain, no keystone, capstone or context noise.
+    - Prompts: [prompts/noise_sweep](prompts/noise_sweep).
+    - The 0.8 linear and baseline runs reuse test 9's clips 2–9, which had the same settings, prompts and seed. They render from clip 10.
     - Every run before this used 0.8 linear, which was a starting guess, not a tuned value.
 
 Compared against: no Keystone, keystone only, keystone + capstone, keystone + capstone + Fresh Singles on latent 5, and the Step Echo runs.*

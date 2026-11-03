@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the adult woman whose appearance comes from <Picture 1>, a character sheet of her standing on a plain grey background. Preserve her face, curvy body proportions, wavy shoulder-length pink hair with bangs, red clown nose, red lipstick, cream sundress with a small pink floral print, a modest rounded neckline, wide sleeveless shoulders, a fitted waist, and a full mid-calf skirt, and pink strappy sandals. Use <Picture 1> for her appearance only, not its grey background or its poses.
+
+summary:
+[reference generation] <Subject 1> walks out of the pine forest onto a path through a wide purple lavender field in a tracking shot, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - retain her face, pink hair, clown nose, lipstick, floral sundress, sandals, and curvy figure from <Picture 1> while she walks out of the pine forest onto a path through a wide purple lavender field.
+
+detailed_description:
+Photorealistic live-action rendering with the same character appearance as <Picture 1>, moving from the shady pine forest out onto a dirt path through a wide lavender field in full bloom, rows of purple lavender stretching to low hills under a clear blue sky, bright sunshine. The camera tracks in front of her, moving backward at her walking pace in a smooth tracking shot, keeping a medium-wide frame with her full body visible from head to feet as the surroundings change behind her, with no cuts.
+
+[Shot 1] <Subject 1> continues exactly from where the previous shot ended. <Subject 1> walks along the forest trail toward bright daylight, steps out from under the last pine trees, and walks on along a dirt path between long rows of purple lavender, brushing the flowers with her fingertips. Her face, pink hair, red clown nose, floral sundress, and sandals stay exactly as in <Picture 1> the whole time.
+
+overall_soundscape:
+Pine needles under her sandals giving way to a dry dirt path, bees humming in the lavender, a light breeze through the flowers.
+
+non_diegetic_music:
+N/A

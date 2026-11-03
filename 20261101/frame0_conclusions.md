@@ -481,4 +481,4 @@ So this is a "switch it on while the scene stays the same" tool: on a long singl
 
 ## Running now
 
-Context noise fade and strength sweep, 11 runs of the 20-clip beach run ([test 10](frame0_influence_test.md)).
+Context noise fade and strength sweep: 13 runs of 20 clips, beach run then a new scene every clip from clip 10 ([test 10](frame0_influence_test.md)).
