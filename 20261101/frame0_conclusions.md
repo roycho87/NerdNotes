@@ -434,6 +434,51 @@ Clip 10 and clip 15 numbers are in the same pattern: at clip 10 the colour drift
 - **The other rows never recovered.** Their frame 0 pictures don't quite match the video (blue background, child, close-up), so it looks like the reset only happens when the keystone and capstone match the scene closely. That's also why the control row looks best in the still above: it has just reset, not because it never drifted.
 - So on a locked-off shot, context noise is a texture fix, not a colour fix. The colour still needs something else: a matching keystone/capstone (and whatever triggers the reset), a join correction like NikoDemon80's Join Match, or colour matching.
 
+## 10. Beach benchmark: a 50-clip chain through four scenes
+
+A woman running on a beach is a hard benchmark (BittiAI's suggestion): still and moving parts in the background, bare skin, and constant motion, which usually start breaking after about a minute. Here it's extended into four scenes, 50 clips of 8 seconds (about 5 min 20 s stitched), rendered twice:
+
+- **Best setup:** Geiru Context (39, drop_last 17) + Context Noise (0.8) + Keystone (keystone front + capstone back) + Late Lock (capstone from step 5).
+- **Plain chain:** the same Context settings, nothing else.
+
+Both chains share clip 1 and use the same prompts, seed and settings. Reference: the sundress clown character sheet.
+
+| Clips | Scene | Best setup |
+|---|---|---|
+| 1–20 | Running along the beach, camera tracking | Keystone + capstone from clip 1, context noise |
+| 21–22 | Slows down and sits at a beach café (21), settles in (22) | Keystone off, context noise on |
+| 23–30 | Sitting at the café table, still camera | Keystone + capstone from **clip 22**, the first clip that's fully the café |
+| 31–40 | Gets up and walks through a changing town: boardwalk, steps, streets, plaza, market, park, avenue, garden gate | Keystone off, context noise on |
+| 41–42 | Walks onto a garden patio and sits on a wicker sofa | Keystone off, context noise on |
+| 43–50 | Sitting on the sofa, still camera | Keystone + capstone from **clip 42** |
+
+The keystone source is the first clip that fully shows each new still scene, not the transition clip into it, so the anchor matches the scene (grid 2, section 9, showed a mismatched frame 0 drifts more).
+
+**How it's measured:** the four corners of the frame (top: sky / umbrella / roses; bottom: sand / deck / paving), about 20 frames from the end of each clip. Colour drift and brightness are measured against the start of each still section: clip 1 for the beach, clip 22 for the café, clip 42 for the garden, each chain against its own clip. Grit is fine grain in the corners. The beach is a moving shot, so its corners change content a bit from clip to clip; those numbers are rougher than the café and garden ones.
+
+The end of each section (best setup on top, plain chain below):
+
+![Beach benchmark, end of each section](media/beach_compare.png)
+
+Every clip: [best setup](media/beach_best_every_clip.png), [plain chain](media/beach_base_every_clip.png).
+
+| | Best setup | Plain chain |
+|---|---|---|
+| **Beach, clip 20** (vs clip 1): sky drift / brightness | 15.5 / −12.3 | 23.4 / −20.3 |
+| Beach, clip 20: sand drift / brightness | 12.6 / −12.4 | 18.1 / −17.8 |
+| Beach, clip 20: grit (clip 1 = 2.16) | 2.68 | 5.65 |
+| **Café, clip 30** (vs clip 22): top / bottom brightness | −1.1 / −4.6 | −5.5 / −5.8 |
+| **Garden, clip 50** (vs clip 42): top / bottom brightness | −0.2 / −0.3 | −1.3 / −3.9 |
+| Garden, clip 50: grit (clip 42: 11.0 / 11.6) | 11.2 | 13.6 |
+
+- **Beach: the plain chain falls apart; the best setup holds.** By clip 20 the plain chain's sky has turned into glitchy streaks, the skin is burnt and the sand is more than twice as gritty. The best setup is still clean at clip 20, but it does get darker (about −12), steadily over the first 10 clips and then levelling off.
+- **Café and garden (still camera): the best setup barely drifts.** With the keystone and capstone from the first clip of the scene, the garden is flat for 8 clips (−0.3) and the café drifts only a little. The plain chain keeps darkening in both.
+- **Scene changes reset the drift on their own.** At the café the plain chain cleaned itself up, so protection isn't needed around cuts and new environments, only while the scene stays the same.
+- **The town walk held up in both,** since the background keeps changing; nothing gets copied for long enough to bake.
+- Joins stay smooth in both chains (checked by eye on the stitched videos).
+
+So this is a "switch it on while the scene stays the same" tool: on a long single-scene stretch it's the difference between falling apart and holding, and around cuts it isn't needed. That's what Geiru Context's `degradation_protection` switch is for.
+
 ## Running now
 
-**Final test: the beach benchmark** (being set up). BittiAI on Reddit suggested a woman running on a beach as a hard benchmark: still and moving parts in the background, exposed skin, and constant movement, which all start to break after about a minute.
+Nothing running right now.
