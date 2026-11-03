@@ -481,4 +481,4 @@ So this is a "switch it on while the scene stays the same" tool: on a long singl
 
 ## Running now
 
-Nothing running right now.
+Context noise fade and strength sweep, 11 runs of the 20-clip beach run ([test 10](frame0_influence_test.md)).
