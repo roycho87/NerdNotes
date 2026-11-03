@@ -360,7 +360,7 @@ The common thread: **models drift because they trust their own previous output t
 - ComfyUI native H3 implementation: `comfy/ldm/minimax/vae.py`, `comfy/ldm/minimax/model.py`, `comfy/model_base.py` (MiniMaxH3), `comfy/samplers.py` (KSamplerX0Inpaint)
 - [xyzDist / H3-LongTakeNoCuts](https://github.com/xyzDist/H3-LongTakeNoCuts)
 - [NikoDemon80 / ComfyUI-H3-Motion-Context](https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context)
-- [roycho87 / clown_context_suite](https://github.com/roycho87/clown_context_suite)
+- [roycho87 / clown_context_suite](https://github.com/roycho87/geiru_context_suite)
 - [Kijai / ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes) (ColorMatch)
 
 **From the Banodoco Discord** (quotes from the community discussion)

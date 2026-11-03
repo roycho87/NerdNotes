@@ -219,7 +219,7 @@ Worth adding: a moving shot (an arc or a walk) next to the locked-off one, since
 
 ## Links
 
-- Clown Context Suite (Keystone, Late Lock, Clowntext Hybrid Windows, Clown Context, Anchoring, Shot Counter, Clown Chain): https://github.com/roycho87/clown_context_suite
-- Clown Prophecy (experimental): https://github.com/roycho87/Clown-Prophecy-Experimental-
+- Clown Context Suite (Keystone, Late Lock, Clowntext Hybrid Windows, Clown Context, Anchoring, Shot Counter, Clown Chain): https://github.com/roycho87/geiru_context_suite
+- Clown Prophecy (experimental): https://github.com/roycho87/Geiru-Prophecy-Experimental-
 - All workflows: https://github.com/roycho87/workflows
 - Built on work by kijai (H3 context windows), JalenBrunson (HybridWindows), seitanism and nikodemon (Motion Context / MultiRef), xyzdist (FL2VA resampling), obvpm (odd/even shot order).
