@@ -81,7 +81,6 @@ FreeNoise (a Step Echo option): the held frames get the last clip's exact starti
 To test later:
 
 10. Context noise strength: the same walk chain at 0.6, 0.8 and 1.0 for 10 clips. Every run so far used 0.8, which was a starting guess, not a tuned value.
-11. Geiru Anchoring with the capstone: Anchoring alone, capstone alone, and both, on one chain. (Keystone now skips the capstone when Anchoring holds the end of the shot, so "both" needs that check turned off for the test.)
 
 Compared against: no Keystone, keystone only, keystone + capstone, keystone + capstone + Fresh Singles on latent 5, and the Step Echo runs.*
 
