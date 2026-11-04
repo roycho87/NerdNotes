@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the adult woman whose appearance comes from <Picture 1>, a character sheet of her standing on a plain grey background. Preserve her face, curvy body proportions, wavy shoulder-length pink hair with bangs, red clown nose, red lipstick, cream sundress with a small pink floral print, a modest rounded neckline, wide sleeveless shoulders, a fitted waist, and a full mid-calf skirt, and pink strappy sandals. Use <Picture 1> for her appearance only, not its grey background or its poses.
+
+summary:
+[reference generation] <Subject 1> keeps sitting still in the same armchair in the same richly patterned parlor, in the same locked-off static shot, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - retain her face, pink hair, clown nose, lipstick, floral sundress, sandals, and curvy figure from <Picture 1> while she sits in the armchair.
+
+detailed_description:
+Photorealistic live-action rendering with the same character appearance as <Picture 1>, in a small, richly decorated parlor full of fine patterns. The walls are covered in dense black-and-white geometric wallpaper of small interlocking hexagons with thin gold pinstripes; the floor is small black-and-white checkerboard tiles; an intricate red, navy and cream Persian rug with fine medallion and vine patterns lies under the chair. Behind her stands a tall dark wooden bookshelf packed with dozens of books with varied colored spines and gold lettering, next to a gold-framed mosaic of tiny blue and white tiles. To one side, a window with narrow red-and-white striped curtains and a brass floor lamp with a fringed shade. Soft, even, steady indoor light that does not change. The camera is locked off on a tripod in a static medium-wide shot at seated eye level, her whole body and the chair in frame, with no camera movement and no cuts.
+
+[Shot 1] <Subject 1> sits upright in an armchair upholstered in small black-and-white houndstooth fabric with carved dark wooden arms, her feet together on the rug and her hands resting in her lap, continuing exactly from where the previous shot ended. She takes a slow breath, her shoulders rising and falling gently, and blinks twice. She stays seated in the same place the whole time, and the room, the patterns and the light stay exactly the same. Her face, pink hair, red clown nose, floral sundress, and sandals stay exactly as in <Picture 1> the whole time.
+
+overall_soundscape:
+Quiet room tone, the faint ticking of a clock, the soft creak of the armchair, and her slow, calm breathing.
+
+non_diegetic_music:
+N/A
