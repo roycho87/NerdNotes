@@ -20,4 +20,4 @@ Does the [H3 Anti-Burn LoRA](https://huggingface.co/Imagineer13/H3-Anti-Burn-LoR
 - Smoothing: the wallpaper, rug, houndstooth and book spines going soft. If the softness follows the chain length whatever the strength, it's degradation; if it gets worse as the strength goes up, it's the LoRA ([the theory](antiburn_results.md)).
 - Colour drift from clip 1.
 
-*(queued)*
+*(running, started 2026-11-04 6:52 pm)*
