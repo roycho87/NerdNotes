@@ -521,4 +521,4 @@ One seed, and the beach is a moving shot, so the corners don't show exactly the 
 
 ## Running now
 
-Nothing. Tests 11 and 12 are done: burn and colour results are in [20261104/antiburn_results.md](../20261104/antiburn_results.md). Anti-Burn 0.6 gave the lowest colour change and grit of the whole sweep. Motion review of the turning runs is pending.
+Nothing. Tests 11 and 12 are done: burn and colour results are in [20261104/antiburn_results.md](../20261104/antiburn_results.md). Anti-Burn 0.6 gave the lowest colour change and grit of the whole sweep, and roycho found the motion great with and without it.

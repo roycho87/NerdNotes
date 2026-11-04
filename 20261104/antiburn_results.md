@@ -1,6 +1,6 @@
 # Anti-Burn LoRA results: burn and colour (tests 11 and 12)
 
-Follows [20261101 tests 11 and 12](../20261101/frame0_influence_test.md). Everything here is measured burn and colour. roycho is reviewing the motion himself; there is no motion verdict in this file yet.
+Follows [20261101 tests 11 and 12](../20261101/frame0_influence_test.md). Burn and colour are measured; the motion verdict is roycho's, from watching the videos.
 
 ## What ran
 
@@ -51,6 +51,10 @@ Full-frame grit:
 - After clip 9 the two test 12 runs drift apart and show slightly different versions of each place, so some of the grit gap there could be content, not burn. It goes the same way at all six clips, though.
 - Grit measures fine texture. It can't tell burn from real detail like sand or leaves, which is why the reference is clip 1's own level.
 
-## Still to come
+## Motion (roycho's review)
 
-- **Motion:** roycho's review of the turning runs.
+- **Motion looks great in both turning runs,** with and without the LoRA. Anti-Burn doesn't hurt the motion.
+
+## Takeaway
+
+- Anti-Burn 0.6 on top of linear 1 lowers burn and colour drift without costing motion.
