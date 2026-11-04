@@ -521,4 +521,4 @@ One seed, and the beach is a moving shot, so the corners don't show exactly the 
 
 ## Running now
 
-Nothing running right now.
+Anti-Burn LoRA at 0.6 on the 20-clip sweep run, linear 1 ([test 11](frame0_influence_test.md)).
