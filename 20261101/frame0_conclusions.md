@@ -517,7 +517,7 @@ Clip 9 (the end of the beach part) for every run, next to clip 1:
 
 One seed, and the beach is a moving shot, so the corners don't show exactly the same content in every run: differences of about 1 are within noise. Linear 1 and ease 1 vs the plain chain is a real gap; linear 1 vs ease 1 isn't.
 
-**Suggested:** change the context noise default from 0.8 linear to **1 linear**.
+**Change:** the context noise strength default is now **1** (was 0.8) in Geiru Context Noise and Geiru Hybrid Windows. Linear stays the default fade.
 
 ## Running now
 
