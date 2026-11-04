@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the adult woman whose appearance comes from <Picture 1>, a character sheet of her standing on a plain grey background. Preserve her face, curvy body proportions, wavy shoulder-length pink hair with bangs, red clown nose, red lipstick, cream sundress with a small pink floral print, a modest rounded neckline, wide sleeveless shoulders, a fitted waist, and a full mid-calf skirt, and pink strappy sandals. Use <Picture 1> for her appearance only, not its grey background or its poses.
+
+summary:
+[reference generation] <Subject 1> walks through the glowing mushroom forest, turns right, and a new place comes into view behind her as the camera follows her round the turn, in one continuous take, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - retain her face, pink hair, clown nose, lipstick, floral sundress, sandals, and curvy figure from <Picture 1> while she walks and turns.
+
+detailed_description:
+Photorealistic live-action rendering with the same character appearance as <Picture 1>, starting in the glowing mushroom forest in the same light as the previous shot. One single continuous take with no cuts and no transitions: the camera tracks in front of her, moving backward at her walking pace, and swings smoothly around with her when she turns, keeping a medium-wide frame with her full body visible from head to feet.
+
+[Shot 1] <Subject 1> continues exactly from where the previous shot ended, walking along the glowing mushroom forest. She turns right and walks around a giant mushroom stalk. The camera swings around with her as she turns, and the new view comes into the background behind her: the mouth of a huge sparkling crystal cave ahead, lit from within by tall glowing crystals. She keeps walking toward it at the same steady pace. Her face, pink hair, red clown nose, floral sundress, and sandals stay exactly as in <Picture 1> the whole time.
+
+overall_soundscape:
+The soft hum turning into gentle crystal chimes, footsteps echoing on stone.
+
+non_diegetic_music:
+N/A
