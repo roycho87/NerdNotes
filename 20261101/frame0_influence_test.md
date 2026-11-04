@@ -78,7 +78,7 @@ FreeNoise (a Step Echo option): the held frames get the last clip's exact starti
 8. Grid 2: the five clean frame 0 pictures (rows) × baseline / keystone + capstone / context noise / context noise + keystone + capstone (columns), studio scene, 20 clips each. Keystone and capstone from the row's picture; baseline and noise-only run once. *(done, see [conclusions, section 9](frame0_conclusions.md))*
 9. Beach benchmark (BittiAI's idea): the sundress clown running on a beach (20 clips), then a café (10), a walk through a changing town (10), and a garden (10). Best setup vs plain chain, 50 clips each. Keystone source changes to the first clip that fully shows each new still scene (clips 22 and 42); keystone off while the scene keeps changing. *(done, see [conclusions, section 10](frame0_conclusions.md))*
 
-10. Context noise fade and strength sweep, 13 runs of 20 clips. *(running)*
+10. Context noise fade and strength sweep, 20 clips. *(done, see [conclusions, section 11](frame0_conclusions.md); ease and ethanfel at 0.4 were dropped)*
     - Clips 1–9: the beach run from test 9 (same prompts, seed and clip 1), keystone + capstone + context noise.
     - Clip 10: she leaves the beach up a dune path into a pine forest. Clips 11–20: she keeps walking into a new place every clip (lavender field, village street, market, railway station, riverside, autumn park, greenhouse, library, harbour pier, cliff-top path). Every prompt has her move into the new place from where the last clip ended.
     - Keystone + capstone off from clip 10, because the scene keeps changing (the same rule as the town walk in test 9). Context noise stays on.

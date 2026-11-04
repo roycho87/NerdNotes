@@ -479,6 +479,46 @@ Every clip: [best setup](media/beach_best_every_clip.png), [plain chain](media/b
 
 So this is a "switch it on while the scene stays the same" tool: on a long single-scene stretch it's the difference between falling apart and holding, and around cuts it isn't needed. That's what Geiru Context's `degradation_protection` switch is for.
 
+## 11. Context noise sweep: fade × strength (beach run, 20 clips)
+
+The same beach run as section 10 (same prompts, seed and clip 1). Clips 1–9: running on the beach, keystone + capstone + context noise. Clip 10: she leaves the beach into a pine forest, then walks into a new place every clip up to clip 20 (keystone and capstone off from clip 10, context noise on). Each run changes only the context noise fade and strength:
+
+- **linear:** the held latents ramp from the strength down to 0 at the join.
+- **ease:** the same, curved, so the noise drops off faster.
+- **ethanfel:** ethanfel's drift_control recipe: full strength, a 4-latent taper to 0 at the join, and at every step the values are scaled by next noise level ÷ current noise level. With the 5 held latents here, its taper is the same as linear, so the per-step scaling is the real difference.
+
+Strengths 1, 0.8, 0.6 and 0.4 (linear 0.4 only; ease and ethanfel at 0.4 were dropped once 0.6 and linear 0.4 were clearly worse). 11 runs plus the plain chain (no keystone, capstone or noise). The 0.8 linear and plain runs reuse section 10's clips 2–9.
+
+**Measured:** colour change against clip 1 in the four corners (average of sky and sand), and corner grit, on the beach (clips 3, 5, 7, 9); full-frame grit after the scene changes (clips 12, 16, 20). Lower is better.
+
+| Run | Beach colour change (avg, clips 3–9) | Beach colour change, clip 9 | Beach grit (avg; clip 1 = 2.16) | Grit after scene changes (avg) |
+|---|---|---|---|---|
+| **linear 1** | **8.4** | **8.4** | **2.33** | 6.18 |
+| ease 1 | 8.5 | 9.8 | **2.33** | 6.08 |
+| ease 0.8 | 8.5 | 10.0 | 2.45 | 6.26 |
+| linear 0.8 (old default) | 8.9 | 10.3 | 2.54 | 5.97 |
+| ethanfel 0.8 | 9.6 | 9.7 | 2.50 | 6.14 |
+| ethanfel 1 | 9.9 | 10.3 | 2.51 | 6.25 |
+| linear 0.6 | 9.1 | 10.2 | 2.66 | 6.25 |
+| ease 0.6 | 9.0 | 10.5 | 2.66 | 6.38 |
+| ethanfel 0.6 | 10.4 | 11.2 | 2.50 | 6.02 |
+| linear 0.4 | 8.9 | 10.6 | 2.84 | 6.43 |
+| plain chain | 9.9 | **13.0** | 2.47 (2.83 at clip 9) | 6.46 |
+
+Clip 9 (the end of the beach part) for every run, next to clip 1:
+
+![Clip 9, every run](media/noise_sweep_clip9.png)
+
+- **Strength matters more than fade.** At 1 and 0.8 the grit stays close to clip 1; at 0.6 and 0.4 it climbs back up to the plain chain's level by clip 9.
+- **Strength 1 is best.** Linear 1 has the least colour change and stays the cleanest; ease 1 is about the same. Both beat the old default (linear 0.8).
+- **ethanfel's per-step scaling didn't help here.** At the same strength it drifted a bit more than linear and ease. (Here it runs on top of keystone + capstone, which isn't what it was designed for.)
+- **The plain chain drifts steadily** (colour change 6.4 → 8.5 → 11.8 → 13.0 over clips 3–9); the noise runs level off around 8–10.
+- **After the scene changes, the settings barely matter.** Full-frame grit is 6.0–6.5 in every run, the plain chain included: each new place resets the drift (as in section 10).
+
+One seed, and the beach is a moving shot, so the corners don't show exactly the same content in every run: differences of about 1 are within noise. Linear 1 and ease 1 vs the plain chain is a real gap; linear 1 vs ease 1 isn't.
+
+**Suggested:** change the context noise default from 0.8 linear to **1 linear**.
+
 ## Running now
 
-Context noise fade and strength sweep: 13 runs of 20 clips, beach run then a new scene every clip from clip 10 ([test 10](frame0_influence_test.md)).
+Nothing running right now.
