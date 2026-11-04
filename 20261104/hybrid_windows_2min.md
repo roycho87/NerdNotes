@@ -12,7 +12,7 @@ A 2-minute, 16-window Geiru Hybrid Windows render (the space roller coaster, ext
 
 ## Result
 
-**By eye (roycho): no visible degradation over the full 2 minutes, even with every window rendered at full steps.** Before the latest Hybrid Windows changes (context noise on the overlap, the fade selector, freeing memory between windows), full-step windows without the blended finish were expected to drift.
+**By eye (roycho): no visible degradation over the full 2 minutes, even with every window rendered at full steps.**
 
 ## Next
 
