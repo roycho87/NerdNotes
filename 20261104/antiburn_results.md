@@ -45,6 +45,20 @@ Full-frame grit:
 - **Anti-Burn is lower at every clip measured,** by about 0.6 on average (roughly 10%).
 - The clip-to-clip swings (4.3 to 7.1) come from the places themselves: a crystal cave or jungle has more fine detail than a lavender field. Compare the two runs at the same clip, not clips against each other.
 
+## Colour and contrast drift, clip 1 to clip 9 (whole frame)
+
+How much of the plain chain's drift each setup takes care of, measured on the whole frame at clip 9 (plain chain = 100% of the drift):
+
+| Setup | Colour drift taken care of | Contrast drift taken care of |
+|---|---|---|
+| Plain chain | 0% | 0% |
+| Degradation protection (context noise linear 1 + keystone + capstone) | 40% | 63% |
+| Degradation protection + Anti-Burn LoRA 0.6 | 36% | 93% |
+
+- **Contrast (burn):** the LoRA keeps it almost exactly at clip 1's level.
+- **Colour:** almost all the colour change is the picture getting darker. The beach is a moving shot, so some of that is the camera showing different parts of the scene, not drift. On this measure the LoRA doesn't add anything for colour.
+- **More testing coming:** a locked-off shot (where the scene doesn't change, so any colour change really is drift), with and without the LoRA, to get colour numbers we can trust.
+
 ## Caveats
 
 - One seed. Differences of about 1 in colour change are within noise; the grit gap on the beach is small but holds at every clip.
@@ -57,4 +71,4 @@ Full-frame grit:
 
 ## Takeaway
 
-- Anti-Burn 0.6 on top of linear 1 lowers burn and colour drift without costing motion.
+- Anti-Burn 0.6 on top of linear 1 removes virtually all the burn without costing motion. Its effect on colour drift is still being tested.
