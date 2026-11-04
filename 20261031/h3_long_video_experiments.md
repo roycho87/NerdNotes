@@ -29,6 +29,13 @@ Results are what I saw in my own renders. Nothing here is a controlled benchmark
 - **Capstone** = clip 1's last single-frame latent. Pinning it at the back from the start was a no-go: the character walked back to that position. Adding it **late** (from around step 4, with the "Late Lock" step selector) added detail without pulling the motion.
 - Keystone + capstone worked a lot better than Clown Prophecy, and they're now the recommended fix in Clown Context Suite.
 
+#### How Keystone came about
+- **The problem:** the plain Clown Context chain was still cloudy by shot 8. The conclusion at the time was that you can't make a fresh latent that's exactly the same as another one, so every clip copies a slightly worse version of the last one forward.
+- **The first try:** about a week of trying to find a clean latent at the tail of the chain and join to it without it looking bad (Clown Prophecy, Ripple Repair).
+- **The theory:** cutting the held context in the middle of a block throws away the clean opening latent, the single-frame latent 0 that the model leans on as its detail reference. Every later shot only ever sees a copied, slightly worse version of it.
+- **The idea:** so why not put clip 1's *actual* first latent at the front of every shot? That was Clown Keyframe, later renamed Keystone. The first test came out crisp at shot 5 and later.
+- **Then the capstone:** clip 1's last single-frame latent at the back. Locked from step 0, it pulled her pose back toward clip 1's, so Late Lock only brings it in for the last few steps.
+
 ### Clowntext Hybrid Windows
 - Built on kijai's H3 context windows (in ComfyUI core) and JalenBrunson's HybridWindows (Rolling Diffusion): early steps run window by window in order, with each overlap pinned to the previous window; the last steps are blended context windows.
 - My addition: window 1 finishes once to get the keystone and capstone, then rewinds. The keystone goes in every window's first slot, and the capstone is tacked on from a chosen step. `finished_handoff` passes each window's fully finished frames on to pin the next window.
