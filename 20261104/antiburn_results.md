@@ -59,6 +59,14 @@ How much of the plain chain's drift each setup takes care of, measured on the wh
 - **Colour:** almost all the colour change is the picture getting darker. The beach is a moving shot, so some of that is the camera showing different parts of the scene, not drift. On this measure the LoRA doesn't add anything for colour.
 - **More testing coming:** a locked-off shot (where the scene doesn't change, so any colour change really is drift), with and without the LoRA, to get colour numbers we can trust.
 
+## Next test: is the LoRA's smoothing real?
+
+Some people see a slight softening with the Anti-Burn LoRA. roycho's theory: the LoRA isn't causing it. Degradation normally shows up as burn (H3 over-sharpening as the chain drifts); the LoRA stops the over-sharpening, so the detail that's already been lost shows up as softness instead. The same degradation in a different form. Against that, Imagineer13 found the LoRA can over-smooth when it's too strong for the turbo ([his notes](../20261102/community/Imagineer13_H3_antiburn_notes.md)).
+
+The test: a locked-off shot, the LoRA at 0.3, 0.6 and 1.0, measuring real fine detail and burn crunch separately (several texture sizes), against clip 1.
+- If the softness follows the chain length whatever the strength, it's degradation.
+- If it gets worse as the strength goes up, it's the LoRA.
+
 ## Caveats
 
 - One seed. Differences of about 1 in colour change are within noise; the grit gap on the beach is small but holds at every clip.
