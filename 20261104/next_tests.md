@@ -6,6 +6,8 @@ A few 30-clip tests to gauge exactly how much the [H3 Anti-Burn LoRA](https://hu
 
 ## 2. Continuations with Geiru Hybrid Windows (after the LoRA testing)
 
+A single 2-minute render already holds up with no degradation ([hybrid_windows_2min.md](hybrid_windows_2min.md)), so the next step is extending one.
+
 The idea: extend a finished Hybrid Windows video without re-rendering it.
 
 1. Load the finished video's saved latent.
