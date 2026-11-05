@@ -12,6 +12,10 @@ So far every chain test has used one turbo LoRA (`minimax_h3_ref2v_turbo_8step_v
   - First report (Etupa, Banodoco, 2026-11-05): still degradation with `minimax_h3_ref2v_turbo_silver_dareties_comfy_pruned_v2`, even with context noise at 1. No noticeable degradation with `minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_resized_avg_rank_64_bf16` (the turbo all of these tests use) at 704 × 1280, 3 clips of 8 s.
 - **Higher resolutions** (for example 1 MP and up), to see whether protection holds the same way when there's more fine detail to lose.
 
+## 2b. A rolling keystone with the Anti-Burn LoRA (idea)
+
+Without the LoRA, the keystone has to come from a fixed clip (clip 1, or the first clip of a new scene), or the chain darkens beyond control. With the LoRA holding the colour, try taking the keystone from the previous clip instead, so each shot isn't pulled back toward clip 1. See [test 14](../20261105/beach_lora_strength_test.md).
+
 ## 3. Continuations with Geiru Hybrid Windows (after the LoRA testing)
 
 A single 2-minute render already holds up with no degradation ([hybrid_windows_2min.md](hybrid_windows_2min.md)), so the next step is extending one.

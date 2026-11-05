@@ -34,4 +34,8 @@ By eye (roycho):
 - **There is some darkening over the 50 clips, but it never goes below a certain level.** It settles a little darker than the keystone (clip 1) and holds there instead of getting darker and darker.
 - **The quality holds without the LoRA.** Her face, hair, dress pattern, the sand and the waves stay clean through clip 50, with no build-up of burn or grit.
 
-This matches the earlier tests: degradation protection stops the drift from stacking up, but leaves a small, steady darkening. Next: compare with the 0.2, 0.4 and 0.6 runs to see whether the LoRA closes that gap, and what it does to quality.
+- **By clip 10 it has darkened all it's going to.** From there to clip 50 it holds at that level.
+
+This matches the earlier tests: degradation protection stops the drift from stacking up, but leaves a small, steady darkening.
+
+**Idea (roycho): with the LoRA, the keystone could come from the previous clip instead of clip 1 every time.** Right now the keystone has to come from a fixed clip (clip 1, or the first clip of a new scene): without that, it darkens beyond control, so we have to pick a clip to keep it from going too dark. If the Anti-Burn LoRA holds the colour on its own, a rolling keystone from the clip before could work instead, and the shot wouldn't be pulled back toward clip 1. More tests. Next: compare with the 0.2, 0.4 and 0.6 runs to see whether the LoRA closes that gap, and what it does to quality.
