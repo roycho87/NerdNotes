@@ -48,8 +48,8 @@ This builds on a lot of other people's work: seitanism and NikoDemon80 (H3 Motio
 
 Found something, ran a test, or wrote up your own results? Open an [issue](https://github.com/roycho87/NerdNotes/issues).
 
-**If you want your contribution protected by the CC BY-SA 4.0 license, to keep it open source, you must say so in your issue,** and I'll add it to the protected folder, [`community_cc_by_sa/`](community_cc_by_sa/). Otherwise it goes into a community folder that isn't covered by the license (like [`20261102/community/`](20261102/community/)).
+**If you want your contribution protected by the CC BY-SA 4.0 license, to keep it open source, you must say so in your issue,** and I'll add it to the protected folder, [`community_cc_by_sa/`](community_cc_by_sa/). Anyone who reuses a protected contribution must credit its contributor as well as NerdNotes. Otherwise it goes into a community folder that isn't covered by the license (like [`20261102/community/`](20261102/community/)).
 
 ## License
 
-NerdNotes is licensed under [CC BY-SA 4.0](LICENSE): share and adapt anything here, as long as you credit roycho / NerdNotes with a link back and share what you make under the same license. The community folders are covered as described above. Details in [NOTICE.md](NOTICE.md).
+NerdNotes is licensed under [CC BY-SA 4.0](LICENSE): share and adapt anything here, as long as you credit roycho / NerdNotes with a link back and share what you make under the same license. Contributions in `community_cc_by_sa/` are under the same license, and reusing them requires crediting their contributor too. The other community folders aren't covered. Details in [NOTICE.md](NOTICE.md).
