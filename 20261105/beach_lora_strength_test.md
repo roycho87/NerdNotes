@@ -22,3 +22,16 @@ Test 13 ([static chair](../20261104/static_chair_lora_test.md)) showed no visibl
 - Motion: does a higher strength change how she moves?
 
 *(running, queued 2026-11-05 8:05 am)*
+
+## Baseline result: no LoRA, 50 clips (done)
+
+![No LoRA at clips 1, 10, 20, 30, 40 and 50](media/beach50_nolora_clips_1-50.png)
+
+*Frames 4 s into clips 1, 10, 20, 30, 40 and 50 of the no-LoRA run.*
+
+By eye (roycho):
+
+- **There is some darkening over the 50 clips, but it never goes below a certain level.** It settles a little darker than the keystone (clip 1) and holds there instead of getting darker and darker.
+- **The quality holds without the LoRA.** Her face, hair, dress pattern, the sand and the waves stay clean through clip 50, with no build-up of burn or grit.
+
+This matches the earlier tests: degradation protection stops the drift from stacking up, but leaves a small, steady darkening. Next: compare with the 0.2, 0.4 and 0.6 runs to see whether the LoRA closes that gap, and what it does to quality.
