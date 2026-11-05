@@ -8,7 +8,8 @@ A few 30-clip tests to gauge exactly how much the [H3 Anti-Burn LoRA](https://hu
 
 So far every chain test has used one turbo LoRA (`minimax_h3_ref2v_turbo_8step_v1.0`) at about 0.5 MP (480 × 864). Next, repeat the degradation protection tests with:
 
-- **Different speed (turbo) LoRAs.** Imagineer13 found burn varies a lot from one turbo to another, and someone using a different turbo reported degradation even with protection on.
+- **Different speed (turbo) LoRAs.** Imagineer13 found burn varies a lot from one turbo to another. Certain LoRAs affect protection differently, because a LoRA changes how the model reacts to noise: the noise itself comes from the scheduler, but each turbo was trained on its own noise levels, so it can handle the partly-noised held frames very differently.
+  - First report (Etupa, Banodoco, 2026-11-05): still degradation with `minimax_h3_ref2v_turbo_silver_dareties_comfy_pruned_v2`, even with context noise at 1. No noticeable degradation with `minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_resized_avg_rank_64_bf16` (the turbo all of these tests use) at 704 × 1280, 3 clips of 8 s.
 - **Higher resolutions** (for example 1 MP and up), to see whether protection holds the same way when there's more fine detail to lose.
 
 ## 3. Continuations with Geiru Hybrid Windows (after the LoRA testing)
