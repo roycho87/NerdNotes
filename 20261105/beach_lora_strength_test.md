@@ -21,7 +21,11 @@ Test 13 ([static chair](../20261104/static_chair_lora_test.md)) showed no visibl
 - Colour drift from clip 1.
 - Motion: does a higher strength change how she moves?
 
-*(running, queued 2026-11-05 8:05 am)*
+*(done: all four runs finished 2026-11-05)*
+
+Stitched into one 5 min 20 s video per run, plus a 4-up side-by-side (no LoRA | 0.2 | 0.4 | 0.6) and a sped-up GIF of the 4-up, on roycho's PC in `output\minimax\beach_lora50\stitched\`.
+
+**Verdict (roycho, by eye):** *(to come)*
 
 ## Baseline result: no LoRA, 50 clips (done)
 
