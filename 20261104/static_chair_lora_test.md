@@ -29,4 +29,4 @@ Stitched into one 3 min 13 s video per run plus a 4-up side-by-side (no LoRA | 0
 **roycho's verdict, by eye: no visible difference between the four runs.**
 
 - **No smoothing from the LoRA.** If the LoRA softened fine texture, 0.6 should look softer than no LoRA on the wallpaper, rug and houndstooth. It doesn't, at any strength. So the softening some people see is more likely degradation than the LoRA.
-- **Degradation protection alone held this static scene for 30 clips**, so there was nothing left for the LoRA to fix here. On the moving beach run (test 11) it did help, so the next test repeats the four strengths on that moving scene: [beach_lora_strength_test.md](beach_lora_strength_test.md).
+- **Degradation protection alone held this static scene for 30 clips**, so there was nothing left for the LoRA to fix here. On the moving beach run (test 11) it did help, so the next test repeats the four strengths on a moving beach scene for 50 clips: [beach_lora_strength_test.md](beach_lora_strength_test.md).

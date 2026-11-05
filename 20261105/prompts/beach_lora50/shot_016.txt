@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the adult woman whose appearance comes from <Picture 1>, a character sheet of her standing on a plain grey background. Preserve her face, curvy body proportions, wavy shoulder-length pink hair with bangs, red clown nose, red lipstick, cream sundress with a small pink floral print, a modest rounded neckline, wide sleeveless shoulders, a fitted waist, and a full mid-calf skirt, and pink strappy sandals. Use <Picture 1> for her appearance only, not its grey background or its poses.
+
+summary:
+[reference generation] <Subject 1> runs along a sunny beach beside the sea in a tracking shot, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - retain her face, pink hair, clown nose, lipstick, floral sundress, sandals, and curvy figure from <Picture 1> while she runs along the beach.
+
+detailed_description:
+Photorealistic live-action rendering with the same character appearance as <Picture 1>, on a wide sandy beach on a bright, sunny afternoon. Gentle waves roll in from a blue-green sea on one side, wet sand shines along the waterline, and rocky green headlands rise in the distance under a clear sky. Warm, natural sunlight comes from high and to the side. The camera tracks alongside her at her running speed in a smooth tracking shot, keeping a medium-wide frame with her full body visible from head to feet and the sea behind her, with no cuts.
+
+[Shot 1] <Subject 1> is running along the beach, continuing exactly from where the previous shot ended. <Subject 1> looks out to sea at a distant sailboat on the horizon, smiling, as she keeps running. Her face, pink hair, red clown nose, floral sundress, and sandals stay exactly as in <Picture 1> the whole time.
+
+overall_soundscape:
+The steady wash of waves on the shore, the soft thud of her sandals on firm wet sand, her even breathing, and the light flutter of her dress in the sea breeze.
+
+non_diegetic_music:
+N/A
