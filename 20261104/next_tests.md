@@ -4,7 +4,14 @@
 
 A few 30-clip tests to gauge exactly how much the [H3 Anti-Burn LoRA](https://huggingface.co/Imagineer13/H3-Anti-Burn-LoRA) affects quality, what the best strength is, and whether the slight softening some people see comes from the LoRA or from degradation showing up in a different form. Details: [antiburn_results.md](antiburn_results.md). First test: [static_chair_lora_test.md](static_chair_lora_test.md) (no LoRA, 0.2, 0.4, 0.6, 30 clips each): done, no visible difference on a still scene. Second test: [the same four strengths on a moving beach run, 50 clips](../20261105/beach_lora_strength_test.md) (running).
 
-## 2. Continuations with Geiru Hybrid Windows (after the LoRA testing)
+## 2. Other speed LoRAs and higher resolutions
+
+So far every chain test has used one turbo LoRA (`minimax_h3_ref2v_turbo_8step_v1.0`) at about 0.5 MP (480 × 864). Next, repeat the degradation protection tests with:
+
+- **Different speed (turbo) LoRAs.** Imagineer13 found burn varies a lot from one turbo to another, and someone using a different turbo reported degradation even with protection on.
+- **Higher resolutions** (for example 1 MP and up), to see whether protection holds the same way when there's more fine detail to lose.
+
+## 3. Continuations with Geiru Hybrid Windows (after the LoRA testing)
 
 A single 2-minute render already holds up with no degradation ([hybrid_windows_2min.md](hybrid_windows_2min.md)), so the next step is extending one.
 
@@ -22,7 +29,7 @@ Related work found so far:
 - kijai described the same two-stage idea on Banodoco (2026-10-29): extend with latent inpainting for the first steps, then full context windows for the last steps to remove degradation. That's what Hybrid Windows does inside one run.
 - [Herrgott's H3 Infinite Continuation Suite](https://github.com/HerrgottMargott/Herrgotts-H3-Infinite-Continuation-Suite/releases/tag/1.3.0) and [ComfyUI-MiniMaxH3-Contex-Loop](https://github.com/salikshah/ComfyUI-MiniMaxH3-Contex-Loop) do continuations with clip chaining, not context windows.
 
-## 3. A better keystone with H3's image model (idea)
+## 4. A better keystone with H3's image model (idea)
 
 Clean up clip 1's first frame with an H3 image model and use the cleaned frame as the keystone for the whole chain. If the image model shares the video model's latent space (same VAE), the single-frame keystone latent could be edited and plugged straight back in, with no decode and re-encode. That's the first thing to check.
 
