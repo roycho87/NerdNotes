@@ -2,7 +2,7 @@
 
 ## 1. Anti-Burn LoRA: quality and best strength
 
-A few 30-clip tests to gauge exactly how much the [H3 Anti-Burn LoRA](https://huggingface.co/Imagineer13/H3-Anti-Burn-LoRA) affects quality, what the best strength is, and whether the slight softening some people see comes from the LoRA or from degradation showing up in a different form. Details: [antiburn_results.md](antiburn_results.md). First test: [static_chair_lora_test.md](static_chair_lora_test.md) (no LoRA, 0.2, 0.4, 0.6, 30 clips each).
+A few 30-clip tests to gauge exactly how much the [H3 Anti-Burn LoRA](https://huggingface.co/Imagineer13/H3-Anti-Burn-LoRA) affects quality, what the best strength is, and whether the slight softening some people see comes from the LoRA or from degradation showing up in a different form. Details: [antiburn_results.md](antiburn_results.md). First test: [static_chair_lora_test.md](static_chair_lora_test.md) (no LoRA, 0.2, 0.4, 0.6, 30 clips each): done, no visible difference on a still scene. Second test: [the same four strengths on the moving beach run](../20261105/beach_lora_strength_test.md) (running).
 
 ## 2. Continuations with Geiru Hybrid Windows (after the LoRA testing)
 
