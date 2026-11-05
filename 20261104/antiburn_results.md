@@ -67,7 +67,7 @@ How much of the plain chain's drift each setup takes care of, measured on the wh
 
 ## Next test: is the LoRA's smoothing real?
 
-Some people see a slight softening with the Anti-Burn LoRA. roycho's theory: the LoRA isn't causing it. Degradation normally shows up as burn (H3 over-sharpening as the chain drifts); the LoRA stops the over-sharpening, so the detail that's already been lost shows up as softness instead. The same degradation in a different form. Against that, Imagineer13 found the LoRA can over-smooth when it's too strong for the turbo ([his notes](../20261102/community/Imagineer13_H3_antiburn_notes.md)).
+Some people see a slight softening with the Anti-Burn LoRA. roycho's theory: the LoRA isn't causing it. Degradation normally shows up as burn (H3 over-sharpening as the chain drifts); the LoRA stops the over-sharpening, so the detail that's already been lost shows up as softness instead. The same degradation in a different form. Against that, Imagineer13 found the LoRA can over-smooth when it's too strong for the turbo ([his notes](../community_cc_by_sa/Imagineer13_H3_antiburn_notes.md)).
 
 The test: a locked-off shot, the LoRA at 0.3, 0.6 and 1.0, measuring real fine detail and burn crunch separately (several texture sizes), against clip 1.
 - If the softness follows the chain length whatever the strength, it's degradation.

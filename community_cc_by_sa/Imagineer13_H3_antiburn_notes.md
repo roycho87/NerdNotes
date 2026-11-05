@@ -1,8 +1,8 @@
 # Imagineer13: how the H3 Anti-Burn LoRA was made (and what didn't work)
 
-Imagineer13's write-up on making the [H3 Anti-Burn LoRA](https://huggingface.co/Imagineer13/H3-Anti-Burn-LoRA), copied here unchanged from his training code's README: [TryingSomeStuff13/ai-toolkit, h3-antiburn branch](https://github.com/TryingSomeStuff13/ai-toolkit/tree/h3-antiburn/extensions_built_in/diffusion_models/minimax_h3/antiburn). All credit to him. File paths below (`config_universal_v1.yaml`, `recorder/...`, `metrics/...`, `../CONTINUATION.md`) are in that folder of his repo, not in NerdNotes.
+Imagineer13's write-up on making the [H3 Anti-Burn LoRA](https://huggingface.co/Imagineer13/H3-Anti-Burn-LoRA), copied here unchanged from his training code's README: [TryingSomeStuff13/ai-toolkit, h3-antiburn branch](https://github.com/TryingSomeStuff13/ai-toolkit/tree/h3-antiburn/extensions_built_in/diffusion_models/minimax_h3/antiburn). All credit to him. **Contributor: Imagineer13.** Licensed under CC BY-SA 4.0 with his permission (2026-11-05): if you share or adapt it, credit Imagineer13 as well as roycho / NerdNotes. File paths below (`config_universal_v1.yaml`, `recorder/...`, `metrics/...`, `../CONTINUATION.md`) are in that folder of his repo, not in NerdNotes.
 
-Our own results with it on Geiru Context Suite chains: [20261104/antiburn_results.md](../../20261104/antiburn_results.md).
+Our own results with it on Geiru Context Suite chains: [20261104/antiburn_results.md](../20261104/antiburn_results.md).
 
 ---
 

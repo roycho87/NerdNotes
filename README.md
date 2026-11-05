@@ -38,7 +38,7 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 | 2026-11-05 | [Test 14: LoRA strength on a moving scene](20261105/beach_lora_strength_test.md) | The same four strengths over 50 clips of the beach. |
 | | [Next tests](20261104/next_tests.md) | What's coming up. |
 
-**From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](20261102/community/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](20261102/community/NikoDemon80_H3_drift_notes.md)
+**From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](20261102/community/NikoDemon80_H3_drift_notes.md)
 
 ## Credits
 
