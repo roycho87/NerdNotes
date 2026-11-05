@@ -19,3 +19,9 @@ Related work found so far:
 - JalenBrunson mentioned unpublished resume/restart nodes for his [ComfyUI-HybridWindows](https://github.com/Jalen-Brunson/ComfyUI-HybridWindows) (Banodoco, 2026-10-17).
 - kijai described the same two-stage idea on Banodoco (2026-10-29): extend with latent inpainting for the first steps, then full context windows for the last steps to remove degradation. That's what Hybrid Windows does inside one run.
 - [Herrgott's H3 Infinite Continuation Suite](https://github.com/HerrgottMargott/Herrgotts-H3-Infinite-Continuation-Suite/releases/tag/1.3.0) and [ComfyUI-MiniMaxH3-Contex-Loop](https://github.com/salikshah/ComfyUI-MiniMaxH3-Contex-Loop) do continuations with clip chaining, not context windows.
+
+## 3. A better keystone with H3's image model (idea)
+
+Clean up clip 1's first frame with an H3 image model and use the cleaned frame as the keystone for the whole chain. If the image model shares the video model's latent space (same VAE), the single-frame keystone latent could be edited and plugged straight back in, with no decode and re-encode. That's the first thing to check.
+
+Related: on Banodoco, Hevi, VK and QuintForms clean up keyframes in an outside image model (Z-Image at 0.25–0.5) and run H3 again with them ([notes](../20261031/h3_long_video_experiments.md)). Same goal, but done outside H3 and with a decode in between.
