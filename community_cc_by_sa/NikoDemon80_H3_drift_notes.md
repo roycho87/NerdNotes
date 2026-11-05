@@ -1,3 +1,5 @@
+> **Contributor: NikoDemon80** ([ComfyUI-H3-Motion-Context](https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context)). Kept as he wrote it. Licensed under CC BY-SA 4.0 with his permission (2026-11-05): if you share or adapt it, credit NikoDemon80 as well as roycho / NerdNotes.
+
 # Issue title
 
 H3 chain degradation: NikoDemon80's test notes (what I measured, what failed, what changed my mind)

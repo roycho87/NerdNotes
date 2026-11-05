@@ -91,7 +91,7 @@ H3 is a flow-matching model: each step moves the latent from noise toward a clea
 
 So **the visible picture only really forms in the last two steps.** For six of eight steps, everything is mostly noise.
 
-But NikoDemon80 logged the model's guess at the finished clip after every step and found **contrast and colour are already decided at step 0**, before there's any picture. Saturation is settled by step 1; only fine detail is added later, around steps 2–4. So the look of a clip is part of the model's plan from the start, and last-step tricks only reach detail. This held even for a clip with nothing pinned: clip 1 on its own gained 8–16 brightness levels over 124 frames. ([his notes, section 4](community/NikoDemon80_H3_drift_notes.md))
+But NikoDemon80 logged the model's guess at the finished clip after every step and found **contrast and colour are already decided at step 0**, before there's any picture. Saturation is settled by step 1; only fine detail is added later, around steps 2–4. So the look of a clip is part of the model's plan from the start, and last-step tricks only reach detail. This held even for a clip with nothing pinned: clip 1 on its own gained 8–16 brightness levels over 124 frames. ([his notes, section 4](../community_cc_by_sa/NikoDemon80_H3_drift_notes.md))
 
 H3's turbo / PDD schedules are tuned for `er_sde` + `beta`; community tests found generic samplers degrade them.
 
@@ -143,7 +143,7 @@ Several causes stack. Here's what we know, roughly from best-supported to more s
 
 This is the core of it, and the papers call it **exposure bias** or **error accumulation**. The model was trained to continue from clean, real video. In a chain it continues from its **own** output, which has small errors. It treats those errors as truth, adds its own, and passes everything on. xyzDist calls it the **"photocopy effect"**: a copy of a copy of a copy.
 
-Where the drift happens depends on the shot (NikoDemon80, [his notes, section 3](community/NikoDemon80_H3_drift_notes.md)):
+Where the drift happens depends on the shot (NikoDemon80, [his notes, section 3](../community_cc_by_sa/NikoDemon80_H3_drift_notes.md)):
 
 - **Moving shots:** 85–95% of contrast and 88–97% of saturation drift builds up **inside each clip** while it generates. The handover just passes it on.
 - **Locked-off shots with a subject doing something:** a lot of it is a **step at each join**, about 1% brightness and 1.5% colour per join. The first new frames sat about 2.8× further from the held frames than normal motion. Correcting only that step held the levels.
@@ -259,7 +259,7 @@ KingGore's approach for chains that get dark and blurry after ~3 links: only fix
 
 ### NikoDemon80's stack (Motion Context)
 
-From [his notes, section 5](community/NikoDemon80_H3_drift_notes.md). It slows drift; it doesn't stop it.
+From [his notes, section 5](../community_cc_by_sa/NikoDemon80_H3_drift_notes.md). It slows drift; it doesn't stop it.
 
 - **Join Match:** corrects the step at each join on locked-off shots. Over 6 clips: darkening 5% → 0.3%, contrast loss 2.4% → 0.5%, colour loss 7% → 2.4%. Texture unchanged. It stands down on moving shots.
 - **One-step Refine Blend, then Join Match:** a refine of just the last step (split at step 7 of 8), blended in. Detail growth +14.9% (was +23.5%), texture +11.4% (was +23.4%), saturation and brightness flat. Order matters: Join Match has to run after the refine. A 0.5-denoise refine aged the subject 5–10 years by clip 5 in his setup.
@@ -377,7 +377,7 @@ The common thread: **models drift because they trust their own previous output t
 - **Lumifel** (20 Aug 2026): all his methods suffered "burn in" at 60 s or more, with "the color get warmer and warmer when the scene doesn't change with a cut". His fix "recalculate[s] how much of the sampler's current noise to apply to the context every sampling steps, while fading that treatment to zero near the end of the context so the join stays clean."
 
 **From GitHub issues**
-- **NikoDemon80** (Nov 2026): three months of H3 drift tests, including what failed. Kept in this repo as is: [community/NikoDemon80_H3_drift_notes.md](community/NikoDemon80_H3_drift_notes.md).
+- **NikoDemon80** (Nov 2026): three months of H3 drift tests, including what failed. Kept in this repo as is: [community_cc_by_sa/NikoDemon80_H3_drift_notes.md](../community_cc_by_sa/NikoDemon80_H3_drift_notes.md).
 
 **From Reddit**
 - **ucost4** (r/StableDiffusion, Nov 2026): tested a last-frame PNG, a similar prompt with the same sigmas and seed, the previous clip's video latent, and prompting an angle cut by cinema rules; found the video latent "looking promising", using angle cuts until a solid solution turns up.
