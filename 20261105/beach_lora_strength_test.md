@@ -30,6 +30,7 @@ Stitched into one 5 min 20 s video per run, plus a 4-up side-by-side (no LoRA | 
 - **The colour gain from test 11 couldn't be replicated.** The suspected cause is double compression of one of the initial side-by-side videos during stitching. The 4-up made for this test isn't reliable for colour either.
 - **The LoRA was checked and loaded correctly:** on at the right strength from clip 2, wired into the sampler, and every layer matches the H3 model.
 - **It doesn't hurt fine detail** (test 13 showed no softening at any strength).
+- **Why it was thought to cause smoothing (roycho's theory):** the smoothing some people saw with this LoRA is suspected to be the detail loss that comes with normal degradation. Because the LoRA preserves colour, that loss showed up as smoothing instead of the usual crushed blacks and waxy skin we're all familiar with.
 - **The LoRA itself works:** roycho tested it previously on its own, without these nodes, and it had a positive impact on colour. What these tests couldn't show is any extra colour gain on top of degradation protection.
 - **Geiru Protection LoRA moved to an experimental repo,** [Geiru-Protection-LoRa-Experimental](https://github.com/roycho87/Geiru-Protection-LoRa-Experimental). roycho plans to explore using a LoRA with this loader, on top of the protection nodes, to preserve colour better. Please try it and share what you find; more testing is needed.
 

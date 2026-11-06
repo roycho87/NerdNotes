@@ -75,6 +75,8 @@ The test: a locked-off shot, the LoRA at 0.3, 0.6 and 1.0, measuring real fine d
 - If the softness follows the chain length whatever the strength, it's degradation.
 - If it gets worse as the strength goes up, it's the LoRA.
 
+**Result ([test 13](static_chair_lora_test.md)):** no smoothing at any strength. So the smoothing some people saw with this LoRA is suspected to be the detail loss that comes with normal degradation. Because the LoRA preserves colour, that loss showed up as smoothing instead of the usual crushed blacks and waxy skin we're all familiar with.
+
 ## Caveats
 
 - One seed. Differences of about 1 in colour change are within noise; the grit gap on the beach is small but holds at every clip.
