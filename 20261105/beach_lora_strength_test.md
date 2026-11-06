@@ -25,7 +25,13 @@ Test 13 ([static chair](../20261104/static_chair_lora_test.md)) showed no visibl
 
 Stitched into one 5 min 20 s video per run, plus a 4-up side-by-side (no LoRA | 0.2 | 0.4 | 0.6) and a sped-up GIF of the 4-up, on roycho's PC in `output\minimax\beach_lora50\stitched\`.
 
-**Verdict (roycho, by eye):** *(to come)*
+**Verdict (roycho, by eye):** no visible difference. In roycho's own side-by-side (stitched in his editor, straight from the original clips), no LoRA, 0.2, 0.4 and 0.6 look the same in colour.
+
+- **The colour gain from test 11 couldn't be replicated.** The suspected cause is double compression of one of the initial side-by-side videos during stitching. The 4-up made for this test isn't reliable for colour either.
+- **The LoRA was checked and loaded correctly:** on at the right strength from clip 2, wired into the sampler, and every layer matches the H3 model.
+- **It doesn't hurt fine detail** (test 13 showed no softening at any strength).
+- **The LoRA itself works:** roycho tested it previously on its own, without these nodes, and it had a positive impact on colour. What these tests couldn't show is any extra colour gain on top of degradation protection.
+- **Geiru Protection LoRA moved to an experimental repo,** [Geiru-Protection-LoRa-Experimental](https://github.com/roycho87/Geiru-Protection-LoRa-Experimental). roycho plans to experiment with training a LoRA that would work with this concept. Please try it and share what you find; more testing is needed.
 
 ## Baseline result: no LoRA, 50 clips (done)
 

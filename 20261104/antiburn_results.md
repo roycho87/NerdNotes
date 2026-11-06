@@ -1,5 +1,7 @@
 # Anti-Burn LoRA results: burn and colour (tests 11 and 12)
 
+> **Update (2026-11-05):** the colour gain seen here couldn't be replicated in [test 14](../20261105/beach_lora_strength_test.md). The suspected cause is double compression of one of the initial side-by-side videos during stitching. The measurements below come from the original clips, and on the beach clips they show small differences. Geiru Protection LoRA is now in [Geiru-Protection-LoRa-Experimental](https://github.com/roycho87/Geiru-Protection-LoRa-Experimental).
+
 Follows [20261101 tests 11 and 12](../20261101/frame0_influence_test.md). Burn and colour are measured; the motion verdict is roycho's, from watching the videos.
 
 ## What ran
@@ -86,3 +88,4 @@ The test: a locked-off shot, the LoRA at 0.3, 0.6 and 1.0, measuring real fine d
 ## Takeaway
 
 - Anti-Burn 0.6 on top of linear 1 eliminates virtually all remaining colour drift (by eye) and burn, without costing motion. 30-clip tests to come for quality and the best strength.
+- **Later:** the colour result couldn't be replicated (see the update at the top).
