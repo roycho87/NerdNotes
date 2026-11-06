@@ -31,7 +31,7 @@ Stitched into one 5 min 20 s video per run, plus a 4-up side-by-side (no LoRA | 
 - **The LoRA was checked and loaded correctly:** on at the right strength from clip 2, wired into the sampler, and every layer matches the H3 model.
 - **It doesn't hurt fine detail** (test 13 showed no softening at any strength).
 - **The LoRA itself works:** roycho tested it previously on its own, without these nodes, and it had a positive impact on colour. What these tests couldn't show is any extra colour gain on top of degradation protection.
-- **Geiru Protection LoRA moved to an experimental repo,** [Geiru-Protection-LoRa-Experimental](https://github.com/roycho87/Geiru-Protection-LoRa-Experimental). roycho plans to experiment with training a LoRA that would work with this concept. Please try it and share what you find; more testing is needed.
+- **Geiru Protection LoRA moved to an experimental repo,** [Geiru-Protection-LoRa-Experimental](https://github.com/roycho87/Geiru-Protection-LoRa-Experimental). roycho plans to explore using a LoRA with this loader, on top of the protection nodes, to preserve colour better. Please try it and share what you find; more testing is needed.
 
 ## Baseline result: no LoRA, 50 clips (done)
 
