@@ -37,6 +37,7 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 | 2026-11-04 | [Test 13: LoRA strength on a still scene](20261104/static_chair_lora_test.md) | No LoRA, 0.2, 0.4 and 0.6 over 30 clips. |
 | 2026-11-05 | [Test 14: LoRA strength on a moving scene](20261105/beach_lora_strength_test.md) | The same four strengths over 50 clips of the beach: no visible difference. |
 | 2026-11-06 | [Test 15: a talking clown in 16 Hybrid Windows](20261106/talking_clown_hybrid_16win.md) | 2 minutes of talking at full steps: no visible degradation, a slow measured darkening, and the prompting fixes. |
+| 2026-11-07 | [Test 16: every combination of the three protections](20261107/beach30_protection_combos.md) | Eight 30-clip beach chains: context only, keystone + capstone, the protection LoRA, context noise, each pair, and all three (running). |
 | | [Next tests](20261104/next_tests.md) | What's coming up. |
 
 **From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md)
