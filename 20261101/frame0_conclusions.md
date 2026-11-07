@@ -519,6 +519,28 @@ One seed, and the beach is a moving shot, so the corners don't show exactly the 
 
 **Change:** the context noise strength default is now **1** (was 0.8) in Geiru Context Noise and Geiru Hybrid Windows. Linear stays the default fade.
 
+## Related work: frame 0 elsewhere
+
+Looked up on 2026-11-07: who else has used frame 0 (or the first latent) with H3, and whether research does the same thing.
+
+**On the Banodoco Discord (MiniMax H3 channels), before these tests:**
+
+- Aug 2026: Gleb Tretyak and Chandler found that H3's code only accepts keyframe anchors at frame 0 and the last frame (`PackedLayout`); Chandler called the limit arbitrary.
+- Sep 2026: Alisson explained that H3's video guide is anchored at frame 0, the way the model was trained (`MiniMaxH3AddGuide` with `frame_idx = 0`). reallybigname loops video by sending the overlap back in as a guide at frame 0. seitanism asked about the 1-4-4-4-4 latent layout, where the first latent holds a single frame.
+- Oct 2026: TSC used a swapped-character first-frame latent as a guide to force a character swap. Kijai's ComfyUI change ([PR #16881](https://github.com/Comfy-Org/ComfyUI/pull/16881)) decodes single images as a clip's first latent.
+
+All of these use frame 0 as a guide, an anchor slot or a way to swap a character. None of them use it as the source of detail and colour for a chain, or against drift. That started here: grafting clip 1's frame 0 onto the front of the held context (Oct 28) and the keystone. Not everyone agrees on why chains drift: Ryko thinks each generated frame is simply a little worse than the one before.
+
+**In research: the "attention sink".**
+
+Long-video research uses the same idea under another name. Models that generate long videos piece by piece keep the first frames as a permanent anchor (an "attention sink") so later frames don't drift:
+
+- [Rolling Forcing](https://www.alphaxiv.org/abs/2509.25161v1) (ICLR 2026) keeps the first frames as an anchor while it generates in real time.
+- [Deep Forcing](https://arxiv.org/html/2512.05081) (no training needed) gives 40–60% of its window to these anchor frames and found that deeper anchors cut drift over 60-second videos. It also found the anchor alone only partly fixes degradation, and added a second fix on top.
+- [Disen-Forcing](https://arxiv.org/html/2611.02822) (Nov 2026), "Disentangling Semantic Anchoring from Motion" (not read yet).
+
+**The difference:** those papers keep the anchor inside the model's attention memory while one video is being generated. The keystone does it with the actual frame-0 latent, put into every separate clip of a chain, with an unchanged model. Deep Forcing's finding that the anchor alone isn't enough lines up with what these tests found (keystone helps, capstone and context noise help further); [test 16](../20261107/beach30_protection_combos.md) measures each one on its own and in every combination.
+
 ## Running now
 
 Nothing. Tests 11 and 12 are done: burn and colour results are in [20261104/antiburn_results.md](../20261104/antiburn_results.md). Anti-Burn 0.6 gave the lowest colour change and grit of the whole sweep, and roycho found the motion great with and without it.
