@@ -32,4 +32,36 @@ Which of the three degradation protections does the work, and do they add up? Ei
 - Which protection on its own cuts the drift the most, compared with context only.
 - Whether the pairs and all three together do better than the best one alone.
 
-*(running, started 2026-11-07)*
+## Results
+
+All 30 clips of every run are the beach run (no scene change), so everything is measured against clip 1.
+
+![Clip 30 of every run, next to clip 1](media/beach30_combos_clip30.jpg)
+
+Clip 20: [every run](media/beach30_combos_clip20.jpg). Raw numbers for every clip: [beach30_combos_metrics.csv](media/beach30_combos_metrics.csv).
+
+**Baseline (context only), clip 1 → clip 30:** corner colour drift 81, 38% darker, and grit went from 0.75 to 2.80 (almost 4× clip 1).
+
+Each setup at clip 30 (average of clips 26–30), and how much it cuts the baseline's drift:
+
+| Setup | Colour drift | Darkening | Extra grit cut |
+|---|---|---|---|
+| Context only (baseline) | 81 | 38% | – |
+| K | 37 (cuts 54%) | 17% (cuts 56%) | 81% |
+| K + N | 46 (cuts 43%) | 21% (cuts 44%) | 80% |
+| K + L | 48 (cuts 40%) | 22% (cuts 42%) | 88% |
+| K + L + N | 50 (cuts 38%) | 23% (cuts 40%) | 93% |
+| N | 95 (17% worse) | 45% (19% worse) | 61% |
+| L + N | 92 (14% worse) | 42% (13% worse) | 80% |
+| L | 110 (37% worse) | 51% (36% worse) | 70% |
+
+**What it means:**
+
+- **Keystone + capstone does almost all the work.** Every run with K roughly halves the colour drift and the darkening. Every run without it ends up as dark and discoloured as context only, or worse.
+- **K alone was best on colour and brightness.** Adding the LoRA, context noise or both made colour slightly worse but left a little less grit. The least grit was K + L + N.
+- **Without K, the LoRA and context noise don't stop the drift.** They cut some fine grain, but by eye L and L + N have the worst stripes and banding in the sky by clip 30 (the grit number only measures fine grain, not big streaks).
+- **At clip 20 the four K runs are about tied** (colour 34–47). They only spread out by clip 30.
+
+**Caveats:** one seed, and the camera moves, so the corners don't show exactly the same content in every clip. Differences of a few points between the K runs are about noise level; the gap between the K runs and the rest is real. A second test (forest trail, seed 5678, context only and the four K runs) is running to check it.
+
+**How it's measured:** the four corners of the frame (top: sky; bottom: sand), averaged over frames 166–178 of each clip (about 20 frames from the end). Colour drift is the RGB distance from clip 1's corners; darkening is the drop in corner brightness against clip 1 (121.5); grit is the fine grain in the corners (the difference from a slightly blurred copy). Clip 30 numbers are the average of clips 26–30.
