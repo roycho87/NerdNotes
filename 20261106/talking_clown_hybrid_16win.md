@@ -6,13 +6,26 @@ A 2 min 6 s talking video in one Geiru Hybrid Windows render: the clown talks to
 
 *(space for the video)*
 
-## Setup
+## Settings used for this video
 
-- 3031 frames (2:06) at 544 × 960 (portrait), 16 windows of 226 frames, overlap 39.
-- One prompt per window, Ref2AV, with roycho's own recorded voice as the audio (split per window, each prompt worded exactly like its part of the recording).
-- **`switch_step` 8:** every window renders all 8 steps on its own, with no blended pass and `finished_handoff` off.
-- Keystone and capstone on (`capstone_step` 6), context noise linear 1, `fuse_method` pyramid, `freenoise` off, crash protection on.
-- Turbo 8-step LoRA and Motion Booster LoRA at 1, er_sde / beta, 8 steps.
+| | |
+|---|---|
+| Length | 3031 frames (2:06) at 24 fps, 544 × 960 (portrait) |
+| Windows | 16 windows of 226 frames (`context_length` 226), `context_overlap` 39 |
+| `switch_step` | 8 (every window renders all 8 steps on its own, no blended pass) |
+| `finished_handoff` | off |
+| Keystone / capstone | `keystone_swap` on, `back_capstone` on, `capstone_step` 6 |
+| Context noise | on, strength 1, fade linear |
+| `fuse_method` | pyramid |
+| `freenoise` | off |
+| `split_conds_to_windows` | on (one prompt per window) |
+| `sound_first` | off |
+| Crash protection | on |
+| Sampler | er_sde, beta scheduler, 8 steps, BasicGuider |
+| Sigma shift | video 12, audio 3 |
+| LoRAs | Turbo 8-step (ref2v, 768p) at 1, Motion Booster V2 at 1 |
+| Audio | roycho's recorded voice (126.3 s), encoded into the latent with a noise mask of 0.5 |
+| Prompts | Ref2AV, one per window, each worded exactly like its part of the recording |
 
 ## Result
 
