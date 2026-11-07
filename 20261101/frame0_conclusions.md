@@ -537,9 +537,20 @@ Long-video research uses the same idea under another name. Models that generate 
 
 - [Rolling Forcing](https://www.alphaxiv.org/abs/2509.25161v1) (ICLR 2026) keeps the first frames as an anchor while it generates in real time.
 - [Deep Forcing](https://arxiv.org/html/2512.05081) (no training needed) gives 40–60% of its window to these anchor frames and found that deeper anchors cut drift over 60-second videos. It also found the anchor alone only partly fixes degradation, and added a second fix on top.
-- [Disen-Forcing](https://arxiv.org/html/2611.02822) (Nov 2026), "Disentangling Semantic Anchoring from Motion" (not read yet).
+- [Disen-Forcing](https://arxiv.org/html/2611.02822) (Nov 2026), "Disentangling Semantic Anchoring from Motion". Its main points:
+  - Pinning the first frames (a "frame sink") does stop drift, but it makes motion stiff: in their tests it cut the amount of motion roughly in half.
+  - Only a small group of the model's attention heads (about 20%, the "anchor heads") actually look back at the first frame and hold the look steady. The rest ("working heads") build motion from nearby frames.
+  - Showing the first frame to every head is what kills motion: the model takes the easy way out and stays close to that clean first frame.
+  - Their fix lets only the anchor heads see the first frame, plus a training rule that keeps motion separate, and gets both low drift and full motion. It needs training (distillation) and was built on a frame-by-frame model (Wan 2.1 1.3B), so it can't be applied to H3 as it is.
 
 **The difference:** those papers keep the anchor inside the model's attention memory while one video is being generated. The keystone does it with the actual frame-0 latent, put into every separate clip of a chain, with an unchanged model. Deep Forcing's finding that the anchor alone isn't enough lines up with what these tests found (keystone helps, capstone and context noise help further); [test 16](../20261107/beach30_protection_combos.md) measures each one on its own and in every combination.
+
+**What Disen-Forcing means for these tests:**
+
+- It matches the early capstone finding that a frame at the back made her return to that position: an anchor the model can always see pulls the motion back toward it.
+- Late Lock and `keystone_step` work on the same trade-off from another side: the anchor comes in only for the later steps, so the early steps are free to make motion.
+- Something that could carry over without training: letting only some of H3's attention heads see the keystone. That would mean patching H3's attention head by head and first finding which of its heads are the anchor heads, so it's an idea, not a plan.
+- For test 16, the keystone runs should be checked for lost motion as well as for drift (frame-to-frame motion, compared with context only).
 
 ## Running now
 
