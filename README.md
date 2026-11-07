@@ -21,7 +21,7 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 5. **Scene changes reset drift on their own,** so protection is a switch: on for long single-scene stretches, off around cuts.
 6. **It holds over long chains.** 50 clips stay clean where a plain chain falls apart. What's left is a small, steady darkening that stops a little below clip 1.
 7. **The Anti-Burn LoRA** (Imagineer13) has a positive impact on colour on its own, but on top of degradation protection it made no visible difference, on a still scene or over 50 clips of a moving one. The earlier colour gain couldn't be replicated (suspected cause: double compression of one of the initial side-by-sides). Geiru Protection LoRA is now [experimental](https://github.com/roycho87/Geiru-Protection-LoRa-Experimental).
-8. **Hybrid Windows held for two minutes** in one render, with no visible degradation.
+8. **Hybrid Windows held for two minutes** in one render, with no visible degradation. At full steps it's not as good as the continuation nodes at preventing degradation ([test 15](20261106/talking_clown_hybrid_16win.md): no visible change, but a slow measured darkening), and that isn't its purpose: it's for fast, seamless motion.
 9. **Your speed (turbo) LoRA matters:** protection that works with one turbo may not with another.
 
 ## All the notes
@@ -36,6 +36,7 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 | 2026-11-04 | [Hybrid Windows: 2 minutes in one render](20261104/hybrid_windows_2min.md) | A 16-window, 2-minute roller coaster ride, and the prompt fixes that made the joins hold. |
 | 2026-11-04 | [Test 13: LoRA strength on a still scene](20261104/static_chair_lora_test.md) | No LoRA, 0.2, 0.4 and 0.6 over 30 clips. |
 | 2026-11-05 | [Test 14: LoRA strength on a moving scene](20261105/beach_lora_strength_test.md) | The same four strengths over 50 clips of the beach: no visible difference. |
+| 2026-11-06 | [Test 15: a talking clown in 16 Hybrid Windows](20261106/talking_clown_hybrid_16win.md) | 2 minutes of talking at full steps: no visible degradation, a slow measured darkening, and the prompting fixes. |
 | | [Next tests](20261104/next_tests.md) | What's coming up. |
 
 **From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md)
