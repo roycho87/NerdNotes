@@ -39,10 +39,10 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 | 2026-11-06 | [Test 15: a talking clown in 16 Hybrid Windows](20261106/talking_clown_hybrid_16win.md) | 2 minutes of talking at full steps: no visible degradation, a slow measured darkening, and the prompting fixes. |
 | 2026-11-07 | [Test 16: every combination of the three protections](20261107/beach30_protection_combos.md) | Eight 30-clip beach chains, every combination of keystone + capstone, the protection LoRA and context noise. Keystone + capstone does almost all the work: it halves the colour drift and darkening; the others only trim fine grain. |
 | 2026-11-07 | [Test 17: the protections again on a forest trail](20261107/forest30_protection_combos.md) | Context only and the four keystone runs, new scene and seed. Same result as test 16: keystone + capstone stops the drift; context noise and the LoRA add little or nothing visible on top. |
-| 2026-11-08 | [Related research: matlowai's h3-long-video-research](20261108/matlowai_long_video_research.md) | Dylan (matlowai) measured the suite on 2-minute chains: keystone + capstone holds (even every 3rd clip), the LoRA, context noise and Late Lock add nothing, and the audio drone comes from the audio carry. |
+| 2026-11-08 | [Related research: matlowai's h3-long-video-research](community_cc_by_sa/matlowai_h3_long_video_research.md) | Dylan (matlowai) measured the suite on 2-minute chains: keystone + capstone holds (even every 3rd clip), the LoRA, context noise and Late Lock add nothing, and the audio drone comes from the audio carry. |
 | | [Next tests](20261104/next_tests.md) | What's coming up. |
 
-**From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md)
+**From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md) · [Dylan (matlowai)'s long-video research](community_cc_by_sa/matlowai_h3_long_video_research.md)
 
 ## Credits
 

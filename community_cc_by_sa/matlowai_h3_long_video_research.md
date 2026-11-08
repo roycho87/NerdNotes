@@ -1,3 +1,5 @@
+> **Contributor: Dylan (matlowai)** ([h3-long-video-research](https://github.com/matlowai/h3-long-video-research)). A summary of his research, which he published under CC BY 4.0 (it can be adapted under CC BY-SA 4.0 with credit). If you share or adapt it, credit "Dylan (matlowai), h3-long-video-research" as well as roycho / NerdNotes.
+
 # Related research: Dylan (matlowai), h3-long-video-research
 
 **Source:** [github.com/matlowai/h3-long-video-research](https://github.com/matlowai/h3-long-video-research), by Dylan ([matlowai](https://github.com/matlowai)) with Claude agents, published 2026-11-07. Text and figures are CC BY 4.0; this page summarizes it and links to it. Credit: "Dylan (matlowai), h3-long-video-research".
