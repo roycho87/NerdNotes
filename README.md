@@ -38,6 +38,7 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 | 2026-11-05 | [Test 14: LoRA strength on a moving scene](20261105/beach_lora_strength_test.md) | The same four strengths over 50 clips of the beach: no visible difference. |
 | 2026-11-06 | [Test 15: a talking clown in 16 Hybrid Windows](20261106/talking_clown_hybrid_16win.md) | 2 minutes of talking at full steps: no visible degradation, a slow measured darkening, and the prompting fixes. |
 | 2026-11-07 | [Test 16: every combination of the three protections](20261107/beach30_protection_combos.md) | Eight 30-clip beach chains, every combination of keystone + capstone, the protection LoRA and context noise. Keystone + capstone does almost all the work: it halves the colour drift and darkening; the others only trim fine grain. |
+| 2026-11-07 | [Test 17: the protections again on a forest trail](20261107/forest30_protection_combos.md) | Context only and the four keystone runs, new scene and seed. Same result as test 16: keystone + capstone stops the drift; context noise and the LoRA add little or nothing visible on top. |
 | | [Next tests](20261104/next_tests.md) | What's coming up. |
 
 **From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md)
