@@ -1,0 +1,151 @@
+run,clip,loudness_db,flatness,treble_pct_above_4k
+park 192 drop14,1,-45.6,0.185,40.8
+park 192 drop14,2,-47.2,0.222,66.9
+park 192 drop14,3,-47.2,0.201,80.6
+park 192 drop14,4,-46.3,0.157,90.2
+park 192 drop14,5,-46.6,0.102,84.3
+park 192 drop14,6,-45.6,0.144,69.5
+park 192 drop14,7,-47.2,0.059,83.5
+park 192 drop14,8,-46.5,0.064,71.4
+park 192 drop14,9,-45.3,0.169,56.5
+park 192 drop14,10,-47.3,0.066,82.5
+park 192 drop15,1,-45.6,0.185,40.8
+park 192 drop15,2,-47.0,0.195,65.3
+park 192 drop15,3,-48.0,0.184,76.1
+park 192 drop15,4,-46.7,0.125,83.0
+park 192 drop15,5,-46.9,0.082,20.5
+park 192 drop15,6,-54.0,0.104,33.6
+park 192 drop15,7,-50.6,0.071,33.8
+park 192 drop15,8,-50.5,0.042,33.8
+park 192 drop15,9,-50.1,0.034,49.5
+park 192 drop15,10,-49.5,0.025,59.7
+birds 175 drop14,1,-37.5,0.01,49.2
+birds 175 drop14,2,-38.1,0.004,88.8
+birds 175 drop14,3,-37.2,0.003,85.2
+birds 175 drop14,4,-36.3,0.002,85.4
+birds 175 drop14,5,-31.9,0.001,84.3
+birds 175 drop14,6,-28.9,0.0,84.4
+birds 175 drop14,7,-27.1,0.0,82.2
+birds 175 drop14,8,-25.3,0.001,78.3
+birds 175 drop14,9,-25.8,0.003,67.0
+birds 175 drop14,10,-21.4,0.025,35.6
+birds 175 normal (drop15),1,-37.5,0.01,49.2
+birds 175 normal (drop15),2,-37.8,0.004,82.7
+birds 175 normal (drop15),3,-38.1,0.003,83.4
+birds 175 normal (drop15),4,-36.8,0.002,79.9
+birds 175 normal (drop15),5,-32.6,0.001,83.5
+birds 175 normal (drop15),6,-29.2,0.0,81.9
+birds 175 normal (drop15),7,-27.9,0.001,76.8
+birds 175 normal (drop15),8,-25.8,0.001,71.4
+birds 175 normal (drop15),9,-23.5,0.003,63.6
+birds 175 normal (drop15),10,-20.5,0.023,30.3
+birds 175 feather8,1,-37.5,0.01,49.2
+birds 175 feather8,2,-37.5,0.004,75.8
+birds 175 feather8,3,-38.2,0.004,77.5
+birds 175 feather8,4,-36.6,0.002,73.9
+birds 175 feather8,5,-32.8,0.001,74.4
+birds 175 feather8,6,-29.5,0.0,75.3
+birds 175 feather8,7,-28.5,0.0,73.0
+birds 175 feather8,8,-27.3,0.0,70.8
+birds 175 feather8,9,-26.7,0.0,68.6
+birds 175 feather8,10,-24.1,0.014,32.5
+birds 175 timing-label patch,1,-37.5,0.01,49.2
+birds 175 timing-label patch,2,-38.5,0.005,85.0
+birds 175 timing-label patch,3,-37.9,0.003,80.1
+birds 175 timing-label patch,4,-36.5,0.002,77.5
+birds 175 timing-label patch,5,-31.3,0.001,84.2
+birds 175 timing-label patch,6,-29.3,0.001,85.0
+birds 175 timing-label patch,7,-28.5,0.001,80.6
+birds 175 timing-label patch,8,-27.3,0.001,76.6
+birds 175 timing-label patch,9,-26.2,0.003,70.7
+birds 175 timing-label patch,10,-21.2,0.024,36.0
+birds 175 guide,1,-37.5,0.01,49.2
+birds 175 guide,2,-36.5,0.005,58.7
+birds 175 guide,3,-34.2,0.002,57.1
+birds 175 guide,4,-31.9,0.002,54.7
+birds 175 guide,5,-31.3,0.001,65.4
+birds 175 guide,6,-31.0,0.001,72.7
+birds 175 guide,7,-30.6,0.001,67.7
+birds 175 guide,8,-29.7,0.001,68.3
+birds 175 guide,9,-27.6,0.002,70.1
+birds 175 guide,10,-22.5,0.021,55.9
+birds 175 re-encode,1,-37.5,0.01,49.2
+birds 175 re-encode,2,-38.7,0.006,70.8
+birds 175 re-encode,3,-38.8,0.006,62.8
+birds 175 re-encode,4,-38.1,0.004,58.3
+birds 175 re-encode,5,-38.6,0.003,49.5
+birds 175 re-encode,6,-37.9,0.001,38.3
+birds 175 re-encode,7,-41.5,0.002,28.1
+birds 175 re-encode,8,-43.8,0.002,43.2
+birds 175 re-encode,9,-42.4,0.001,49.4
+birds 175 re-encode,10,-37.9,0.0,8.6
+birds 175 re-encode+feather8,1,-37.5,0.01,49.2
+birds 175 re-encode+feather8,2,-39.1,0.006,64.7
+birds 175 re-encode+feather8,3,-39.3,0.007,55.6
+birds 175 re-encode+feather8,4,-39.7,0.007,60.6
+birds 175 re-encode+feather8,5,-38.8,0.004,57.9
+birds 175 re-encode+feather8,6,-37.6,0.003,58.4
+birds 175 re-encode+feather8,7,-39.3,0.001,59.1
+birds 175 re-encode+feather8,8,-43.3,0.001,47.4
+birds 175 re-encode+feather8,9,-42.1,0.002,43.9
+birds 175 re-encode+feather8,10,-34.8,0.001,15.7
+birds 192 drop14,1,-42.1,0.013,22.5
+birds 192 drop14,2,-38.6,0.01,4.3
+birds 192 drop14,3,-42.4,0.013,39.2
+birds 192 drop14,4,-40.5,0.008,6.6
+birds 192 drop14,5,-36.7,0.006,8.2
+birds 192 drop14,6,-38.6,0.01,15.4
+birds 192 drop14,7,-35.6,0.011,3.3
+birds 192 drop14,8,-36.6,0.013,5.3
+birds 192 drop14,9,-35.0,0.013,5.0
+birds 192 drop14,10,-43.5,0.086,61.2
+birds 192 drop15,1,-42.1,0.013,22.5
+birds 192 drop15,2,-42.4,0.017,10.6
+birds 192 drop15,3,-41.0,0.009,52.1
+birds 192 drop15,4,-36.4,0.006,13.2
+birds 192 drop15,5,-36.8,0.006,11.0
+birds 192 drop15,6,-31.8,0.003,2.0
+birds 192 drop15,7,-31.5,0.009,8.0
+birds 192 drop15,8,-29.8,0.004,2.7
+birds 192 drop15,9,-32.9,0.013,6.1
+birds 192 drop15,10,-35.5,0.054,67.8
+speech 192 drop15,1,-15.9,0.033,6.4
+speech 192 drop15,2,-18.1,0.02,7.1
+speech 192 drop15,3,-16.5,0.016,8.3
+speech 192 drop15,4,-16.2,0.018,9.1
+speech 192 drop15,5,-16.4,0.012,11.5
+speech 192 drop15,6,-15.7,0.01,11.2
+speech 192 drop15,7,-16.0,0.015,10.2
+speech 192 drop15,8,-14.7,0.015,11.3
+speech 192 drop15,9,-15.9,0.014,10.1
+speech 192 drop15,10,-15.9,0.013,12.3
+speech 192 drop14,1,-15.9,0.033,6.4
+speech 192 drop14,2,-18.5,0.025,7.8
+speech 192 drop14,3,-16.5,0.025,8.6
+speech 192 drop14,4,-16.5,0.019,10.4
+speech 192 drop14,5,-16.4,0.015,11.4
+speech 192 drop14,6,-16.4,0.012,11.8
+speech 192 drop14,7,-16.3,0.01,11.7
+speech 192 drop14,8,-16.3,0.008,11.3
+speech 192 drop14,9,-16.4,0.009,12.6
+speech 192 drop14,10,-17.1,0.007,10.3
+speech 175 normal,1,-15.0,0.034,6.4
+speech 175 normal,2,-15.3,0.024,6.1
+speech 175 normal,3,-14.8,0.019,6.5
+speech 175 normal,4,-14.1,0.016,6.4
+speech 175 normal,5,-13.8,0.015,7.3
+speech 175 normal,6,-13.6,0.015,7.7
+speech 175 normal,7,-13.6,0.016,8.8
+speech 175 normal,8,-13.5,0.016,9.8
+speech 175 normal,9,-13.6,0.016,11.6
+speech 175 normal,10,-13.4,0.014,12.4
+speech 175 re-encode+feather8,1,-15.0,0.034,6.4
+speech 175 re-encode+feather8,2,-16.3,0.019,3.8
+speech 175 re-encode+feather8,3,-15.1,0.015,4.0
+speech 175 re-encode+feather8,4,-16.1,0.018,9.4
+speech 175 re-encode+feather8,5,-16.4,0.008,8.9
+speech 175 re-encode+feather8,6,-17.8,0.012,7.4
+speech 175 re-encode+feather8,7,-18.5,0.006,7.8
+speech 175 re-encode+feather8,8,-18.7,0.003,8.2
+speech 175 re-encode+feather8,9,-17.9,0.001,8.4
+speech 175 re-encode+feather8,10,-16.5,0.001,4.5

@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the woman in <Picture 1>, with pink hair and a red clown nose. Use <Picture 1> for her appearance only.
+
+summary:
+[reference generation] <Subject 1> sits quietly on a bench in a city park beside a fountain, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - keep her face and pink hair from <Picture 1>.
+
+detailed_description:
+Photorealistic, a static wide shot of a sunny city park with a stone fountain, trees and a paved path.
+
+[Shot 1] <Subject 1> sits still on a park bench beside the fountain, silent, watching the water. Nobody speaks.
+
+overall_soundscape:
+Water splashing steadily in the stone fountain, birds chirping in the trees, leaves rustling in a light breeze, and distant city traffic.
+
+non_diegetic_music:
+N/A

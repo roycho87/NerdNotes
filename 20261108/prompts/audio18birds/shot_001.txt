@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the woman in <Picture 1>, with pink hair and a red clown nose. Use <Picture 1> for her appearance only.
+
+summary:
+[reference generation] <Subject 1> stands silently in a sunny forest full of singing birds, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - keep her face and pink hair from <Picture 1>.
+
+detailed_description:
+Photorealistic, a static medium shot in a bright forest, small songbirds perched on the branches all around her.
+
+[Shot 1] <Subject 1> stands still among the trees, silent, listening to the birds singing on the branches close by. Nobody speaks.
+
+overall_soundscape:
+Loud, clear birdsong close to the microphone the whole time: many small songbirds chirping, whistling and trilling over each other continuously, with bright, high-pitched calls. A very soft rustle of leaves underneath.
+
+non_diegetic_music:
+N/A
