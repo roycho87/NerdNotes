@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the woman in <Picture 1>, with pink hair and a red clown nose. Use <Picture 1> for her appearance only.
+
+summary:
+[reference generation] <Subject 1> faces the camera and repeats one short sentence, over an 8-second clip.
+
+retention_analysis:
+<Subject 1> (throughout [Shot 1]): fully_preserved - keep her face and pink hair from <Picture 1>.
+
+detailed_description:
+Photorealistic, a static close-up of <Subject 1> against a plain grey wall, soft even light.
+
+[Shot 1] <Subject 1> (S1), a woman with a clear, even, mid-pitched voice, looks into the camera and says, at a steady pace with short pauses: <d>[English] This is a test.</d> <d>[English] This is a test.</d> <d>[English] This is a test.</d> <d>[English] This is a test.</d> <d>[English] This is a test.</d> <d>[English] This is a test.</d>
+
+overall_soundscape:
+A quiet room with a faint, steady room tone.
+
+non_diegetic_music:
+N/A
