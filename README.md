@@ -41,9 +41,10 @@ The pink-haired clown is the test subject. She's in almost every test on purpose
 | 2026-11-07 | [Test 17: the protections again on a forest trail](20261107/forest30_protection_combos.md) | Context only and the four keystone runs, new scene and seed. Same result as test 16: keystone + capstone stops the drift; context noise and the LoRA add little or nothing visible on top. |
 | 2026-11-08 | [Related research: matlowai's h3-long-video-research](community_cc_by_sa/matlowai_h3_long_video_research.md) | Dylan (matlowai) measured the suite on 2-minute chains: keystone + capstone holds (even every 3rd clip), the LoRA, context noise and Late Lock add nothing, and the audio drone comes from the audio carry. |
 | 2026-11-08 | [Test 18: making the audio hold up down a chain](20261108/audio_hold_diagnostic.md) | Audio tests with the held audio on. Clip lengths that aren't multiples of 3 make the sound build up; re-encoding the held audio stops the build-up, but speech still degrades. |
+| 2026-11-08 | [Split unsample for continuations (TrentHunter82)](20261108/community/TrentHunter82_split_unsample.md) | Trent re-develops the held overlap from a half-unsampled copy of it. In a 4-clip plain chain it roughly halved the saturation drift and kept the edge detail; context noise gave no gain there. One seed, not yet tested with keystone + capstone. |
 | | [Next tests](20261104/next_tests.md) | What's coming up. |
 
-**From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md) · [Dylan (matlowai)'s long-video research](community_cc_by_sa/matlowai_h3_long_video_research.md)
+**From the community:** [Imagineer13 on how the Anti-Burn LoRA was made](community_cc_by_sa/Imagineer13_H3_antiburn_notes.md) · [NikoDemon80's drift notes](community_cc_by_sa/NikoDemon80_H3_drift_notes.md) · [Dylan (matlowai)'s long-video research](community_cc_by_sa/matlowai_h3_long_video_research.md) · [TrentHunter82's split unsample test](20261108/community/TrentHunter82_split_unsample.md)
 
 ## Credits
 
