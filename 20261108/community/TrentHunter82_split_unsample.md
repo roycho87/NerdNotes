@@ -1,4 +1,4 @@
-> **Contributor: TrentHunter82 (Flipping Sigmas)** ([TrentNodes](https://github.com/TrentHunter82/TrentNodes)). Posted as [NerdNotes issue #3](https://github.com/roycho87/NerdNotes/issues/3) on 2026-11-08 and kept as he wrote it. **Not** covered by NerdNotes' CC BY-SA 4.0 license: it stays under his own terms. The comparison image from the issue isn't copied here; see the issue.
+> **Contributor: TrentHunter82 (Flipping Sigmas)** ([TrentNodes](https://github.com/TrentHunter82/TrentNodes)). Posted as [NerdNotes issue #3](https://github.com/roycho87/NerdNotes/issues/3) on 2026-11-08 and kept as he wrote it. **Not** covered by NerdNotes' CC BY-SA 4.0 license: it stays under his own terms.
 
 ## Split unsample for H3 continuations: test data (TrentHunter82 / Flipping Sigmas)
 
@@ -32,6 +32,8 @@ One detail: the partial sampler returns locked rows scaled by 1/(1-sigma) (CONST
 | E | Split unsample (above) |
 
 ### Results
+
+![Runs A, B, C3 and E: frame 0 and the end of clips 1 to 4](media/TrentHunter82_split_unsample.png)
 
 Last frame of each clip (frames 140, 242, 344, 446). Metrics on the full RGB frame: brightness = mean, contrast = std, saturation = mean HSV S (0-255), edge detail = variance of PIL `FIND_EDGES`, diff = mean abs difference from A at the same frame.
 
