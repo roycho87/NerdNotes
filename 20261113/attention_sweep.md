@@ -54,7 +54,21 @@ A new node in the private experimental pack. It measures, for every token, head 
 * It reads Geiru Keystone's output latent to find the keystone, and follows Geiru Context's `degradation_protection` switch.
 * Checked against a by-hand calculation: the same result to 7 decimal places, with every other slice unchanged.
 
-First run: keystone on, balance 2.0, no carry turn-down, 10 clips. Results go here when it finishes.
+First run: keystone on, balance 2.0, no carry turn-down, 10 clips. Results go here when it finishes. After 6 clips it was level with keystone + capstone (−12.9% vs −12.3% at clip 5, −12.6% vs −12.4% at clip 6).
+
+**How small the slice is.** The node logs the average shares for block 0. There, the keystone and the carried frames together get only about 5% of each token's attention:
+
+| Block 0 | Normal | Balance 2.0 |
+|---|---|---|
+| Keystone | 0.78% | 1.10% |
+| Carried frames | 4.55% | 4.23% |
+| Together | 5.33% | 5.33% (unchanged) |
+
+So balance 2.0 moves about a third of a percent of the attention in that block. The node works in all 50 blocks but only logs block 0, and each block splits its attention differently, so the keystone's slice may be bigger in later ones.
+
+## Next test: a black keystone
+
+Put a black frame in as the keystone. Whatever darkness shows up in the clips is passed on through the keystone, so it shows how strongly, and through which blocks, the keystone's brightness gets copied. Running Keystone Balance on only some blocks (for example the first half against the second half) with the black keystone should show where brightness is carried. That's where the balance would need to be aimed.
 
 ## Notes
 
