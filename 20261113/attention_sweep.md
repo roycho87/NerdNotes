@@ -6,7 +6,7 @@ ckinpdx found that turning down H3's attention on the carried frames, and up on 
 
 1. **Turning the carry down doesn't slow the darkening on its own.** At context 0.40 and 0.15, clip 10 ended up about as dark as with no node at all (−29.7% and −26.5%, against −28.0%).
 2. **It behaves like a switch, not a dial.** The darkening is in the carried frames themselves. As long as the new frames continue from them, they inherit it. The only way out is for the model to stop continuing and redraw, and that's when the joins break (ckinpdx saw that at −3).
-3. **Carry turned down + keystone is the best result so far:** −9.5% at clip 10, against −19.7% for keystone alone and −28.0% for nothing. The scene redrew once at the first join (new rocks and coastline), then held steady from clip 2 to clip 10.
+3. **Carry turned down + keystone is the best result so far:** −9.5% at clip 10, against −19.7% for keystone + capstone (test 16's K run) and −28.0% for nothing, with no capstone at all. The scene redrew once at the first join (new rocks and coastline), then held steady from clip 2 to clip 10.
 4. **Next: lean on the keystone instead of starving the carry.** A new node, Geiru Keystone Balance, moves attention from the carry to the keystone *inside their shared slice only*, leaving the prompt, references and audio untouched. Its first run is going now.
 
 ![Frame 172 of clips 1, 2, 5 and 10: no node, context 0.40, context 0.15, and 0.15 + keystone](media/attention_sweep_clips_1-10.png)
@@ -25,13 +25,13 @@ ckinpdx found that turning down H3's attention on the carried frames, and up on 
 
 Brightness at frames 166–178, compared with clip 1:
 
-| Clip | No node | Keystone alone | Context 0.40 | Context 0.15 | 0.15 + keystone |
+| Clip | No node | Keystone + capstone (K) | Context 0.40 | Context 0.15 | 0.15 + keystone |
 |---|---|---|---|---|---|
-| 2 | −6.8% | – | −4.5% | −5.1% | −7.0% |
-| 5 | −17.9% | – | −12.4% | −19.5% | −12.3% |
+| 2 | −6.8% | −4.9% | −4.5% | −5.1% | −7.0% |
+| 5 | −17.9% | −12.3% | −12.4% | −19.5% | −12.3% |
 | 10 | −28.0% | −19.7% | −29.7% | −26.5% | **−9.5%** |
 
-* "Keystone alone" is the earlier keystone run on the same benchmark, with the Sage patch on.
+* "Keystone + capstone (K)" is the K run from [test 16](../20261107/beach30_protection_combos.md) on the same benchmark: keystone front + capstone back, Late Lock at swap step 6, Sage patch on. Keystone alone (no capstone) hasn't been run on this benchmark.
 * Colour drift at clip 10 (average colour change of the corners): 60.3 with no node, 20.5 with 0.15 + keystone.
 * No run showed a motion jump at the clip 1 → 2 join in the frame-to-frame numbers. Whether the motion looks right is judged by eye.
 * An earlier 0.70 run matched the plain chain almost exactly (−17.6% vs −17.7% at clip 4) and was stopped.
