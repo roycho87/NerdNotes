@@ -28,7 +28,7 @@ A bias of b multiplies a part's share of attention by e^b.
 
 roycho's private experimental pack has a version of the same idea for Motion Context / Geiru Context chains: **Geiru Attention Balance**. It finds the carried frames from the noise mask instead of from a sampler, so it works with any noise-mask chain. Settings are strengths (1 = normal) rather than biases: context_strength, reference_strength, and keystone_strength for latent 0 when it holds clip 1's clean keystone. The way it locates the reference rows follows ckinpdx's MIT-licensed Reference Attention Probe.
 
-**First result:** on the 30-clip beach benchmark, context_strength 0.7 (a bias of about -0.36, much milder than his default) made no difference: through clip 4 the darkening matched the plain chain almost exactly (-17.6 vs -17.7 brightness). A sweep from 0.4 down is running; results go here when it finishes.
+**First result:** on the 30-clip beach benchmark, context_strength 0.7 (a bias of about -0.36, much milder than his default) made no difference: through clip 4 the darkening matched the plain chain almost exactly (-17.6 vs -17.7 brightness). The sweep from 0.4 down is in [test 19](../attention_sweep.md): the carry turned down alone didn't slow the darkening, but carry down + keystone cut it to about a third.
 
 ## Related
 
