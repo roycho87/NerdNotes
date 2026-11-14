@@ -10,7 +10,7 @@ ckinpdx found that turning down H3's attention on the carried frames, and up on 
 4. **Leaning on the keystone works better than starving the carry.** A new node, Geiru Keystone Balance, moves attention from the carry to the keystone *inside their shared slice only*, leaving the prompt, references and audio untouched. At balance 20, clip 10 ended **−6.9%**, the best result so far, and it got brighter from clip 5 to clip 10. Watched as video, it doesn't darken.
 5. **The keystone also pulls the scenery back.** In every keystone run, clip 2's background drifts back to clip 1's opening view (the big cliff and sea stacks) over about 2 seconds, then stays. It isn't a cut; it's the keystone holding the whole shot to clip 1's first frame.
 6. **Keystone alone does about as well as keystone + capstone:** −21.8% at clip 10, against −19.7%.
-7. **Finding the brightness blocks needs a keystone that still matches the scene.** Black and white keystones did nothing even at balance 20, because Keystone Balance multiplies the attention a frame already gets, and a plain frame that matches nothing gets almost none. Next: a brightened copy of clip 1's own frame.
+7. **Finding the brightness blocks needs a keystone that still matches the scene.** Black and white keystones did nothing even at balance 20, because Keystone Balance multiplies the attention a frame already gets, and a plain frame that matches nothing gets almost none. A brightened copy of clip 1's own frame works: at balance 20 it lifts clip 2 by +18%, so the block sweep can run one clip at a time.
 
 ![Frame 172 of clips 1, 2, 5 and 10: no node, context 0.40, context 0.15, and 0.15 + keystone](media/attention_sweep_clips_1-10.png)
 
@@ -141,9 +141,32 @@ Each token looks at the keystone in proportion to how much the keystone resemble
 
 So Keystone Balance doesn't push brightness by itself. It pulls the whole look back toward clip 1's frame, which is also why it pulls the scenery back. A test keystone has to still match the scene.
 
-### Next: a brightened keystone (running)
+### A brightened keystone: a clear signal in one clip
 
-Clip 1's first frame is decoded, brightened (×1.3) and re-encoded as the keystone. It still looks like the same scene, so it should get real attention. The amount is arbitrary; the test is only looking for upward movement. If boosting it makes clips brighter than the normal keystone at the same balance, the block groups can be swept with it: the groups that push brightness up are the ones that carry it. First run: clip 2 only, balance 20 on all blocks, compared with the normal-keystone balance 20 clip 2.
+Clip 1's first frame is decoded, brightened (×1.3) and re-encoded as the keystone. It still looks like the same scene, so it gets real attention. The amount is arbitrary; the test only looks for upward movement.
+
+![Clip 1's original first frame and the brightened keystone](media/bright_keystone.png)
+
+*Left: clip 1's first frame. Right: the brightened keystone (average brightness 111 → 143, about 3% of pixels clipped, mostly surf).*
+
+Clip 2 only, balance 20 on all blocks:
+
+| Clip 2, balance 20 on all blocks | New frames (40–191) vs normal keystone | End of clip vs clip 1 |
+|---|---|---|
+| Normal keystone | – | −6.5% |
+| **Brightened keystone** | **+18.1%** | **+16.8%** |
+
+The lift grows through the clip: +7.8% in the first quarter, then +19.9%, +22.0% and +23.1%. With the keystone about 29% brighter than the original, one clip already takes on most of the difference.
+
+![Clip 2, frames 40 to 191: normal keystone on top, brightened keystone below](media/bright_vs_normal_clip2.png)
+
+*Clip 2, frames 40 to 191, both at balance 20. Top: normal keystone. Bottom: brightened keystone.*
+
+This makes the block search fast: each test is one clip, about 3 minutes, instead of a 10-clip chain.
+
+### Next: the block sweep (running)
+
+Brightened keystone, clip 2 only: no balance (how much lift comes without the boost), then balance 20 on one 10-block group at a time (0–9, 10–19, 20–29, 30–39, 40–49). The groups that give most of the +18% carry brightness. The strongest group then gets split into pairs and single blocks. If the lift is spread over several groups, the single blocks in those groups get tested instead.
 
 ## Notes
 
