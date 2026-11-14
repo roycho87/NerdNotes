@@ -9,7 +9,8 @@ ckinpdx found that turning down H3's attention on the carried frames, and up on 
 3. **Carry turned down + keystone is the best result so far:** −9.5% at clip 10, against −19.7% for keystone + capstone (test 16's K run) and −28.0% for nothing, with no capstone at all.
 4. **Leaning on the keystone works better than starving the carry.** A new node, Geiru Keystone Balance, moves attention from the carry to the keystone *inside their shared slice only*, leaving the prompt, references and audio untouched. At balance 20, clip 10 ended **−6.9%**, the best result so far, and it got brighter from clip 5 to clip 10. Watched as video, it doesn't darken.
 5. **The keystone also pulls the scenery back.** In every keystone run, clip 2's background drifts back to clip 1's opening view (the big cliff and sea stacks) over about 2 seconds, then stays. It isn't a cut; it's the keystone holding the whole shot to clip 1's first frame.
-6. **Next: find which blocks carry brightness,** so the balance only acts there and nothing else changes.
+6. **Keystone alone does about as well as keystone + capstone:** −21.8% at clip 10, against −19.7%.
+7. **Finding the brightness blocks needs a keystone that still matches the scene.** Black and white keystones did nothing even at balance 20, because Keystone Balance multiplies the attention a frame already gets, and a plain frame that matches nothing gets almost none. Next: a brightened copy of clip 1's own frame.
 
 ![Frame 172 of clips 1, 2, 5 and 10: no node, context 0.40, context 0.15, and 0.15 + keystone](media/attention_sweep_clips_1-10.png)
 
@@ -101,16 +102,48 @@ Nobody has published which H3 blocks carry brightness or colour. What there is:
 * **matlowai's H3 Delta Color Carry** cancels darkening from a VAE round trip on carried frames. The Geiru chains keep the carried frames as latents, so that's probably a different cause.
 * **On other diffusion transformers,** early blocks set layout and meaning and late blocks draw fine detail, and colour follows the same early-to-middle pattern as shape ([Unraveling MMDiT Blocks](https://arxiv.org/html/2601.02211)). The standard way to find a block's job is to change one block at a time and measure the result ([Stable Flow](https://arxiv.org/html/2411.14430v1)).
 
-## Next test: which blocks carry brightness (built, not run yet)
+## Finding the brightness blocks
 
-A black frame goes in as the keystone. Every run makes only clip 2, from the same clip 1, so each one takes about 7 minutes. The brightness of clip 2's new frames (40–191) is compared with a normal-keystone clip 2:
+The goal: run the balance only in the blocks that carry brightness, so nothing else changes.
 
-* **ref_normal:** normal keystone, no balance.
-* **blk_none:** black keystone, no balance (how much darkness gets through by default).
-* **blk_all:** black keystone, balance 20 on all blocks (the most it can pull).
-* **Five runs** with balance 20 on one group of 10 blocks only: 0–9, 10–19, 20–29, 30–39, 40–49.
+### Black keystone, one clip: nothing
 
-The groups that pull clip 2 darkest are where the keystone's brightness gets copied. The strongest group is then split into pairs, and the strongest pair into single blocks, about 15 clips in all. The winning blocks then get checked on the normal 10-clip test, since a black keystone is an extreme case.
+A black frame went in as the keystone. Every run made only clip 2, from the same clip 1, and the brightness of clip 2's new frames (40–191) was compared with a normal-keystone clip 2:
+
+| Run | Brightness vs normal keystone | Extra darkness from the balance |
+|---|---|---|
+| Black keystone, no balance | +0.8% | – |
+| Black, balance 20 on all blocks | +0.2% | −0.6% |
+| Black, balance 20 on blocks 0–9 | +0.8% | −0.1% |
+| Black, balance 20 on blocks 10–19 | +1.0% | +0.1% |
+| Black, balance 20 on blocks 20–29 | +0.9% | 0.0% |
+| Black, balance 20 on blocks 30–39 | +0.7% | −0.2% |
+| Black, balance 20 on blocks 40–49 | −0.6% | −1.5% |
+
+Only frames 0–3 were dark: the black frame itself and the frames right after it. Even balance 20 on all 50 blocks passed less than 1% of the darkness into the clip.
+
+### White keystone, 10 clips: nothing
+
+The same idea the other way round, over 10-clip chains from the same clip 1, since getting *brighter* would be a clear sign. Brightness at frames 166–178 compared with clip 1:
+
+| Chain | Clip 5 | Clip 10 |
+|---|---|---|
+| Normal keystone, no balance | −12.8% | −21.8% |
+| Normal keystone, balance 20 on all blocks | −9.0% | −6.9% |
+| White keystone, no balance | −18.9% | −29.8% |
+| White keystone, balance 20 on all blocks | −18.2% | −30.6% |
+
+The white keystone made the chain a little darker than no keystone at all (−28.0%), and boosting it changed nothing. The per-group white chains were stopped.
+
+### Why: the balance multiplies, it can't create
+
+Each token looks at the keystone in proportion to how much the keystone resembles what it's drawing. Clip 1's own frame, the same beach, girl and light, is a close match and gets real attention, so ×20 of it is a big pull. A plain black or white frame matches nothing in the scene; its share is close to zero, and twenty times almost nothing is still almost nothing.
+
+So Keystone Balance doesn't push brightness by itself. It pulls the whole look back toward clip 1's frame, which is also why it pulls the scenery back. A test keystone has to still match the scene.
+
+### Next: a brightened keystone (running)
+
+Clip 1's first frame is decoded, brightened (×1.3) and re-encoded as the keystone. It still looks like the same scene, so it should get real attention. The amount is arbitrary; the test is only looking for upward movement. If boosting it makes clips brighter than the normal keystone at the same balance, the block groups can be swept with it: the groups that push brightness up are the ones that carry it. First run: clip 2 only, balance 20 on all blocks, compared with the normal-keystone balance 20 clip 2.
 
 ## Notes
 
