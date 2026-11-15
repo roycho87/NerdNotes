@@ -286,6 +286,8 @@ Geiru Keystone Balance (still private and experimental) now has a `block_mode` d
 
 ### Next
 
+**Update:** the node is now Geiru Keystone Attention, released in the Geiru Context Suite. Its cost to motion and its use in Hybrid Windows are in [test 20](../20261115/keystone_attention_motion_and_hybrid.md).
+
 * **Keystone + balance + context noise, 30 clips:** whether it keeps the balance's brightness and gets context noise's smooth joins.
 * **Balance 40 on the 13 blocks:** whether a higher balance closes the gap to all 50 blocks at balance 20 (−6.9% at clip 10), and how much more it pulls the scenery back.
 * **Which steps:** ckinpdx added start/end step settings to Carry Attention. Early steps set the layout, late steps the detail and look, so the balance on only the later steps might keep the brightness without pulling the scenery back to clip 1. Plan: the balance on steps 1–8, 4–8 and 6–8, compared on brightness and pull-back.
