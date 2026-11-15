@@ -11,6 +11,8 @@ ckinpdx found that turning down H3's attention on the carried frames, and up on 
 5. **The keystone also pulls the scenery back.** In every keystone run, clip 2's background drifts back to clip 1's opening view (the big cliff and sea stacks) over about 2 seconds, then stays. It isn't a cut; it's the keystone holding the whole shot to clip 1's first frame.
 6. **Keystone alone does about as well as keystone + capstone:** −21.8% at clip 10, against −19.7%.
 7. **Finding the brightness blocks needs a keystone that still matches the scene.** Black and white keystones did nothing even at balance 20, because Keystone Balance multiplies the attention a frame already gets, and a plain frame that matches nothing gets almost none. A brightened copy of clip 1's own frame works: at balance 20 it lifts clip 2 by +18%, so the block sweep can run one clip at a time.
+8. **Brightness lives in 13 blocks: 31–33, 36–44 and 47.** Balance 20 on just those holds a 10-clip chain about as well as all 50 blocks (−9.5% at clip 10, against −6.9%), and the result repeats exactly.
+9. **Keystone + balance beats keystone + capstone at clip 10** (−9.5% against −19.7%). Adding a capstone on top of the balance only adds about 2 points. A 30-clip run is going to see if it holds the whole way; if it does, keystone + balance becomes the default instead of keystone + capstone.
 
 ![Frame 172 of clips 1, 2, 5 and 10: no node, context 0.40, context 0.15, and 0.15 + keystone](media/attention_sweep_clips_1-10.png)
 
@@ -34,7 +36,7 @@ Brightness at frames 166–178, compared with clip 1:
 | 5 | −17.9% | −12.3% | −12.4% | −19.5% | −12.3% |
 | 10 | −28.0% | −19.7% | −29.7% | −26.5% | **−9.5%** |
 
-* "Keystone + capstone (K)" is the K run from [test 16](../20261107/beach30_protection_combos.md) on the same benchmark: keystone front + capstone back, Late Lock at swap step 6, Sage patch on. Keystone alone (no capstone) hasn't been run on this benchmark.
+* "Keystone + capstone (K)" is the K run from [test 16](../20261107/beach30_protection_combos.md) on the same benchmark: keystone front + capstone back, Late Lock at swap step 6, Sage patch on. Keystone alone (no capstone) was run later: −12.8% at clip 5, −21.8% at clip 10.
 * Colour drift at clip 10 (average colour change of the corners): 60.3 with no node, 20.5 with 0.15 + keystone.
 * No run showed a motion jump at the clip 1 → 2 join in the frame-to-frame numbers. Whether the motion looks right is judged by eye.
 * An earlier 0.70 run matched the plain chain almost exactly (−17.6% vs −17.7% at clip 4) and was stopped.
@@ -164,13 +166,94 @@ The lift grows through the clip: +7.8% in the first quarter, then +19.9%, +22.0%
 
 This makes the block search fast: each test is one clip, about 3 minutes, instead of a 10-clip chain.
 
-### Next: the block sweep (running)
+### The block sweep
 
-Brightened keystone, clip 2 only: no balance (how much lift comes without the boost), then balance 20 on one 10-block group at a time (0–9, 10–19, 20–29, 30–39, 40–49). The groups that give most of the +18% carry brightness. The strongest group then gets split into pairs and single blocks. If the lift is spread over several groups, the single blocks in those groups get tested instead.
+Brightened keystone, clip 2 only, balance 20 on one group of blocks at a time. The number is how much brighter clip 2's new frames came out than with the normal keystone:
+
+| Blocks with balance 20 | Lift |
+|---|---|
+| None (brightened keystone, no balance) | +4.4% |
+| 0–9 | +4.2% |
+| 10–19 | +4.0% |
+| 20–29 | +4.1% |
+| 30–39 | +13.8% |
+| 40–49 | +7.0% |
+| 30–49 | +19.0% |
+| All 50 | +18.1% |
+
+Blocks 0–29 do nothing for brightness. It's all in 30–49. Halves: 30–34 +6.7%, 35–39 +8.1%, 40–44 +7.4%, 45–49 +2.8%. Pairs on their own were all about the same as no balance, so it's spread over many blocks, not one or two.
+
+**Whittling it down.** Starting from 30–49, one block at a time was dropped. A block stayed out only if the lift stayed at 18% or more without it; otherwise it went back in. The first pass changed that limit partway through, so it was redone with 18% the whole way:
+
+| Block dropped | Lift without it | Kept? |
+|---|---|---|
+| 30 | 18.4% | out |
+| 31 | 17.0% | **needed** |
+| 32 | 16.4% | **needed** |
+| 33 | 16.3% | **needed** |
+| 34 | 18.7% | out |
+| 35 | 18.6% | out |
+| 36 | 16.3% | **needed** |
+| 37 | 16.8% | **needed** |
+| 38 | 15.6% | **needed** |
+| 39 | 17.7% | **needed** |
+| 40 | 17.0% | **needed** |
+| 41 | 17.4% | **needed** |
+| 42 | 17.6% | **needed** |
+| 43 | 16.9% | **needed** |
+| 44 | 15.6% | **needed** |
+| 45 | 19.0% | out |
+| 46 | 18.6% | out |
+| 47 | 17.2% | **needed** |
+| 48 | 18.9% | out |
+| 49 | 19.2% | out |
+
+**The lighting blocks: 31, 32, 33, 36, 37, 38, 39, 40, 41, 42, 43, 44 and 47** (13 of 50). Every number was checked twice: the block ranges in ComfyUI's history are right, and re-measuring gives the same values. Renders are exactly repeatable (the same settings give the same file, byte for byte).
+
+### The 13 blocks over a 10-clip chain
+
+Normal keystone, balance 20 on the 13 blocks only, 10 clips. Brightness at frames 166–178 compared with clip 1:
+
+| Chain | Clip 5 | Clip 10 |
+|---|---|---|
+| No node | −17.9% | −28.0% |
+| Keystone only | −12.8% | −21.8% |
+| Balance 20, all 50 blocks | −9.0% | −6.9% |
+| **Balance 20, the 13 lighting blocks** | **−10.0%** | **−9.5%** |
+
+The 13 blocks hold it flat from clip 5 to clip 10. A second run with the same settings came out identical, all 9 clips byte for byte.
+
+### Keystone + balance against keystone + capstone
+
+All measured the same way (corners, frames 166–178, against clip 1). The test 16 runs are the 30-clip chains from [test 16](../20261107/beach30_protection_combos.md), re-measured with this method:
+
+| Run | Clip 5 | Clip 10 | Clip 20 | Clip 30 |
+|---|---|---|---|---|
+| No node | −17.9% | −28.0% | −39.9% | −33.5% |
+| Keystone + capstone | −12.3% | −19.7% | −17.3% | −10.1% |
+| Keystone + capstone + context noise | −13.4% | −11.9% | −16.7% | −20.7% |
+| Keystone + capstone + Protection LoRA | −13.5% | −22.0% | −17.5% | −22.5% |
+| Keystone + capstone + LoRA + context noise | −12.5% | −14.5% | −19.8% | −21.9% |
+| **Keystone + balance (13 blocks)** | **−10.0%** | **−9.5%** | running | running |
+| Keystone + balance + capstone (Late Lock step 6) | −10.0% | −7.2% | | |
+| Keystone + balance + capstone (Late Lock step 4) | −6.8% | −7.2% | | |
+
+* At clip 10, keystone + balance is the best run without a capstone, and about 10 points better than keystone + capstone.
+* Adding the capstone on top of the balance helps by about 2 points at clip 10. In those runs the balance also boosted the capstone (the node treats it as a second anchor), so a plain capstone probably adds even less.
+* The capstone runs swing around: keystone + capstone was worse at clip 10 and better by clip 30, and with context noise the other way round. So clip 10 doesn't say how a run ends, which is why keystone + balance is being run to 30 clips.
+
+### The node now
+
+Geiru Keystone Balance (still private and experimental) now has a `block_mode` dropdown:
+
+* **lighting blocks**: the 13 blocks above. The blocks box is greyed out and shows `31-33, 36-44, 47`.
+* **custom blocks**: type your own, like `31-33, 36-44, 47` or `31, 32, 33`. Spaces don't matter.
+
+`balance` now goes up to 100,000. One node does what took three chained nodes in the tests.
 
 ## Notes
 
-* **Sage:** both Geiru Attention Balance and ckinpdx's node fall back to plain PyTorch attention on the calls they change, because Sage on a 50-series card doesn't take an attention bias. Kijai's Sage patch node replaces the attention hook, so an attention node has to come **after** it on the model line, or it gets wiped out.
-* **Limits:** one scene, one seed, 10 clips, measured on corner patches. Balance 20 is the node's current maximum. The darkening numbers are reliable for comparing runs; motion and look are judged by eye.
+* **Sage:** both Geiru Attention Balance and ckinpdx's node fall back to plain PyTorch attention on the calls they change, because Sage on a 50-series card doesn't take an attention bias. Kijai's Sage patch node replaces the attention hook, so an attention node has to come **after** it on the model line, or it gets wiped out. Even after it, Kijai's patch swaps each block's whole attention, so Keystone Balance did nothing with it on: a chain with the Sage patch came out identical to keystone only. The node now turns the Sage patch off on its own blocks only, so the other blocks keep Sage; that version hasn't been tested yet. All the results here are with the Sage patch off.
+* **Limits:** one scene, one seed, 10 clips, measured on corner patches. The darkening numbers are reliable for comparing runs; motion and look are judged by eye.
 
 **Credits:** ckinpdx for Carry Attention and the idea of biasing H3's attention by part of the sequence.
