@@ -12,7 +12,8 @@ ckinpdx found that turning down H3's attention on the carried frames, and up on 
 6. **Keystone alone does about as well as keystone + capstone:** −21.8% at clip 10, against −19.7%.
 7. **Finding the brightness blocks needs a keystone that still matches the scene.** Black and white keystones did nothing even at balance 20, because Keystone Balance multiplies the attention a frame already gets, and a plain frame that matches nothing gets almost none. A brightened copy of clip 1's own frame works: at balance 20 it lifts clip 2 by +18%, so the block sweep can run one clip at a time.
 8. **Brightness lives in 13 blocks: 31–33, 36–44 and 47.** Balance 20 on just those holds a 10-clip chain about as well as all 50 blocks (−9.5% at clip 10, against −6.9%), and the result repeats exactly.
-9. **Keystone + balance beats keystone + capstone at clip 10** (−9.5% against −19.7%). Adding a capstone on top of the balance only adds about 2 points. A 30-clip run is going to see if it holds the whole way; if it does, keystone + balance becomes the default instead of keystone + capstone.
+9. **Keystone + balance beats keystone + capstone over 30 clips,** not just 10. It stays flat at about −9% the whole way (never worse than −10.8%), while keystone + capstone swings between −5% and −22%. Over clips 11–30 it averages −8.8%, against −16.7%. **Keystone + balance becomes the default instead of keystone + capstone.**
+10. **Context noise smooths the joins.** Keystone + capstone wobbles in quality from clip to clip; adding context noise takes most of that out, and keystone + balance sits close to the context-noise run. Context noise doesn't stop the darkening on its own, so keystone + balance + context noise is next.
 
 ![Frame 172 of clips 1, 2, 5 and 10: no node, context 0.40, context 0.15, and 0.15 + keystone](media/attention_sweep_clips_1-10.png)
 
@@ -234,13 +235,45 @@ All measured the same way (corners, frames 166–178, against clip 1). The test 
 | Keystone + capstone + context noise | −13.4% | −11.9% | −16.7% | −20.7% |
 | Keystone + capstone + Protection LoRA | −13.5% | −22.0% | −17.5% | −22.5% |
 | Keystone + capstone + LoRA + context noise | −12.5% | −14.5% | −19.8% | −21.9% |
-| **Keystone + balance (13 blocks)** | **−10.0%** | **−9.5%** | running | running |
+| **Keystone + balance (13 blocks)** | **−10.0%** | **−9.5%** | **−7.3%** | **−7.7%** |
 | Keystone + balance + capstone (Late Lock step 6) | −10.0% | −7.2% | | |
 | Keystone + balance + capstone (Late Lock step 4) | −6.8% | −7.2% | | |
 
 * At clip 10, keystone + balance is the best run without a capstone, and about 10 points better than keystone + capstone.
 * Adding the capstone on top of the balance helps by about 2 points at clip 10. In those runs the balance also boosted the capstone (the node treats it as a second anchor), so a plain capstone probably adds even less.
-* The capstone runs swing around: keystone + capstone was worse at clip 10 and better by clip 30, and with context noise the other way round. So clip 10 doesn't say how a run ends, which is why keystone + balance is being run to 30 clips.
+* The capstone runs swing around: keystone + capstone was worse at clip 10 and better by clip 30, and with context noise the other way round. So clip 10 doesn't say how a run ends, which is why keystone + balance was run to 30 clips (below).
+
+### 30 clips: keystone + balance against keystone + capstone
+
+The 13-block chain continued to clip 30 (renders are exactly repeatable, so clips 1–10 are the same as above). Brightness compared with clip 1:
+
+| Run | Clip 5 | Clip 10 | Clip 15 | Clip 20 | Clip 25 | Clip 30 | Average, clips 11–30 |
+|---|---|---|---|---|---|---|---|
+| No node | −17.9% | −28.0% | −35.2% | −39.9% | −39.4% | −33.5% | |
+| Keystone + capstone | −12.3% | −19.7% | −13.6% | −17.3% | −20.3% | −10.1% | −16.7% |
+| Keystone + capstone + context noise | −13.4% | −11.9% | −18.1% | −16.7% | −20.0% | −20.7% | −18.1% |
+| **Keystone + balance (13 blocks)** | **−10.0%** | **−9.5%** | **−9.4%** | **−7.3%** | **−9.9%** | **−7.7%** | **−8.8%** |
+
+* Keystone + balance never gets worse than −10.8% in any of the 30 clips. Keystone + capstone runs in a saw-tooth: it darkens to about −21% over clips 2–11, jumps back at clip 12, darkens again to −22% by clip 28, and jumps back at clip 29. Its good clip-30 number is one of those jumps.
+* Watched side by side, the no-node run has fallen apart by clip 30 (colour banding and streaks over the sky and sand); the two keystone runs are close at clip 30 itself, and the balance run is steadier through the middle.
+
+![Clip 30: no protection, keystone + capstone, keystone + balance](media/clip30_none_capstone_balance.png)
+
+*Clip 30. Left to right: no protection, keystone + capstone, keystone + balance (13 blocks).*
+
+### Quality wobble: context noise smooths the joins
+
+Watched side by side, keystone + capstone has a quality wobble that the context-noise run doesn't. Measured on the full frame over all 30 clips: how much sharpness swings inside each clip, and how much it changes across each join.
+
+| Run | Sharpness swing inside a clip | Change at the joins |
+|---|---|---|
+| Keystone + capstone | 17.1% | 6.5% |
+| Keystone + balance (13 blocks) | 13.1% | 5.0% |
+| Keystone + capstone + context noise | 12.2% | 3.5% |
+
+* Keystone + capstone has the biggest swings, with spikes at clips 12–13 and 29 (33%, 42% and 49%), the same clips where its brightness jumps.
+* Context noise gives the steadiest sharpness and the smoothest joins. Keystone + balance is much closer to it than to keystone + capstone.
+* So the two do different jobs: the balance holds brightness, context noise smooths the handoff at each join. Keystone + balance + context noise is the next 30-clip test.
 
 ### The node now
 
@@ -250,6 +283,12 @@ Geiru Keystone Balance (still private and experimental) now has a `block_mode` d
 * **custom blocks**: type your own, like `31-33, 36-44, 47` or `31, 32, 33`. Spaces don't matter.
 
 `balance` now goes up to 100,000. One node does what took three chained nodes in the tests.
+
+### Next
+
+* **Keystone + balance + context noise, 30 clips:** whether it keeps the balance's brightness and gets context noise's smooth joins.
+* **Balance 40 on the 13 blocks:** whether a higher balance closes the gap to all 50 blocks at balance 20 (−6.9% at clip 10), and how much more it pulls the scenery back.
+* **Which steps:** ckinpdx added start/end step settings to Carry Attention. Early steps set the layout, late steps the detail and look, so the balance on only the later steps might keep the brightness without pulling the scenery back to clip 1. Plan: the balance on steps 1–8, 4–8 and 6–8, compared on brightness and pull-back.
 
 ## Notes
 
