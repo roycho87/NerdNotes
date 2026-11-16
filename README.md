@@ -63,3 +63,7 @@ Found something, ran a test, or wrote up your own results? Open an [issue](https
 ## License
 
 NerdNotes is licensed under [CC BY-SA 4.0](LICENSE): share and adapt anything here, as long as you credit roycho / NerdNotes with a link back and share what you make under the same license. Contributions in `community_cc_by_sa/` are under the same license, and reusing them requires crediting their contributor too. The other community folders aren't covered. Details in [NOTICE.md](NOTICE.md).
+
+**Projects that credit NerdNotes:**
+
+* [fblissjr/ComfyUI-h3-explorations](https://github.com/fblissjr/ComfyUI-h3-explorations/commit/4040e4dc50d1f7104a475d3f2a04a201b2981669) credits NerdNotes (CC BY-SA 4.0) in `docs/wiki/upstream/periphery.md`.
