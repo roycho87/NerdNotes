@@ -1,8 +1,8 @@
-# Test 22: Block Step Echo (setup, results to come)
+# Test 22: Block Step Echo
 
 Follow-up to [test 21](../20261119/block_map.md). The block map showed that brightness, saturation, warmth, contrast and sharpness all live in blocks 30–49, and that blocks 0–29 do nothing for any of them. This test asks: what if the two halves of the model are shown different versions of the held frames?
 
-**Status:** the node and both test chains are built. No renders yet. This page is the plan; results get added here.
+**Status:** first run done on the moving chain. It cut at the seam. Shelved for now; see results.
 
 ## The idea
 
@@ -63,4 +63,13 @@ Not this exact combination, as far as a Banodoco and paper search could find. Th
 
 ## Results
 
-To come.
+**Moving chain, first run (echo on, label switch on, timeline step noise on): it cuts.** Clip 2 jumps right where the held frames end (frame 22). The held frames play as one shot and the new frames start another, so the new frames aren't continuing from the held ones.
+
+Best guess (not tested): from block 30 up, the label switch tells the model the held frames are still noisy, and the echo hands it clip 1's half-finished version of them. In the half of the model that decides the look, nothing marks the held frames as given any more, so the model has no reason to continue from them.
+
+Not yet run: label switch off, `start_block` 40, and the echo off with only the timeline noise on (the control). The idea is shelved for now in favour of a simpler one, [test 23](context_attention.md): leave the held frames as they are and turn the attention on them up, on the same blocks.
+
+Two setup notes from the first run:
+
+* The node first crashed against KJNodes' Low VRAM Attention node (an older version whose block code doesn't take the `attention` argument ComfyUI passes to patched blocks). Fixed by calling the blocks directly.
+* After the node gained a setting, a saved workflow loaded with its settings shifted one box over (seed NaN, folder "true"). Worth checking the boxes after any node update.
