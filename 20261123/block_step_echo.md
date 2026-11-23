@@ -22,7 +22,7 @@ This comes from an older experiment, Step Echo (Nov 2), which saved each step's 
 1. **Record.** While a clip samples, the state going into block 30 is saved at every step, for the frames the next clip will hold.
 2. **Echo.** On the next clip, at block 30, the held frames' state is swapped for the saved one from the matching step.
 3. **Switch the label.** H3 tells every block how noisy each frame is. Locked frames carry a "given frame" label (0.999, the same one pinned keyframes get). From block 30 up, the held frames' label is switched to this step's noise level, so the label matches the echo. Blocks 0–29 keep the normal label.
-4. **Same noise.** The echo was made from the previous clip's noise, so the held frames need that same noise here. The node makes "timeline noise": each latent's noise comes from the seed plus its place in the whole video, not its place in the clip. Frames that overlap between two clips get identical noise. New frames get fresh noise, and nothing repeats.
+4. **Same noise.** The echo was made from the previous clip's noise, so the held frames need that same noise here. The node makes "timeline noise": each latent's noise comes from the seed plus its place in the whole video, not its place in the clip. Frames that overlap between two clips get identical noise. New frames get fresh noise, and nothing repeats. The noise the sampler adds at every step (er_sde does this) comes from the same timeline, keyed by the step as well, so overlapping frames also get the same added noise at the same step.
 
 Notes on the mechanics, from ComfyUI 0.45.0's H3 code:
 
@@ -59,7 +59,6 @@ Not this exact combination, as far as a Banodoco and paper search could find. Th
 ## Open questions going in
 
 * The echo comes from the previous clip's frames at their old positions in that clip, placed at the start of this one. The state at block 30 already has that old position mixed in. Does that confuse the model?
-* The sampler used here (er_sde) adds fresh noise every step, so only the starting noise matches between clips. Does that matter?
 * The output for locked frames is thrown away and replaced by the clean latent. The echo can only act through how the new frames read the held frames in blocks 30–49. Is that enough to change anything?
 
 ## Results
