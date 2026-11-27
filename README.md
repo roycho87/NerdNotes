@@ -63,7 +63,7 @@ This builds on a lot of other people's work: seitanism and NikoDemon80 (H3 Motio
 
 Found something, ran a test, or wrote up your own results? Open an [issue](https://github.com/roycho87/NerdNotes/issues).
 
-**If you want your contribution protected by the CC BY-SA 4.0 license, to keep it open source, you must say so in your issue,** and I'll add it to the protected folder, [`community_cc_by_sa/`](community_cc_by_sa/). Anyone who reuses a protected contribution must credit its contributor as well as NerdNotes. Otherwise it goes into a community folder that isn't covered by the license (like [`20261102/community/`](20261102/community/)). The protection applies once the contribution is filed as a file in `community_cc_by_sa/`; the issue itself isn't covered by this repo's license.
+**If you want your contribution protected by the CC BY-SA 4.0 license, to keep it open source, you must say so in your issue,** and I'll add it to the protected folder, [`community_cc_by_sa/`](community_cc_by_sa/). Anyone who reuses a protected contribution must credit its contributor as well as NerdNotes. Otherwise it goes into a community folder that isn't covered by the license (like [`20261102/community/`](20261102/community/)). The protection applies once the contribution is filed as a file in `community_cc_by_sa/`.
 
 ## License
 
